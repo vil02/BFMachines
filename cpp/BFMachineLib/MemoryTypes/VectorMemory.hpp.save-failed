@@ -1,0 +1,77 @@
+#ifndef VECTORMEMORY_HPP_INCLUDED
+#define VECTORMEMORY_HPP_INCLUDED
+
+#include <utility>
+
+namespace BFM::MemoryTypes
+{
+    namespace VMInner
+    {
+        template<typename ContainerType>
+        [[nondistard]] auto getValue(
+                const ContainerType& inData,
+                const typename ContainerType::size_type& inPos,
+                const typename ContainerType::value_type& defaultVal) noexcept
+        {
+            return inPos < inData.size() ? inData[inPos] : defaultVal;
+        }
+        template<typename ContainerType>
+        void setValue(
+                ContainerType& inData,
+                const typename ContainerType::size_type& inPos,
+                const typename ContainerType::value_type& inVal,
+                const typename ContainerType::value_type& defaultValue)
+        {
+            if (inPos >= inData.size())
+            {
+                inData.resize(inPos+1, defaultValue);
+            }
+            inData[inPos] = inVal;
+        }
+
+    }
+
+    template<typename ContainerType, typename ContainerType::value_type defaultValue = 0>
+    class VectorMemory
+    {
+        public:
+            using ValueType = typename ContainerType::value_type;
+            using PositionType = std::int64_t;
+            static const ValueType defaultVal = defaultValue;
+        private:
+            ContainerType geqData, lessData;
+            using RawPositionType = std::pair<typename ContainerType::size_type, bool>;
+            [[nondistard]] RawPositionType getRawPosition(const PositionType& inPos) const noexcept
+            {
+                return inPos >= 0 ?
+                    RawPositionType(inPos, true) : RawPositionType(-inPos-1, false);
+            }
+            [[nondistard]] ValueType getValue(const RawPositionType& inRawPos) const noexcept
+            {
+                return inRawPos.second ?
+                    VMInner::getValue(this->geqData, inRawPos.first, defaultValue) :
+                    VMInner::getValue(this->lessData, inRawPos.second, defaultValue);
+            }
+            void setValue(const RawPositionType& inRawPos, const ValueType& inVal)
+            {
+                return inRawPos.second ?
+                    VMInner::setValue(this->geqData, inRawPos.first, defaultValue) :
+                    VMInner::setValue(this->lessData, inRawPos.second, defaultValue);
+            }
+        public:
+            VectorMemory() :
+                geqData(),
+                lessData()
+            {}
+            [[nondistard]] ValueType getValue(const PositionType &inPos) const noexcept
+            {
+                return this->getValue(this->getRawPosition(inPos));
+            }
+            void setValue(const PositionType &inPos, const ValueType& inVal)
+            {
+                return this->setValue(this->getRawPosition(inPos), inVal);
+            }
+    };
+}
+
+#endif // VECTORMEMORY_HPP_INCLUDED
