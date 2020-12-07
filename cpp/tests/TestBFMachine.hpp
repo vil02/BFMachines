@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-#include "../../BFMachineLib/BFMachineLib.hpp"
+#include "../BFMachineLib/BFMachineLib.hpp"
 
 typedef boost::mpl::list<BFM::BFMachine<BFM::MemoryTypes::VectorMemory<std::vector<int> >,
                                         BFM::Streams::InputVectorStream<std::vector<int> >,

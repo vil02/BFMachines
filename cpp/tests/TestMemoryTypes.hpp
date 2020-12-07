@@ -9,7 +9,7 @@
 #include <unordered_set>
 #include <random>
 
-#include "../../BFMachineLib/BFMachineLib.hpp"
+#include "../BFMachineLib/BFMachineLib.hpp"
 
 typedef boost::mpl::list<BFM::MemoryTypes::VectorMemory<std::vector<int> >,
                          BFM::MemoryTypes::VectorMemory<std::vector<long long int> >,
