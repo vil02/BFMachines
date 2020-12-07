@@ -9,6 +9,9 @@ namespace BFM::Streams
         private:
             ContainerType data;
         public:
+            OutputVectorStream() :
+                data()
+            {}
             OutputVectorStream& operator<<(const typename ContainerType::value_type& inValue)
             {
                 this->data.push_back(inValue);
