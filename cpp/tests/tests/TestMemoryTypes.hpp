@@ -5,12 +5,19 @@
 #include <boost/mpl/list.hpp>
 
 #include <vector>
+#include <map>
+#include <unordered_set>
 #include <random>
 
 #include "../../BFMachineLib/BFMachineLib.hpp"
 
 typedef boost::mpl::list<BFM::MemoryTypes::VectorMemory<std::vector<int> >,
-                         BFM::MemoryTypes::VectorMemory<std::vector<long long int> > > MemoryTypes;
+                         BFM::MemoryTypes::VectorMemory<std::vector<long long int> >,
+                         BFM::MemoryTypes::MapMemory<std::map<int, int> >,
+                         BFM::MemoryTypes::MapMemory<std::map<int, int>, false >,
+                         BFM::MemoryTypes::MapMemory<std::unordered_map<int, int> >,
+                         BFM::MemoryTypes::MapMemory<std::unordered_map<int, int>, false >
+                        > MemoryTypes;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(get_value_test, MemoryType, MemoryTypes)
 {
@@ -76,7 +83,5 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, MemoryTypes)
         BOOST_CHECK_EQUAL(resB, startValue+plusNum-ValueType(minusNum));
     }
 }
-
-
 
 #endif // TESTMEMORYTYPES_HPP_INCLUDED
