@@ -32,7 +32,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="../BFMachineLib/BFMachineLib.hpp" />
+		<Unit filename="../BFMachineLib/BFMachine/BFMachine.hpp" />
+		<Unit filename="../BFMachineLib/MemoryTypes/MapMemory.hpp" />
+		<Unit filename="../BFMachineLib/MemoryTypes/MemoryTypes.hpp" />
+		<Unit filename="../BFMachineLib/MemoryTypes/VectorMemory.hpp" />
+		<Unit filename="../BFMachineLib/Streams/InputVectorStream.hpp" />
+		<Unit filename="../BFMachineLib/Streams/OutputVectorStream.hpp" />
+		<Unit filename="../BFMachineLib/Streams/Streams.hpp" />
+		<Unit filename="all_tests.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
