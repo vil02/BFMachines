@@ -67,7 +67,7 @@ namespace BFM
                                 charNum = inCode.find(']', charNum);
                                 if (charNum == std::string::npos)
                                 {
-                                    throw std::invalid_argument("er..");
+                                    throw std::invalid_argument("Could not find matching ].");
                                 }
                                 ++charNum;
                             }
@@ -76,7 +76,7 @@ namespace BFM
                             charNum = inCode.rfind('[', charNum);
                             if (charNum == std::string::npos)
                             {
-                                throw std::invalid_argument("er2");
+                                throw std::invalid_argument("Could not find matching [.");
                             }
                             break;
                         default:
@@ -84,8 +84,6 @@ namespace BFM
                     }
                 }
             }
-
-
     };
 }
 
