@@ -2,6 +2,8 @@
 #define VECTORMEMORY_HPP_INCLUDED
 
 #include <utility>
+#include <cstdint>
+#include <cmath>
 namespace BFM::MemoryTypes
 {
     namespace VMInner
@@ -46,13 +48,17 @@ namespace BFM::MemoryTypes
         private:
             ContainerType geqData, lessData;
             using RawPositionType = std::pair<typename ContainerType::size_type, bool>;
-            [[nondistard]] RawPositionType getRawPosition(const PositionType& inPosition) const noexcept
+            [[nondistard]] RawPositionType getRawPosition(
+                    const PositionType& inPosition) const noexcept
             {
                 return inPosition >= 0 ?
                     RawPositionType(inPosition, true) :
-                    RawPositionType(typename ContainerType::size_type(std::abs(inPosition+1)), false);
+                    RawPositionType(
+                        typename ContainerType::size_type(std::abs(inPosition+1)),
+                        false);
             }
-            [[nondistard]] ValueType getValue(const RawPositionType& inRawPosition) const noexcept
+            [[nondistard]] ValueType getValue(
+                    const RawPositionType& inRawPosition) const noexcept
             {
                 return inRawPosition.second ?
                     VMInner::getValue(this->geqData, inRawPosition.first, defaultValue) :
@@ -75,7 +81,7 @@ namespace BFM::MemoryTypes
             }
             void setValue(const PositionType &inPosition, const ValueType& inValue)
             {
-                return this->setValue(this->getRawPosition(inPosition), inValue);
+                this->setValue(this->getRawPosition(inPosition), inValue);
             }
             void increaseValue(const PositionType &inPosition)
             {
