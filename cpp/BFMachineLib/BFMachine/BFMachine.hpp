@@ -18,13 +18,13 @@ namespace BFM
             InputStream& inputStream;
             OutputStream& outputStream;
         public:
-            BFMachine(InputStream& _inputStream, OutputStream& _outputStream) :
+            constexpr BFMachine(InputStream& _inputStream, OutputStream& _outputStream) :
                 memory(),
                 curPosition(memory.getStartingPosition()),
                 inputStream(_inputStream),
                 outputStream(_outputStream)
             {}
-            void execute(const std::string& inCode)
+            constexpr void execute(const std::string& inCode)
             {
                 std::size_t charNum = 0;
                 while (charNum < inCode.size())

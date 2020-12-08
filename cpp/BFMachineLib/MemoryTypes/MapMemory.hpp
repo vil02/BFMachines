@@ -14,10 +14,11 @@ namespace BFM::MemoryTypes
         private:
             ContainerType data;
         public:
-            MapMemory() :
+            constexpr MapMemory() :
                 data()
             {}
-            [[nodiscard]] ValueType getValue(const PositionType &inPosition) const noexcept
+            [[nodiscard]] constexpr ValueType getValue(
+                    const PositionType &inPosition) const noexcept
             {
                 const auto valueIt = this->data.find(inPosition);
                 return valueIt != this->data.end() ? valueIt->second : defaultValue;
@@ -26,7 +27,7 @@ namespace BFM::MemoryTypes
             {
                 return 0;
             }
-            void setValue(const PositionType &inPosition, const ValueType& inValue)
+            constexpr void setValue(const PositionType &inPosition, const ValueType& inValue)
             {
                 const auto valueIt = this->data.find(inPosition);
                 if (valueIt != this->data.end())
@@ -45,11 +46,11 @@ namespace BFM::MemoryTypes
                     this->data[inPosition] = inValue;
                 }
             }
-            void increaseValue(const PositionType &inPosition)
+            constexpr void increaseValue(const PositionType &inPosition)
             {
                 this->setValue(inPosition, this->getValue(inPosition)+1);
             }
-            void decreaseValue(const PositionType &inPosition)
+            constexpr void decreaseValue(const PositionType &inPosition)
             {
                 this->setValue(inPosition, this->getValue(inPosition)-1);
             }

@@ -9,7 +9,7 @@ namespace BFM::MemoryTypes
     namespace VMInner
     {
         template<typename ContainerType>
-        [[nodiscard]] auto getValue(
+        [[nodiscard]] constexpr auto getValue(
                 const ContainerType& inData,
                 const typename ContainerType::size_type& inPosition,
                 const typename ContainerType::value_type& defaultValue) noexcept
@@ -17,7 +17,7 @@ namespace BFM::MemoryTypes
             return inPosition < inData.size() ? inData[inPosition] : defaultValue;
         }
         template<typename ContainerType>
-        void setValue(
+        constexpr void setValue(
                 ContainerType& inData,
                 const typename ContainerType::size_type& inPosition,
                 const typename ContainerType::value_type& inValue,
@@ -47,7 +47,7 @@ namespace BFM::MemoryTypes
         private:
             ContainerType geqData, lessData;
             using RawPositionType = std::pair<typename ContainerType::size_type, bool>;
-            [[nodiscard]] RawPositionType getRawPosition(
+            [[nodiscard]] constexpr RawPositionType getRawPosition(
                     const PositionType& inPosition) const noexcept
             {
                 return inPosition >= 0 ?
@@ -56,25 +56,26 @@ namespace BFM::MemoryTypes
                         typename ContainerType::size_type(std::abs(inPosition+1)),
                         false);
             }
-            [[nodiscard]] ValueType getValue(
+            [[nodiscard]] constexpr ValueType getValue(
                     const RawPositionType& inRawPosition) const noexcept
             {
                 return inRawPosition.second ?
                     VMInner::getValue(this->geqData, inRawPosition.first, defaultValue) :
                     VMInner::getValue(this->lessData, inRawPosition.first, defaultValue);
             }
-            void setValue(const RawPositionType& inRawPosition, const ValueType& inValue)
+            void constexpr setValue(const RawPositionType& inRawPosition, const ValueType& inValue)
             {
                 return inRawPosition.second ?
                     VMInner::setValue(this->geqData, inRawPosition.first, inValue, defaultValue) :
                     VMInner::setValue(this->lessData, inRawPosition.first, inValue, defaultValue);
             }
         public:
-            VectorMemory() :
+            constexpr VectorMemory() :
                 geqData(),
                 lessData()
             {}
-            [[nodiscard]] ValueType getValue(const PositionType &inPosition) const noexcept
+            [[nodiscard]] constexpr ValueType getValue(
+                    const PositionType &inPosition) const noexcept
             {
                 return this->getValue(this->getRawPosition(inPosition));
             }
@@ -82,15 +83,15 @@ namespace BFM::MemoryTypes
             {
                 return 0;
             }
-            void setValue(const PositionType &inPosition, const ValueType& inValue)
+            void constexpr setValue(const PositionType &inPosition, const ValueType& inValue)
             {
                 this->setValue(this->getRawPosition(inPosition), inValue);
             }
-            void increaseValue(const PositionType &inPosition)
+            void constexpr increaseValue(const PositionType &inPosition)
             {
                 this->setValue(inPosition, this->getValue(inPosition)+1);
             }
-            void decreaseValue(const PositionType &inPosition)
+            void constexpr decreaseValue(const PositionType &inPosition)
             {
                 this->setValue(inPosition, this->getValue(inPosition)-1);
             }
