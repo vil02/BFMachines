@@ -8,7 +8,7 @@ namespace BFM
 {
     namespace Inner
     {
-        [[nodiscard]] std::size_t findMaching(const std::string& inCode, const std::size_t startPos)
+        [[nodiscard]] std::size_t findMatching(const std::string& inCode, const std::size_t startPos)
         {
             if (inCode[startPos] != '[' && inCode[startPos] != ']')
             {
@@ -94,7 +94,7 @@ namespace BFM
                         }
                         else
                         {
-                            charNum = Inner::findMaching(inCode, charNum);
+                            charNum = Inner::findMatching(inCode, charNum);
                             if (charNum == std::string::npos)
                             {
                                 throw std::invalid_argument("Could not find matching ].");
@@ -103,7 +103,7 @@ namespace BFM
                         }
                         break;
                     case ']':
-                        charNum = Inner::findMaching(inCode, charNum);
+                        charNum = Inner::findMatching(inCode, charNum);
                         if (charNum == std::string::npos)
                         {
                             throw std::invalid_argument("Could not find matching [.");
