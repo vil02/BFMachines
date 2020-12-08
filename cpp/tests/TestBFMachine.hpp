@@ -62,6 +62,37 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, BFMTypes)
     }
 }
 
+template <typename ValueType>
+constexpr ValueType fibonacci(const ValueType& inNum)
+{
+    ValueType valA = 0;
+    ValueType valB = 1;
+    for (ValueType curNum = 0; curNum < inNum; ++curNum)
+    {
+        const auto tmpVal = valA+valB;
+        valA = valB;
+        valB = tmpVal;
+    }
+    return valA;
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, BFMTypes)
+{
+    using ValueType = typename BFMType::ValueType;
+    BOOST_CHECK_EQUAL(fibonacci(0), 0);
+    BOOST_CHECK_EQUAL(fibonacci(1), 1);
+    for (ValueType n = 0; n < 20; ++n)
+    {
+        BFM::Streams::InputVectorStream<std::vector<int> > inputStream({n});
+        BFM::Streams::OutputVectorStream<std::vector<int> > outputStream;
+        BFMType bfMachine(inputStream, outputStream);
+        bfMachine.execute(",>>+<<[->>[->+>+<<]>>[-<<+>>]<<<[->+<]>>[-<<+>>]<<< ]>.");
+        BOOST_CHECK_EQUAL(outputStream.getData().size(), 1);
+        BOOST_CHECK_EQUAL(outputStream.getData()[0], fibonacci(n));
+        BOOST_CHECK_EQUAL(fibonacci(n)+fibonacci(n+1), fibonacci(n+2));
+    }
+}
+
 BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, BFMTypes)
 {
     const std::vector<std::string> wrongBfCodes =
