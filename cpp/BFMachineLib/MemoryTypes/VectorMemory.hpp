@@ -78,6 +78,10 @@ namespace BFM::MemoryTypes
             {
                 return this->getValue(this->getRawPosition(inPosition));
             }
+            [[nodiscard]] constexpr PositionType getStartingPosition() const noexcept
+            {
+                return 0;
+            }
             void setValue(const PositionType &inPosition, const ValueType& inValue)
             {
                 this->setValue(this->getRawPosition(inPosition), inValue);

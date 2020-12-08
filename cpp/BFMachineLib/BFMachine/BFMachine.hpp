@@ -13,14 +13,14 @@ namespace BFM
             using ValueType = typename MemoryType::ValueType;
             using PositionType = typename MemoryType::PositionType;
         private:
-            PositionType curPosition;
             MemoryType memory;
+            PositionType curPosition;
             InputStream& inputStream;
             OutputStream& outputStream;
         public:
             BFMachine(InputStream& _inputStream, OutputStream& _outputStream) :
-                curPosition(0),
                 memory(),
+                curPosition(memory.getStartingPosition()),
                 inputStream(_inputStream),
                 outputStream(_outputStream)
             {}

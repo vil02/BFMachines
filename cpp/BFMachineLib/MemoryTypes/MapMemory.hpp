@@ -22,6 +22,10 @@ namespace BFM::MemoryTypes
                 const auto valueIt = this->data.find(inPosition);
                 return valueIt != this->data.end() ? valueIt->second : defaultValue;
             }
+            [[nodiscard]] constexpr PositionType getStartingPosition() const noexcept
+            {
+                return 0;
+            }
             void setValue(const PositionType &inPosition, const ValueType& inValue)
             {
                 const auto valueIt = this->data.find(inPosition);
