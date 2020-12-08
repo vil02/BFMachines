@@ -12,6 +12,21 @@
 
 #include "../BFMachineLib/BFMachineLib.hpp"
 
+BOOST_AUTO_TEST_CASE(findMaching_test)
+{
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[]", 0), 1);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[]", 1), 0);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[[]]", 0), 3);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[[]]", 1), 2);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[[]]", 2), 1);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[[]]", 3), 0);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[[][]]", 0), 5);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[[][]]", 3), 4);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[[][]]", 4), 3);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[[][]]", 5), 0);
+    BOOST_REQUIRE_EQUAL(BFM::Inner::findMaching("[[][[]]]", 3), 6);
+}
+
 typedef boost::mpl::list<BFM::BFMachine<BFM::MemoryTypes::VectorMemory<std::vector<int> >,
                                         BFM::Streams::InputVectorStream<std::vector<int> >,
                                         BFM::Streams::OutputVectorStream<std::vector<int> > >,
