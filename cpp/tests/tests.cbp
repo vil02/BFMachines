@@ -40,6 +40,8 @@
 		<Unit filename="../BFMachineLib/Streams/InputVectorStream.hpp" />
 		<Unit filename="../BFMachineLib/Streams/OutputVectorStream.hpp" />
 		<Unit filename="../BFMachineLib/Streams/Streams.hpp" />
+		<Unit filename="TestBFMachine.hpp" />
+		<Unit filename="TestMemoryTypes.hpp" />
 		<Unit filename="all_tests.cpp" />
 		<Extensions>
 			<code_completion />
