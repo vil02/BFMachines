@@ -26,11 +26,11 @@ namespace BFM
                 {
                     break;
                 }
-                else if(inCode[curPos] == '[')
+                else if (inCode[curPos] == '[')
                 {
                     ++curCount;
                 }
-                else if(inCode[curPos] == ']')
+                else if (inCode[curPos] == ']')
                 {
                     --curCount;
                 }
