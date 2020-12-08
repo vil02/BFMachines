@@ -17,7 +17,7 @@ namespace BFM::Streams
                 this->data.push_back(inValue);
                 return *this;
             }
-            ContainerType getData() const noexcept
+            [[nodiscard]] ContainerType getData() const noexcept
             {
                 return this->data;
             }
