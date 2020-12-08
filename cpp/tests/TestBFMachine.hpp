@@ -8,8 +8,7 @@
 #include <map>
 #include <unordered_set>
 #include <random>
-
-#include <iostream>
+#include <exception>
 
 #include "../BFMachineLib/BFMachineLib.hpp"
 
@@ -48,5 +47,19 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, BFMTypes)
     }
 }
 
+BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, BFMTypes)
+{
+    const std::vector<std::string> wrongBfCodes =
+        {"[+++++",
+         "]+++",
+        };
+    for (const auto curCode : wrongBfCodes)
+    {
+        BFM::Streams::InputVectorStream<std::vector<int> > inputStream({});
+        BFM::Streams::OutputVectorStream<std::vector<int> > outputStream;
+        BFMType bfMachine(inputStream, outputStream);
+        BOOST_CHECK_THROW(bfMachine.execute(curCode), std::invalid_argument);
+    }
+}
 
 #endif // TESTBFMACHINE_HPP_INCLUDED
