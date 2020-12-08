@@ -9,7 +9,7 @@ namespace BFM::MemoryTypes
     namespace VMInner
     {
         template<typename ContainerType>
-        [[nondistard]] auto getValue(
+        [[nodiscard]] auto getValue(
                 const ContainerType& inData,
                 const typename ContainerType::size_type& inPosition,
                 const typename ContainerType::value_type& defaultValue) noexcept
@@ -36,7 +36,6 @@ namespace BFM::MemoryTypes
                 inData[inPosition] = inValue;
             }
         }
-
     }
 
     template<typename ContainerType, typename ContainerType::value_type defaultValue = 0>
@@ -48,7 +47,7 @@ namespace BFM::MemoryTypes
         private:
             ContainerType geqData, lessData;
             using RawPositionType = std::pair<typename ContainerType::size_type, bool>;
-            [[nondistard]] RawPositionType getRawPosition(
+            [[nodiscard]] RawPositionType getRawPosition(
                     const PositionType& inPosition) const noexcept
             {
                 return inPosition >= 0 ?
@@ -57,7 +56,7 @@ namespace BFM::MemoryTypes
                         typename ContainerType::size_type(std::abs(inPosition+1)),
                         false);
             }
-            [[nondistard]] ValueType getValue(
+            [[nodiscard]] ValueType getValue(
                     const RawPositionType& inRawPosition) const noexcept
             {
                 return inRawPosition.second ?
@@ -75,7 +74,7 @@ namespace BFM::MemoryTypes
                 geqData(),
                 lessData()
             {}
-            [[nondistard]] ValueType getValue(const PositionType &inPosition) const noexcept
+            [[nodiscard]] ValueType getValue(const PositionType &inPosition) const noexcept
             {
                 return this->getValue(this->getRawPosition(inPosition));
             }

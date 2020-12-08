@@ -17,7 +17,7 @@ namespace BFM::MemoryTypes
             MapMemory() :
                 data()
             {}
-            [[nondistard]] ValueType getValue(const PositionType &inPosition) const noexcept
+            [[nodiscard]] ValueType getValue(const PositionType &inPosition) const noexcept
             {
                 const auto valueIt = this->data.find(inPosition);
                 return valueIt != this->data.end() ? valueIt->second : defaultValue;
