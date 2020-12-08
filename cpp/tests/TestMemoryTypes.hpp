@@ -24,8 +24,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(get_value_test, MemoryType, MemoryTypes)
     MemoryType curMemory;
     for (typename MemoryType::PositionType i = -100; i < 100; ++i)
     {
-        const auto curVal = curMemory.getValue(i);
-        BOOST_CHECK_EQUAL(curVal, 0);
+        BOOST_CHECK_EQUAL(curMemory.getValue(i), 0);
     }
 }
 
@@ -38,15 +37,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(set_value_test, MemoryType, MemoryTypes)
         if (i%3 == 0)
         {
             curMemory.setValue(i, -i);
-            const auto curVal = curMemory.getValue(i);
-            BOOST_CHECK_EQUAL(curVal, -i);
+            BOOST_CHECK_EQUAL(curMemory.getValue(i), -i);
         }
     }
     for (typename MemoryType::PositionType i = minInd; i < maxInd; ++i)
     {
-        const typename MemoryType::ValueType curVal = curMemory.getValue(i);
         const typename MemoryType::ValueType targetVal = (i%3 == 0) ? -i : 0;
-        BOOST_CHECK_EQUAL(curVal, targetVal);
+        BOOST_CHECK_EQUAL(curMemory.getValue(i), targetVal);
     }
 }
 
@@ -72,15 +69,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, MemoryTypes)
         {
             curMemory.increaseValue(curPosition);
         }
-        const auto resA = curMemory.getValue(curPosition);
-        BOOST_CHECK_EQUAL(resA, startValue+plusNum);
+        BOOST_CHECK_EQUAL(curMemory.getValue(curPosition),
+                          startValue+plusNum);
 
         for (std::size_t i = 0; i < minusNum; ++i)
         {
             curMemory.decreaseValue(curPosition);
         }
-        const auto resB = curMemory.getValue(curPosition);
-        BOOST_CHECK_EQUAL(resB, startValue+plusNum-ValueType(minusNum));
+        BOOST_CHECK_EQUAL(curMemory.getValue(curPosition),
+                          startValue+plusNum-ValueType(minusNum));
     }
 }
 
