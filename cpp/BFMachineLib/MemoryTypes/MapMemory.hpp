@@ -46,14 +46,6 @@ namespace BFM::MemoryTypes
                     this->data[inPosition] = inValue;
                 }
             }
-            constexpr void increaseValue(const PositionType &inPosition)
-            {
-                this->setValue(inPosition, this->getValue(inPosition)+1);
-            }
-            constexpr void decreaseValue(const PositionType &inPosition)
-            {
-                this->setValue(inPosition, this->getValue(inPosition)-1);
-            }
     };
 }
 

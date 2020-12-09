@@ -70,11 +70,11 @@ namespace BFM
                         ++charNum;
                         break;
                     case '-':
-                        this->memory.decreaseValue(this->curPosition);
+                        decreaseValue(this->memory, this->curPosition);
                         ++charNum;
                         break;
                     case '+':
-                        this->memory.increaseValue(this->curPosition);
+                        increaseValue(this->memory, this->curPosition);
                         ++charNum;
                         break;
                     case '.':

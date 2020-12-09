@@ -87,14 +87,6 @@ namespace BFM::MemoryTypes
             {
                 this->setValue(this->getRawPosition(inPosition), inValue);
             }
-            void constexpr increaseValue(const PositionType &inPosition)
-            {
-                this->setValue(inPosition, this->getValue(inPosition)+1);
-            }
-            void constexpr decreaseValue(const PositionType &inPosition)
-            {
-                this->setValue(inPosition, this->getValue(inPosition)-1);
-            }
     };
 }
 

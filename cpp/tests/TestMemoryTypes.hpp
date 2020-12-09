@@ -67,14 +67,14 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, MemoryTypes)
         curMemory.setValue(curPosition, startValue);
         for (std::size_t i = 0; i < plusNum; ++i)
         {
-            curMemory.increaseValue(curPosition);
+            increaseValue(curMemory, curPosition);
         }
         BOOST_CHECK_EQUAL(curMemory.getValue(curPosition),
                           startValue+plusNum);
 
         for (std::size_t i = 0; i < minusNum; ++i)
         {
-            curMemory.decreaseValue(curPosition);
+            decreaseValue(curMemory, curPosition);
         }
         BOOST_CHECK_EQUAL(curMemory.getValue(curPosition),
                           startValue+plusNum-ValueType(minusNum));

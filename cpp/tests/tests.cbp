@@ -34,6 +34,7 @@
 		</Compiler>
 		<Unit filename="../BFMachineLib/BFMachineLib.hpp" />
 		<Unit filename="../BFMachineLib/BFMachine/BFMachine.hpp" />
+		<Unit filename="../BFMachineLib/MemoryTypes/ChangeValueFunctions.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/MapMemory.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/MemoryTypes.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/VectorMemory.hpp" />
