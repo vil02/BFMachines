@@ -40,7 +40,7 @@ namespace BFM
             }
             if (curPos >= inCode.size())
             {
-                curPos = std::string::npos;
+                throw std::invalid_argument("Could not find matching bracket.");
             }
             return curPos;
         }
@@ -97,19 +97,11 @@ namespace BFM
                         else
                         {
                             charNum = Inner::findMatching(inCode, charNum);
-                            if (charNum == std::string::npos)
-                            {
-                                throw std::invalid_argument("Could not find matching ].");
-                            }
                             ++charNum;
                         }
                         break;
                     case ']':
                         charNum = Inner::findMatching(inCode, charNum);
-                        if (charNum == std::string::npos)
-                        {
-                            throw std::invalid_argument("Could not find matching [.");
-                        }
                         break;
                     default:
                         ++charNum;
