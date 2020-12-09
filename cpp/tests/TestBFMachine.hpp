@@ -44,22 +44,72 @@ typedef boost::mpl::list<BFM::BFMachine<BFM::MemoryTypes::VectorMemory<std::vect
                                         BFM::Streams::OutputVectorStream<std::vector<int> > >
                         > BFMTypes;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, BFMTypes)
+template<typename BFMType>
+void checkBfComputation(
+        const std::string& bfCode,
+        const std::vector<typename BFMType::ValueType>& inputVector,
+        const typename BFMType::ValueType& resultValue)
+{
+    using ValueType = typename BFMType::ValueType;
+    BFM::Streams::InputVectorStream<std::vector<ValueType> > inputStream(inputVector);
+    BFM::Streams::OutputVectorStream<std::vector<ValueType> > outputStream;
+    BFMType bfMachine(inputStream, outputStream);
+    bfMachine.execute(bfCode);
+    BOOST_CHECK_EQUAL(outputStream.getData().size(), 1);
+    BOOST_CHECK_EQUAL(outputStream.getData()[0], resultValue);
+}
+
+template<typename BFMType, typename TargetValue>
+void checkBfComputation2dProduct(
+    const std::string& bfCode,
+    const typename BFMType::ValueType& valueLimit,
+    const TargetValue& targetValue)
+{
+    using ValueType = typename BFMType::ValueType;
+    for (ValueType valA = 0; valA < valueLimit; ++valA)
+    {
+        for (ValueType valB = 0; valB < valueLimit; ++valB)
+        {
+            checkBfComputation<BFMType>(bfCode, {valA, valB}, targetValue(valA, valB));
+        }
+    }
+}
+
+
+template<typename BFMType, typename TargetValue>
+void checkBfComputation2dRandom(
+    const std::string& bfCode,
+    const std::size_t numberOfTrials,
+    const typename BFMType::ValueType& valueLimit,
+    const TargetValue& targetValue)
 {
     using ValueType = typename BFMType::ValueType;
     std::mt19937 randomEngine(0);
-    std::uniform_int_distribution<ValueType> valueDist{0, 300};
-    for (std::size_t tryNum = 0; tryNum < 100; ++tryNum)
+    std::uniform_int_distribution<ValueType> valueDist{0, valueLimit};
+    for (std::size_t trialNumber = 0; trialNumber < numberOfTrials; ++trialNumber)
     {
         const ValueType valA = valueDist(randomEngine);
         const ValueType valB = valueDist(randomEngine);
-        BFM::Streams::InputVectorStream<std::vector<int> > inputStream({valA, valB});
-        BFM::Streams::OutputVectorStream<std::vector<int> > outputStream;
-        BFMType bfMachine(inputStream, outputStream);
-        bfMachine.execute(",>,<[->+<]>.");
-        BOOST_CHECK_EQUAL(outputStream.getData().size(), 1);
-        BOOST_CHECK_EQUAL(outputStream.getData()[0], valA+valB);
+        checkBfComputation<BFMType>(bfCode, {valA, valB}, targetValue(valA, valB));
     }
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, BFMTypes)
+{
+    using ValueType = typename BFMType::ValueType;
+    const auto resultValue = [](const ValueType& valA, const ValueType& valB){return valA+valB;};
+    const std::string bfPlus = ",>,<[->+<]>.";
+    checkBfComputation2dProduct<BFMType, decltype(resultValue)>(bfPlus, 45, resultValue);
+    checkBfComputation2dRandom<BFMType, decltype(resultValue)>(bfPlus, 100, 400, resultValue);
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, BFMTypes)
+{
+    using ValueType = typename BFMType::ValueType;
+    const auto resultValue = [](const ValueType& valA, const ValueType& valB){return valA*valB;};
+    const std::string bfTimes = ",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>.";
+    checkBfComputation2dProduct<BFMType, decltype(resultValue)>(bfTimes, 45, resultValue);
+    checkBfComputation2dRandom<BFMType, decltype(resultValue)>(bfTimes, 300, 100, resultValue);
 }
 
 template <typename ValueType>
@@ -90,24 +140,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, BFMTypes)
         BOOST_CHECK_EQUAL(outputStream.getData().size(), 1);
         BOOST_CHECK_EQUAL(outputStream.getData()[0], fibonacci(n));
         BOOST_CHECK_EQUAL(fibonacci(n)+fibonacci(n+1), fibonacci(n+2));
-    }
-}
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, BFMTypes)
-{
-    using ValueType = typename BFMType::ValueType;
-    const ValueType valueLimit = 45;
-    for (ValueType valA = 0; valA < valueLimit; ++valA)
-    {
-        for (ValueType valB = 0; valB < valueLimit; ++valB)
-        {
-            BFM::Streams::InputVectorStream<std::vector<int> > inputStream({valA, valB});
-            BFM::Streams::OutputVectorStream<std::vector<int> > outputStream;
-            BFMType bfMachine(inputStream, outputStream);
-            bfMachine.execute(",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>.");
-            BOOST_CHECK_EQUAL(outputStream.getData().size(), 1);
-            BOOST_CHECK_EQUAL(outputStream.getData()[0], valA*valB);
-        }
     }
 }
 
