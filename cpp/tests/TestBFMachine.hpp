@@ -61,9 +61,9 @@ void checkBfComputation(
 
 template<typename BFMType, typename TargetValue>
 void checkBfComputation2dProduct(
-    const std::string& bfCode,
-    const typename BFMType::ValueType& valueLimit,
-    const TargetValue& targetValue)
+        const std::string& bfCode,
+        const typename BFMType::ValueType& valueLimit,
+        const TargetValue& targetValue)
 {
     using ValueType = typename BFMType::ValueType;
     for (ValueType valA = 0; valA < valueLimit; ++valA)
@@ -77,10 +77,10 @@ void checkBfComputation2dProduct(
 
 template<typename BFMType, typename TargetValue>
 void checkBfComputation2dRandom(
-    const std::string& bfCode,
-    const std::size_t numberOfTrials,
-    const typename BFMType::ValueType& valueLimit,
-    const TargetValue& targetValue)
+        const std::string& bfCode,
+        const std::size_t numberOfTrials,
+        const typename BFMType::ValueType& valueLimit,
+        const TargetValue& targetValue)
 {
     using ValueType = typename BFMType::ValueType;
     std::mt19937 randomEngine(0);
