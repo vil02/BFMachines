@@ -93,6 +93,24 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, BFMTypes)
     }
 }
 
+BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, BFMTypes)
+{
+    using ValueType = typename BFMType::ValueType;
+    const ValueType valueLimit = 45;
+    for (ValueType valA = 0; valA < valueLimit; ++valA)
+    {
+        for (ValueType valB = 0; valB < valueLimit; ++valB)
+        {
+            BFM::Streams::InputVectorStream<std::vector<int> > inputStream({valA, valB});
+            BFM::Streams::OutputVectorStream<std::vector<int> > outputStream;
+            BFMType bfMachine(inputStream, outputStream);
+            bfMachine.execute(",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>.");
+            BOOST_CHECK_EQUAL(outputStream.getData().size(), 1);
+            BOOST_CHECK_EQUAL(outputStream.getData()[0], valA*valB);
+        }
+    }
+}
+
 BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, BFMTypes)
 {
     const std::vector<std::string> wrongBfCodes =
