@@ -75,7 +75,6 @@ void checkBfComputation2dProduct(
     }
 }
 
-
 template<typename BFMType, typename TargetValue>
 void checkBfComputation2dRandom(
     const std::string& bfCode,

@@ -8,7 +8,9 @@ namespace BFM
 {
     namespace Inner
     {
-        [[nodiscard]] std::size_t findMatching(const std::string& inCode, const std::size_t startPos)
+        [[nodiscard]] std::size_t findMatching(
+                const std::string& inCode,
+                const std::size_t startPos)
         {
             if (inCode[startPos] != '[' && inCode[startPos] != ']')
             {
