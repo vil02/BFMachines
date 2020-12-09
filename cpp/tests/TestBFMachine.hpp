@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, BFMTypes)
 {
     const std::vector<std::string> wrongBfCodes =
         {"[+++++",
-         "]+++",
+         "+]+++",
         };
     for (const auto curCode : wrongBfCodes)
     {

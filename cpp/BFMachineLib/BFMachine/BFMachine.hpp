@@ -101,7 +101,14 @@ namespace BFM
                         }
                         break;
                     case ']':
-                        charNum = Inner::findMatching(inCode, charNum);
+                        if (this->memory.getValue(this->curPosition) != ValueType(0))
+                        {
+                            charNum = Inner::findMatching(inCode, charNum);
+                        }
+                        else
+                        {
+                            ++charNum;
+                        }
                         break;
                     default:
                         ++charNum;
