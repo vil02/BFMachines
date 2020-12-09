@@ -75,7 +75,7 @@ namespace BFM::MemoryTypes
                 lessData()
             {}
             [[nodiscard]] constexpr ValueType getValue(
-                    const PositionType &inPosition) const noexcept
+                    const PositionType& inPosition) const noexcept
             {
                 return this->getValue(this->getRawPosition(inPosition));
             }
@@ -83,7 +83,7 @@ namespace BFM::MemoryTypes
             {
                 return 0;
             }
-            void constexpr setValue(const PositionType &inPosition, const ValueType& inValue)
+            void constexpr setValue(const PositionType& inPosition, const ValueType& inValue)
             {
                 this->setValue(this->getRawPosition(inPosition), inValue);
             }

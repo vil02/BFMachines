@@ -18,7 +18,7 @@ namespace BFM::MemoryTypes
                 data()
             {}
             [[nodiscard]] constexpr ValueType getValue(
-                    const PositionType &inPosition) const noexcept
+                    const PositionType& inPosition) const noexcept
             {
                 const auto valueIt = this->data.find(inPosition);
                 return valueIt != this->data.end() ? valueIt->second : defaultValue;
@@ -27,7 +27,7 @@ namespace BFM::MemoryTypes
             {
                 return 0;
             }
-            constexpr void setValue(const PositionType &inPosition, const ValueType& inValue)
+            constexpr void setValue(const PositionType& inPosition, const ValueType& inValue)
             {
                 const auto valueIt = this->data.find(inPosition);
                 if (valueIt != this->data.end())
