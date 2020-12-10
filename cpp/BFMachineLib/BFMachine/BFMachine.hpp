@@ -3,36 +3,43 @@
 
 #include <string>
 #include <exception>
-
+#include <type_traits>
 namespace BFM
 {
     namespace Inner
     {
-        [[nodiscard]] std::size_t findMatching(
-                const std::string& inCode,
-                const std::size_t startPos)
+        template <typename CodeType, typename InstructionSet>
+        [[nodiscard]] constexpr typename CodeType::size_type findMatching(
+                const CodeType& inCode,
+                const typename CodeType::size_type startPos)
         {
-            if (inCode[startPos] != '[' && inCode[startPos] != ']')
+            static_assert(
+                std::is_same<typename CodeType::value_type,
+                             typename InstructionSet::InstructionType>::value);
+            if (inCode[startPos] != InstructionSet::BeginLoop &&
+                inCode[startPos] != InstructionSet::EndLoop)
             {
-                std::cout<<inCode<<std::endl;
-                throw std::invalid_argument("inCode[startPos] must be '[' or ']'.");
+                throw std::invalid_argument("inCode[startPos] must begin or end loop symbol.");
             }
-            const char targetChar = inCode[startPos] == '[' ? ']' : '[';
-            const std::ptrdiff_t searchDir = inCode[startPos] == '[' ? 1 : -1;
+            const char targetChar =
+                inCode[startPos] == InstructionSet::BeginLoop ?
+                InstructionSet::EndLoop : InstructionSet::BeginLoop;
+            const typename CodeType::difference_type searchDir =
+                inCode[startPos] == InstructionSet::BeginLoop ? 1 : -1;
 
-            std::ptrdiff_t curCount = 0;
-            std::size_t curPos = startPos+searchDir;
+            typename CodeType::difference_type curCount = 0;
+            typename CodeType::size_type curPos = startPos+searchDir;
             while (curPos < inCode.size())
             {
                 if (inCode[curPos] == targetChar && curCount == 0)
                 {
                     break;
                 }
-                else if (inCode[curPos] == '[')
+                else if (inCode[curPos] == InstructionSet::BeginLoop)
                 {
                     ++curCount;
                 }
-                else if (inCode[curPos] == ']')
+                else if (inCode[curPos] == InstructionSet::EndLoop)
                 {
                     --curCount;
                 }
@@ -40,12 +47,27 @@ namespace BFM
             }
             if (curPos >= inCode.size())
             {
-                throw std::invalid_argument("Could not find matching bracket.");
+                throw std::invalid_argument("Could not find matching loop symbol.");
             }
             return curPos;
         }
     }
-    template<typename MemoryType, typename InputStream, typename OutputStream>
+    struct StandardInstructions
+    {
+        using InstructionType = char;
+        static const InstructionType MoveLeft = '<';
+        static const InstructionType MoveRight = '>';
+        static const InstructionType IncreaseValue = '+';
+        static const InstructionType DecreaseValue = '-';
+        static const InstructionType ReadValue = ',';
+        static const InstructionType PrintValue = '.';
+        static const InstructionType BeginLoop = '[';
+        static const InstructionType EndLoop = ']';
+    };
+    template<typename MemoryType,
+             typename InputStream,
+             typename OutputStream,
+             typename InstructionSet = StandardInstructions>
     class BFMachine
     {
         public:
@@ -56,54 +78,57 @@ namespace BFM
             PositionType curPosition;
             InputStream& inputStream;
             OutputStream& outputStream;
-            [[nodiscard]] constexpr std::size_t executeSingleCommand(
-                    const std::string& inCode,
-                    const std::size_t inCodePosition)
+            template <typename CodeType>
+            [[nodiscard]] constexpr typename CodeType::size_type executeSingleCommand(
+                    const CodeType& inCode,
+                    const typename CodeType::size_type inCodePosition)
             {
-                std::size_t charNum = inCodePosition;
+                typename CodeType::size_type charNum = inCodePosition;
                 switch (inCode[charNum])
                 {
-                    case '>':
+                    case InstructionSet::MoveRight:
                         ++this->curPosition;
                         ++charNum;
                         break;
-                    case '<':
+                    case InstructionSet::MoveLeft:
                         --this->curPosition;
                         ++charNum;
                         break;
-                    case '-':
+                    case InstructionSet::DecreaseValue:
                         decreaseValue(this->memory, this->curPosition);
                         ++charNum;
                         break;
-                    case '+':
+                    case InstructionSet::IncreaseValue:
                         increaseValue(this->memory, this->curPosition);
                         ++charNum;
                         break;
-                    case '.':
+                    case InstructionSet::PrintValue:
                         this->outputStream<<this->memory.getValue(this->curPosition);
                         ++charNum;
                         break;
-                    case ',':
+                    case InstructionSet::ReadValue:
                         ValueType newVal;
                         this->inputStream>>newVal;
                         this->memory.setValue(this->curPosition, newVal);
                         ++charNum;
                         break;
-                    case '[':
+                    case InstructionSet::BeginLoop:
                         if (this->memory.getValue(this->curPosition) != ValueType(0))
                         {
                             ++charNum;
                         }
                         else
                         {
-                            charNum = Inner::findMatching(inCode, charNum);
+                            charNum =
+                                Inner::findMatching<CodeType, InstructionSet>(inCode, charNum);
                             ++charNum;
                         }
                         break;
-                    case ']':
+                    case InstructionSet::EndLoop:
                         if (this->memory.getValue(this->curPosition) != ValueType(0))
                         {
-                            charNum = Inner::findMatching(inCode, charNum);
+                            charNum =
+                                Inner::findMatching<CodeType, InstructionSet>(inCode, charNum);
                         }
                         else
                         {
@@ -131,20 +156,21 @@ namespace BFM
             {
                 return this->curPosition;
             }
-            constexpr void execute(const std::string& inCode)
+            template <typename CodeType>
+            constexpr void execute(const CodeType& inCode)
             {
-                std::size_t charNum = 0;
+                typename CodeType::size_type charNum = 0;
                 while (charNum < inCode.size())
                 {
                     charNum = this->executeSingleCommand(inCode, charNum);
                 }
             }
-            template <typename ShowDebugData>
+            template <typename ShowDebugData, typename CodeType>
             constexpr void execute(
-                    const std::string& inCode,
+                    const CodeType& inCode,
                     ShowDebugData& showDebugData)
             {
-                std::size_t charNum = 0;
+                typename CodeType::size_type charNum = 0;
                 while (charNum < inCode.size())
                 {
                     showDebugData(inCode, charNum, *this);

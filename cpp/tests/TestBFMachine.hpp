@@ -14,17 +14,22 @@
 
 BOOST_AUTO_TEST_CASE(findMatching_test)
 {
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[]", 0), 1);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[]", 1), 0);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[[]]", 0), 3);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[[]]", 1), 2);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[[]]", 2), 1);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[[]]", 3), 0);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[[][]]", 0), 5);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[[][]]", 3), 4);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[[][]]", 4), 3);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[[][]]", 5), 0);
-    BOOST_REQUIRE_EQUAL(BFM::Inner::findMatching("[[][[]]]", 3), 6);
+    using std::string_literals::operator""s;
+    const auto findMatching =
+            BFM::Inner::findMatching<
+                typename std::basic_string<BFM::StandardInstructions::InstructionType>,
+                BFM::StandardInstructions>;
+    BOOST_REQUIRE_EQUAL(findMatching("[]"s, 0), 1);
+    BOOST_REQUIRE_EQUAL(findMatching("[]"s, 1), 0);
+    BOOST_REQUIRE_EQUAL(findMatching("[[]]"s, 0), 3);
+    BOOST_REQUIRE_EQUAL(findMatching("[[]]"s, 1), 2);
+    BOOST_REQUIRE_EQUAL(findMatching("[[]]"s, 2), 1);
+    BOOST_REQUIRE_EQUAL(findMatching("[[]]"s, 3), 0);
+    BOOST_REQUIRE_EQUAL(findMatching("[[][]]"s, 0), 5);
+    BOOST_REQUIRE_EQUAL(findMatching("[[][]]"s, 3), 4);
+    BOOST_REQUIRE_EQUAL(findMatching("[[][]]"s, 4), 3);
+    BOOST_REQUIRE_EQUAL(findMatching("[[][]]"s, 5), 0);
+    BOOST_REQUIRE_EQUAL(findMatching("[[][[]]]"s, 3), 6);
 }
 
 typedef boost::mpl::list<BFM::BFMachine<BFM::MemoryTypes::VectorMemory<std::vector<int> >,
@@ -97,7 +102,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, BFMTypes)
 {
     using ValueType = typename BFMType::ValueType;
     const auto resultValue = [](const ValueType& valA, const ValueType& valB){return valA+valB;};
-    const std::string bfPlus = ",>,<[->+<]>.";
+    using std::string_literals::operator""s;
+    const std::string bfPlus = ",>,<[->+<]>."s;
     checkBfComputation2dProduct<BFMType, decltype(resultValue)>(bfPlus, 45, resultValue);
     checkBfComputation2dRandom<BFMType, decltype(resultValue)>(bfPlus, 100, 400, resultValue);
 }
@@ -106,7 +112,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, BFMTypes)
 {
     using ValueType = typename BFMType::ValueType;
     const auto resultValue = [](const ValueType& valA, const ValueType& valB){return valA*valB;};
-    const std::string bfTimes = ",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>.";
+    using std::string_literals::operator""s;
+    const std::string bfTimes = ",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>."s;
     checkBfComputation2dProduct<BFMType, decltype(resultValue)>(bfTimes, 45, resultValue);
     checkBfComputation2dRandom<BFMType, decltype(resultValue)>(bfTimes, 300, 100, resultValue);
 }
@@ -135,7 +142,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, BFMTypes)
         BFM::Streams::InputVectorStream<std::vector<int> > inputStream({n});
         BFM::Streams::OutputVectorStream<std::vector<int> > outputStream;
         BFMType bfMachine(inputStream, outputStream);
-        bfMachine.execute(",>>+<<[->>[->+>+<<]>>[-<<+>>]<<<[->+<]>>[-<<+>>]<<< ]>.");
+        using std::string_literals::operator""s;
+        bfMachine.execute(",>>+<<[->>[->+>+<<]>>[-<<+>>]<<<[->+<]>>[-<<+>>]<<< ]>."s);
         BOOST_CHECK_EQUAL(outputStream.getData().size(), 1);
         BOOST_CHECK_EQUAL(outputStream.getData()[0], fibonacci(n));
         BOOST_CHECK_EQUAL(fibonacci(n)+fibonacci(n+1), fibonacci(n+2));
@@ -144,9 +152,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, BFMTypes)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, BFMTypes)
 {
+    using std::string_literals::operator""s;
     const std::vector<std::string> wrongBfCodes =
-        {"[+++++",
-         "+]+++",
+        {"[+++++"s,
+         "+]+++"s,
         };
     for (const auto curCode : wrongBfCodes)
     {
