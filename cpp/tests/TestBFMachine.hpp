@@ -16,9 +16,9 @@ BOOST_AUTO_TEST_CASE(findMatching_test)
 {
     using std::string_literals::operator""s;
     const auto findMatching =
-            BFM::Inner::findMatching<
-                typename std::basic_string<BFM::StandardInstructions::InstructionType>,
-                BFM::StandardInstructions>;
+        BFM::Inner::findMatching<
+            typename std::basic_string<BFM::StandardInstructions::InstructionType>,
+            BFM::StandardInstructions>;
     BOOST_REQUIRE_EQUAL(findMatching("[]"s, 0), 1);
     BOOST_REQUIRE_EQUAL(findMatching("[]"s, 1), 0);
     BOOST_REQUIRE_EQUAL(findMatching("[[]]"s, 0), 3);
@@ -32,21 +32,22 @@ BOOST_AUTO_TEST_CASE(findMatching_test)
     BOOST_REQUIRE_EQUAL(findMatching("[[][[]]]"s, 3), 6);
 }
 
-typedef boost::mpl::list<BFM::BFMachine<BFM::MemoryTypes::VectorMemory<std::vector<int> >,
-                                        BFM::Streams::InputVectorStream<std::vector<int> >,
-                                        BFM::Streams::OutputVectorStream<std::vector<int> > >,
-                         BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::map<int, int> >,
-                                        BFM::Streams::InputVectorStream<std::vector<int> >,
-                                        BFM::Streams::OutputVectorStream<std::vector<int> > >,
-                         BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::map<int, int>, false>,
-                                        BFM::Streams::InputVectorStream<std::vector<int> >,
-                                        BFM::Streams::OutputVectorStream<std::vector<int> > >,
-                         BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::unordered_map<int, int> >,
-                                        BFM::Streams::InputVectorStream<std::vector<int> >,
-                                        BFM::Streams::OutputVectorStream<std::vector<int> > >,
-                         BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::unordered_map<int, int>, false>,
-                                        BFM::Streams::InputVectorStream<std::vector<int> >,
-                                        BFM::Streams::OutputVectorStream<std::vector<int> > >
+typedef boost::mpl::list<
+    BFM::BFMachine<BFM::MemoryTypes::VectorMemory<std::vector<int> >,
+        BFM::Streams::InputVectorStream<std::vector<int> >,
+        BFM::Streams::OutputVectorStream<std::vector<int> > >,
+    BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::map<int, int> >,
+        BFM::Streams::InputVectorStream<std::vector<int> >,
+        BFM::Streams::OutputVectorStream<std::vector<int> > >,
+    BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::map<int, int>, false>,
+        BFM::Streams::InputVectorStream<std::vector<int> >,
+        BFM::Streams::OutputVectorStream<std::vector<int> > >,
+    BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::unordered_map<int, int> >,
+        BFM::Streams::InputVectorStream<std::vector<int> >,
+        BFM::Streams::OutputVectorStream<std::vector<int> > >,
+    BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::unordered_map<int, int>, false>,
+        BFM::Streams::InputVectorStream<std::vector<int> >,
+        BFM::Streams::OutputVectorStream<std::vector<int> > >
                         > BFMTypes;
 
 template<typename BFMType>
