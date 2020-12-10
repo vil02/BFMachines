@@ -43,7 +43,7 @@ namespace BFM::MemoryTypes
     {
         public:
             using ValueType = typename ContainerType::value_type;
-            using PositionType = std::int64_t;
+            using PositionType = std::ptrdiff_t;
         private:
             ContainerType geqData, lessData;
             using RawPositionType = std::pair<typename ContainerType::size_type, bool>;
