@@ -10,7 +10,7 @@ namespace bfm::streams
    {
         private:
             ContainerType data;
-            std::size_t cur_position;
+            typename ContainerType::size_type cur_position;
         public:
             explicit InputVectorStream(const ContainerType& in_data) :
                 data(in_data),
