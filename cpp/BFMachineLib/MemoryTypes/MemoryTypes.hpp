@@ -3,6 +3,8 @@
 
 #include "VectorMemory.hpp"
 #include "MapMemory.hpp"
+#include "ArrayMemory.hpp"
+#include "BoundedMemory.hpp"
 #include "ChangeValueFunctions.hpp"
 
 #endif // MEMORYTYPES_HPP_INCLUDED
