@@ -119,7 +119,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, bfm_types)
     using std::string_literals::operator""s;
     const std::string bf_times = ",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>."s;
     check_bf_computation_2d_product<BFMType, decltype(result_value)>(bf_times, 45, result_value);
-    check_bf_computation_2d_random<BFMType, decltype(result_value)>(bf_times, 300, 100, result_value);
+    check_bf_computation_2d_random<BFMType, decltype(result_value)>(
+        bf_times, 300, 100, result_value);
 }
 
 template <typename ValueType>
