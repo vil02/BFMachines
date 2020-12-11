@@ -31,7 +31,7 @@ namespace bfm
             typename CodeType::size_type cur_pos = start_pos+search_dir;
             while (cur_pos < in_code.size())
             {
-                if (in_code[cur_pos] == target_char && cur_count == 0)
+                if (cur_count == 0 && in_code[cur_pos] == target_char)
                 {
                     break;
                 }
