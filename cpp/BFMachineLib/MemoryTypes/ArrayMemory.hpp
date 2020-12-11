@@ -22,7 +22,7 @@ namespace bfm::memory_types
             [[nodiscard]] constexpr value_type get_value(
                     const position_type& in_position) const noexcept
             {
-                return this->data[in_position];
+                return this->data.at(in_position);
             }
             [[nodiscard]] constexpr position_type get_starting_position() const noexcept
             {
@@ -30,7 +30,7 @@ namespace bfm::memory_types
             }
             void constexpr set_value(const position_type& in_position, const value_type& in_value)
             {
-                this->data[in_position] = in_value;
+                this->data.at(in_position) = in_value;
             }
     };
 }
