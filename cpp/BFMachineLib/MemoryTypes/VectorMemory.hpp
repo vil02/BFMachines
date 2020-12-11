@@ -4,88 +4,92 @@
 #include <utility>
 #include <cstdint>
 #include <cmath>
-namespace BFM::MemoryTypes
+namespace bfm::memory_types
 {
-    namespace VMInner
+    namespace vm_inner
     {
         template<typename ContainerType>
-        [[nodiscard]] constexpr auto getValue(
-                const ContainerType& inData,
-                const typename ContainerType::size_type& inPosition,
-                const typename ContainerType::value_type& defaultValue) noexcept
+        [[nodiscard]] constexpr auto get_value(
+                const ContainerType& in_data,
+                const typename ContainerType::size_type& in_position,
+                const typename ContainerType::value_type& default_value) noexcept
         {
-            return inPosition < inData.size() ? inData[inPosition] : defaultValue;
+            return in_position < in_data.size() ? in_data[in_position] : default_value;
         }
         template<typename ContainerType>
-        constexpr void setValue(
-                ContainerType& inData,
-                const typename ContainerType::size_type& inPosition,
-                const typename ContainerType::value_type& inValue,
-                const typename ContainerType::value_type& defaultValue)
+        constexpr void set_value(
+                ContainerType& in_data,
+                const typename ContainerType::size_type& in_position,
+                const typename ContainerType::value_type& in_value,
+                const typename ContainerType::value_type& default_value)
         {
-            if (inPosition >= inData.size())
+            if (in_position >= in_data.size())
             {
-                if (inValue != defaultValue)
+                if (in_value != default_value)
                 {
-                    inData.resize(inPosition+1, defaultValue);
-                    inData[inPosition] = inValue;
+                    in_data.resize(in_position+1, default_value);
+                    in_data[in_position] = in_value;
                 }
             }
             else
             {
-                inData[inPosition] = inValue;
+                in_data[in_position] = in_value;
             }
         }
     }
 
-    template<typename ContainerType, typename ContainerType::value_type defaultValue = 0>
+    template<typename ContainerType, typename ContainerType::value_type default_value = 0>
     class VectorMemory
     {
         public:
-            using ValueType = typename ContainerType::value_type;
-            using PositionType = std::ptrdiff_t;
+            using value_type = typename ContainerType::value_type;
+            using position_type = std::ptrdiff_t;
         private:
-            ContainerType geqData, lessData;
-            using RawPositionType = std::pair<typename ContainerType::size_type, bool>;
-            [[nodiscard]] constexpr RawPositionType getRawPosition(
-                    const PositionType& inPosition) const noexcept
+            ContainerType geq_data, less_data;
+            using raw_position_type = std::pair<typename ContainerType::size_type, bool>;
+            [[nodiscard]] constexpr raw_position_type get_raw_position(
+                    const position_type& in_position) const noexcept
             {
-                return inPosition >= 0 ?
-                    RawPositionType(inPosition, true) :
-                    RawPositionType(
-                        typename ContainerType::size_type(std::abs(inPosition+1)),
+                return in_position >= 0 ?
+                    raw_position_type(in_position, true) :
+                    raw_position_type(
+                        typename ContainerType::size_type(std::abs(in_position+1)),
                         false);
             }
-            [[nodiscard]] constexpr ValueType getValue(
-                    const RawPositionType& inRawPosition) const noexcept
+            [[nodiscard]] constexpr value_type get_value(
+                    const raw_position_type& in_raw_position) const noexcept
             {
-                return inRawPosition.second ?
-                    VMInner::getValue(this->geqData, inRawPosition.first, defaultValue) :
-                    VMInner::getValue(this->lessData, inRawPosition.first, defaultValue);
+                return in_raw_position.second ?
+                    vm_inner::get_value(this->geq_data, in_raw_position.first, default_value) :
+                    vm_inner::get_value(this->less_data, in_raw_position.first, default_value);
             }
-            void constexpr setValue(const RawPositionType& inRawPosition, const ValueType& inValue)
+            void constexpr set_value(
+                    const raw_position_type& in_raw_position,
+                    const value_type& in_value)
             {
-                return inRawPosition.second ?
-                    VMInner::setValue(this->geqData, inRawPosition.first, inValue, defaultValue) :
-                    VMInner::setValue(this->lessData, inRawPosition.first, inValue, defaultValue);
+                return in_raw_position.second ?
+                    vm_inner::set_value(
+                        this->geq_data, in_raw_position.first, in_value, default_value) :
+                    vm_inner::set_value(
+                        this->less_data, in_raw_position.first, in_value, default_value);
             }
         public:
             constexpr VectorMemory() :
-                geqData(),
-                lessData()
+                geq_data(),
+                less_data()
             {}
-            [[nodiscard]] constexpr ValueType getValue(
-                    const PositionType& inPosition) const noexcept
+            [[nodiscard]] constexpr value_type get_value(
+                    const position_type& in_position) const noexcept
             {
-                return this->getValue(this->getRawPosition(inPosition));
+                return this->get_value(this->get_raw_position(in_position));
             }
-            [[nodiscard]] constexpr PositionType getStartingPosition() const noexcept
+            [[nodiscard]] constexpr position_type get_starting_position() const noexcept
             {
                 return 0;
             }
-            void constexpr setValue(const PositionType& inPosition, const ValueType& inValue)
+            void constexpr set_value(const position_type& in_position, const value_type& in_value)
             {
-                this->setValue(this->getRawPosition(inPosition), inValue);
+                this->set_value(this->get_raw_position(in_position), in_value);
             }
     };
 }

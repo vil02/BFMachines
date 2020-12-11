@@ -3,25 +3,25 @@
 
 #include <exception>
 
-namespace BFM::Streams
+namespace bfm::streams
 {
    template <typename ContainerType>
    class InputVectorStream
    {
         private:
             ContainerType data;
-            std::size_t curPosition;
+            std::size_t cur_position;
         public:
-            explicit InputVectorStream(const ContainerType& inData) :
-                data(inData),
-                curPosition(0)
+            explicit InputVectorStream(const ContainerType& in_data) :
+                data(in_data),
+                cur_position(0)
             {}
-            InputVectorStream& operator>>(typename ContainerType::value_type& outValue)
+            InputVectorStream& operator>>(typename ContainerType::value_type& out_value)
             {
-                if (this->curPosition < this->data.size())
+                if (this->cur_position < this->data.size())
                 {
-                    outValue = this->data[this->curPosition];
-                    ++this->curPosition;
+                    out_value = this->data[this->cur_position];
+                    ++this->cur_position;
                 }
                 else
                 {

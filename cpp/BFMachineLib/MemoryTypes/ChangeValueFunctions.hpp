@@ -1,21 +1,21 @@
 #ifndef CHANGEVALUEFUNCTIONS_HPP_INCLUDED
 #define CHANGEVALUEFUNCTIONS_HPP_INCLUDED
 
-namespace BFM::MemoryTypes
+namespace bfm::memory_types
 {
     template<typename MemoryType>
-    constexpr void increaseValue(
-            MemoryType& inMemory,
-            const typename MemoryType::PositionType& inPosition)
+    constexpr void increase_value(
+            MemoryType& in_memory,
+            const typename MemoryType::position_type& in_position)
     {
-        inMemory.setValue(inPosition, inMemory.getValue(inPosition)+1);
+        in_memory.set_value(in_position, in_memory.get_value(in_position)+1);
     }
     template<typename MemoryType>
-    constexpr void decreaseValue(
-            MemoryType& inMemory,
-            const typename MemoryType::PositionType& inPosition)
+    constexpr void decrease_value(
+            MemoryType& in_memory,
+            const typename MemoryType::position_type& in_position)
     {
-        inMemory.setValue(inPosition, inMemory.getValue(inPosition)-1);
+        in_memory.set_value(in_position, in_memory.get_value(in_position)-1);
     }
 }
 

@@ -1,7 +1,7 @@
 #ifndef OUTPUTVECTORSTREAM_HPP_INCLUDED
 #define OUTPUTVECTORSTREAM_HPP_INCLUDED
 
-namespace BFM::Streams
+namespace bfm::streams
 {
    template <typename ContainerType>
    class OutputVectorStream
@@ -12,12 +12,12 @@ namespace BFM::Streams
             OutputVectorStream() :
                 data()
             {}
-            OutputVectorStream& operator<<(const typename ContainerType::value_type& inValue)
+            OutputVectorStream& operator<<(const typename ContainerType::value_type& in_value)
             {
-                this->data.push_back(inValue);
+                this->data.push_back(in_value);
                 return *this;
             }
-            [[nodiscard]] ContainerType getData() const noexcept
+            [[nodiscard]] ContainerType get_data() const noexcept
             {
                 return this->data;
             }

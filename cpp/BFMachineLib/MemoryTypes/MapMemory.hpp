@@ -1,49 +1,49 @@
 #ifndef MAPMEMORY_HPP_INCLUDED
 #define MAPMEMORY_HPP_INCLUDED
 
-namespace BFM::MemoryTypes
+namespace bfm::memory_types
 {
     template<typename ContainerType,
-             bool removeDefaultValues = true,
-             typename ContainerType::mapped_type defaultValue = 0>
+             bool remove_default_values = true,
+             typename ContainerType::mapped_type default_value = 0>
     class MapMemory
     {
         public:
-            using ValueType = typename ContainerType::mapped_type;
-            using PositionType = typename ContainerType::key_type;
+            using value_type = typename ContainerType::mapped_type;
+            using position_type = typename ContainerType::key_type;
         private:
             ContainerType data;
         public:
             constexpr MapMemory() :
                 data()
             {}
-            [[nodiscard]] constexpr ValueType getValue(
-                    const PositionType& inPosition) const noexcept
+            [[nodiscard]] constexpr value_type get_value(
+                    const position_type& in_position) const noexcept
             {
-                const auto valueIt = this->data.find(inPosition);
-                return valueIt != this->data.end() ? valueIt->second : defaultValue;
+                const auto value_it = this->data.find(in_position);
+                return value_it != this->data.end() ? value_it->second : default_value;
             }
-            [[nodiscard]] constexpr PositionType getStartingPosition() const noexcept
+            [[nodiscard]] constexpr position_type get_starting_position() const noexcept
             {
                 return 0;
             }
-            constexpr void setValue(const PositionType& inPosition, const ValueType& inValue)
+            constexpr void set_value(const position_type& in_position, const value_type& in_value)
             {
-                const auto valueIt = this->data.find(inPosition);
-                if (valueIt != this->data.end())
+                const auto value_it = this->data.find(in_position);
+                if (value_it != this->data.end())
                 {
-                    this->data[inPosition] = inValue;
-                    if constexpr (removeDefaultValues)
+                    this->data[in_position] = in_value;
+                    if constexpr (remove_default_values)
                     {
-                        if (inValue == defaultValue)
+                        if (in_value == default_value)
                         {
-                            this->data.erase(valueIt);
+                            this->data.erase(value_it);
                         }
                     }
                 }
-                else if (inValue != defaultValue)
+                else if (in_value != default_value)
                 {
-                    this->data[inPosition] = inValue;
+                    this->data[in_position] = in_value;
                 }
             }
     };

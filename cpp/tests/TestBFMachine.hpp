@@ -15,155 +15,158 @@
 BOOST_AUTO_TEST_CASE(findMatching_test)
 {
     using std::string_literals::operator""s;
-    const auto findMatching =
-        BFM::Inner::findMatching<
-            typename std::basic_string<BFM::StandardInstructions::InstructionType>,
-            BFM::StandardInstructions>;
-    BOOST_REQUIRE_EQUAL(findMatching("[]"s, 0), 1);
-    BOOST_REQUIRE_EQUAL(findMatching("[]"s, 1), 0);
-    BOOST_REQUIRE_EQUAL(findMatching("[[]]"s, 0), 3);
-    BOOST_REQUIRE_EQUAL(findMatching("[[]]"s, 1), 2);
-    BOOST_REQUIRE_EQUAL(findMatching("[[]]"s, 2), 1);
-    BOOST_REQUIRE_EQUAL(findMatching("[[]]"s, 3), 0);
-    BOOST_REQUIRE_EQUAL(findMatching("[[][]]"s, 0), 5);
-    BOOST_REQUIRE_EQUAL(findMatching("[[][]]"s, 3), 4);
-    BOOST_REQUIRE_EQUAL(findMatching("[[][]]"s, 4), 3);
-    BOOST_REQUIRE_EQUAL(findMatching("[[][]]"s, 5), 0);
-    BOOST_REQUIRE_EQUAL(findMatching("[[][[]]]"s, 3), 6);
+    const auto find_matching =
+        bfm::inner::find_matching<
+            typename std::basic_string<bfm::StandardInstructions::instruction_type>,
+            bfm::StandardInstructions>;
+    BOOST_REQUIRE_EQUAL(find_matching("[]"s, 0), 1);
+    BOOST_REQUIRE_EQUAL(find_matching("[]"s, 1), 0);
+    BOOST_REQUIRE_EQUAL(find_matching("[[]]"s, 0), 3);
+    BOOST_REQUIRE_EQUAL(find_matching("[[]]"s, 1), 2);
+    BOOST_REQUIRE_EQUAL(find_matching("[[]]"s, 2), 1);
+    BOOST_REQUIRE_EQUAL(find_matching("[[]]"s, 3), 0);
+    BOOST_REQUIRE_EQUAL(find_matching("[[][]]"s, 0), 5);
+    BOOST_REQUIRE_EQUAL(find_matching("[[][]]"s, 3), 4);
+    BOOST_REQUIRE_EQUAL(find_matching("[[][]]"s, 4), 3);
+    BOOST_REQUIRE_EQUAL(find_matching("[[][]]"s, 5), 0);
+    BOOST_REQUIRE_EQUAL(find_matching("[[][[]]]"s, 3), 6);
 }
 
 typedef boost::mpl::list<
-    BFM::BFMachine<BFM::MemoryTypes::VectorMemory<std::vector<int> >,
-        BFM::Streams::InputVectorStream<std::vector<int> >,
-        BFM::Streams::OutputVectorStream<std::vector<int> > >,
-    BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::map<int, int> >,
-        BFM::Streams::InputVectorStream<std::vector<int> >,
-        BFM::Streams::OutputVectorStream<std::vector<int> > >,
-    BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::map<int, int>, false>,
-        BFM::Streams::InputVectorStream<std::vector<int> >,
-        BFM::Streams::OutputVectorStream<std::vector<int> > >,
-    BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::unordered_map<int, int> >,
-        BFM::Streams::InputVectorStream<std::vector<int> >,
-        BFM::Streams::OutputVectorStream<std::vector<int> > >,
-    BFM::BFMachine<BFM::MemoryTypes::MapMemory<std::unordered_map<int, int>, false>,
-        BFM::Streams::InputVectorStream<std::vector<int> >,
-        BFM::Streams::OutputVectorStream<std::vector<int> > >
-                        > BFMTypes;
-
+    bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<int> >,
+        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::OutputVectorStream<std::vector<int> > >,
+    bfm::BFMachine<bfm::memory_types::MapMemory<std::map<int, int> >,
+        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::OutputVectorStream<std::vector<int> > >,
+    bfm::BFMachine<bfm::memory_types::MapMemory<std::map<int, int>, false>,
+        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::OutputVectorStream<std::vector<int> > >,
+    bfm::BFMachine<bfm::memory_types::MapMemory<std::unordered_map<int, int> >,
+        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::OutputVectorStream<std::vector<int> > >,
+    bfm::BFMachine<bfm::memory_types::MapMemory<std::unordered_map<int, int>, false>,
+        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::OutputVectorStream<std::vector<int> > >
+                        > bfm_types;
 template<typename BFMType>
-void checkBfComputation(
-        const std::string& bfCode,
-        const std::vector<typename BFMType::ValueType>& inputVector,
-        const typename BFMType::ValueType& resultValue)
+void check_bf_computation(
+        const std::string& bf_code,
+        const std::vector<typename BFMType::value_type>& input_vector,
+        const typename BFMType::value_type& result_value)
 {
-    using ValueType = typename BFMType::ValueType;
-    BFM::Streams::InputVectorStream<std::vector<ValueType> > inputStream(inputVector);
-    BFM::Streams::OutputVectorStream<std::vector<ValueType> > outputStream;
-    BFMType bfMachine(inputStream, outputStream);
-    bfMachine.execute(bfCode);
-    BOOST_CHECK_EQUAL(outputStream.getData().size(), 1);
-    BOOST_CHECK_EQUAL(outputStream.getData()[0], resultValue);
+    using value_type = typename BFMType::value_type;
+    bfm::streams::InputVectorStream<std::vector<value_type> > input_stream(input_vector);
+    bfm::streams::OutputVectorStream<std::vector<value_type> > output_stream;
+    BFMType bf_machine(input_stream, output_stream);
+    bf_machine.execute(bf_code);
+    BOOST_CHECK_EQUAL(output_stream.get_data().size(), 1);
+    BOOST_CHECK_EQUAL(output_stream.get_data()[0], result_value);
 }
 
 template<typename BFMType, typename TargetValue>
-void checkBfComputation2dProduct(
-        const std::string& bfCode,
-        const typename BFMType::ValueType& valueLimit,
-        const TargetValue& targetValue)
+void check_bf_computation_2d_product(
+        const std::string& bf_code,
+        const typename BFMType::value_type& value_limit,
+        const TargetValue& target_value)
 {
-    using ValueType = typename BFMType::ValueType;
-    for (ValueType valA = 0; valA < valueLimit; ++valA)
+    using value_type = typename BFMType::value_type;
+    for (value_type val_a = 0; val_a < value_limit; ++val_a)
     {
-        for (ValueType valB = 0; valB < valueLimit; ++valB)
+        for (value_type val_b = 0; val_b < value_limit; ++val_b)
         {
-            checkBfComputation<BFMType>(bfCode, {valA, valB}, targetValue(valA, valB));
+            check_bf_computation<BFMType>(bf_code, {val_a, val_b}, target_value(val_a, val_b));
         }
     }
 }
 
 template<typename BFMType, typename TargetValue>
-void checkBfComputation2dRandom(
-        const std::string& bfCode,
-        const std::size_t numberOfTrials,
-        const typename BFMType::ValueType& valueLimit,
-        const TargetValue& targetValue)
+void check_bf_computation_2d_random(
+        const std::string& bf_code,
+        const std::size_t number_of_trials,
+        const typename BFMType::value_type& value_limit,
+        const TargetValue& target_value)
 {
-    using ValueType = typename BFMType::ValueType;
-    std::mt19937 randomEngine(0);
-    std::uniform_int_distribution<ValueType> valueDist{0, valueLimit};
-    for (std::size_t trialNumber = 0; trialNumber < numberOfTrials; ++trialNumber)
+    using value_type = typename BFMType::value_type;
+    std::mt19937 random_engine(0);
+    std::uniform_int_distribution<value_type> value_dist{0, value_limit};
+    for (std::size_t trial_number = 0; trial_number < number_of_trials; ++trial_number)
     {
-        const ValueType valA = valueDist(randomEngine);
-        const ValueType valB = valueDist(randomEngine);
-        checkBfComputation<BFMType>(bfCode, {valA, valB}, targetValue(valA, valB));
+        const value_type val_a = value_dist(random_engine);
+        const value_type val_b = value_dist(random_engine);
+        check_bf_computation<BFMType>(bf_code, {val_a, val_b}, target_value(val_a, val_b));
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, BFMTypes)
+BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, bfm_types)
 {
-    using ValueType = typename BFMType::ValueType;
-    const auto resultValue = [](const ValueType& valA, const ValueType& valB){return valA+valB;};
+    using value_type = typename BFMType::value_type;
+    const auto result_value =
+        [](const value_type& val_a, const value_type& val_b){return val_a+val_b;};
     using std::string_literals::operator""s;
-    const std::string bfPlus = ",>,<[->+<]>."s;
-    checkBfComputation2dProduct<BFMType, decltype(resultValue)>(bfPlus, 45, resultValue);
-    checkBfComputation2dRandom<BFMType, decltype(resultValue)>(bfPlus, 100, 400, resultValue);
+    const std::string bf_plus = ",>,<[->+<]>."s;
+    check_bf_computation_2d_product<BFMType, decltype(result_value)>(
+        bf_plus, 45, result_value);
+    check_bf_computation_2d_random<BFMType, decltype(result_value)>(
+        bf_plus, 100, 400, result_value);
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, BFMTypes)
+BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, bfm_types)
 {
-    using ValueType = typename BFMType::ValueType;
-    const auto resultValue = [](const ValueType& valA, const ValueType& valB){return valA*valB;};
+    using value_type = typename BFMType::value_type;
+    const auto result_value =
+        [](const value_type& val_a, const value_type& val_b){return val_a*val_b;};
     using std::string_literals::operator""s;
-    const std::string bfTimes = ",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>."s;
-    checkBfComputation2dProduct<BFMType, decltype(resultValue)>(bfTimes, 45, resultValue);
-    checkBfComputation2dRandom<BFMType, decltype(resultValue)>(bfTimes, 300, 100, resultValue);
+    const std::string bf_times = ",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>."s;
+    check_bf_computation_2d_product<BFMType, decltype(result_value)>(bf_times, 45, result_value);
+    check_bf_computation_2d_random<BFMType, decltype(result_value)>(bf_times, 300, 100, result_value);
 }
 
 template <typename ValueType>
-constexpr ValueType fibonacci(const ValueType& inNum)
+constexpr ValueType fibonacci(const ValueType& in_num)
 {
-    ValueType valA = 0;
-    ValueType valB = 1;
-    for (ValueType curNum = 0; curNum < inNum; ++curNum)
+    ValueType val_a = 0;
+    ValueType val_b = 1;
+    for (ValueType cur_num = 0; cur_num < in_num; ++cur_num)
     {
-        const auto tmpVal = valA+valB;
-        valA = valB;
-        valB = tmpVal;
+        const auto tmp_val = val_a+val_b;
+        val_a = val_b;
+        val_b = tmp_val;
     }
-    return valA;
+    return val_a;
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, BFMTypes)
+BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
 {
-    using ValueType = typename BFMType::ValueType;
+    using value_type = typename BFMType::value_type;
     BOOST_CHECK_EQUAL(fibonacci(0), 0);
     BOOST_CHECK_EQUAL(fibonacci(1), 1);
-    for (ValueType n = 0; n < 20; ++n)
+    for (value_type n = 0; n < 20; ++n)
     {
-        BFM::Streams::InputVectorStream<std::vector<int> > inputStream({n});
-        BFM::Streams::OutputVectorStream<std::vector<int> > outputStream;
-        BFMType bfMachine(inputStream, outputStream);
+        bfm::streams::InputVectorStream<std::vector<int> > i_stream({n});
+        bfm::streams::OutputVectorStream<std::vector<int> > o_stream;
+        BFMType bf_machine(i_stream, o_stream);
         using std::string_literals::operator""s;
-        bfMachine.execute(",>>+<<[->>[->+>+<<]>>[-<<+>>]<<<[->+<]>>[-<<+>>]<<< ]>."s);
-        BOOST_CHECK_EQUAL(outputStream.getData().size(), 1);
-        BOOST_CHECK_EQUAL(outputStream.getData()[0], fibonacci(n));
+        bf_machine.execute(",>>+<<[->>[->+>+<<]>>[-<<+>>]<<<[->+<]>>[-<<+>>]<<< ]>."s);
+        BOOST_CHECK_EQUAL(o_stream.get_data().size(), 1);
+        BOOST_CHECK_EQUAL(o_stream.get_data()[0], fibonacci(n));
         BOOST_CHECK_EQUAL(fibonacci(n)+fibonacci(n+1), fibonacci(n+2));
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, BFMTypes)
+BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
 {
     using std::string_literals::operator""s;
-    const std::vector<std::string> wrongBfCodes =
+    const std::vector<std::string> wrong_bf_codes =
         {"[+++++"s,
          "+]+++"s,
         };
-    for (const auto curCode : wrongBfCodes)
+    for (const auto cur_code : wrong_bf_codes)
     {
-        BFM::Streams::InputVectorStream<std::vector<int> > inputStream({});
-        BFM::Streams::OutputVectorStream<std::vector<int> > outputStream;
-        BFMType bfMachine(inputStream, outputStream);
-        BOOST_CHECK_THROW(bfMachine.execute(curCode), std::invalid_argument);
+        bfm::streams::InputVectorStream<std::vector<int> > i_stream({});
+        bfm::streams::OutputVectorStream<std::vector<int> > o_stream;
+        BFMType bf_machine(i_stream, o_stream);
+        BOOST_CHECK_THROW(bf_machine.execute(cur_code), std::invalid_argument);
     }
 }
 

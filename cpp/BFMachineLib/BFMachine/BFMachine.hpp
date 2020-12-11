@@ -4,65 +4,65 @@
 #include <string>
 #include <exception>
 #include <type_traits>
-namespace BFM
+namespace bfm
 {
-    namespace Inner
+    namespace inner
     {
         template <typename CodeType, typename InstructionSet>
-        [[nodiscard]] constexpr typename CodeType::size_type findMatching(
-                const CodeType& inCode,
-                const typename CodeType::size_type startPos)
+        [[nodiscard]] constexpr typename CodeType::size_type find_matching(
+                const CodeType& in_code,
+                const typename CodeType::size_type start_pos)
         {
             static_assert(
                 std::is_same<typename CodeType::value_type,
-                             typename InstructionSet::InstructionType>::value);
-            if (inCode[startPos] != InstructionSet::BeginLoop &&
-                inCode[startPos] != InstructionSet::EndLoop)
+                             typename InstructionSet::instruction_type>::value);
+            if (in_code[start_pos] != InstructionSet::begin_loop &&
+                in_code[start_pos] != InstructionSet::end_loop)
             {
-                throw std::invalid_argument("inCode[startPos] must begin or end loop symbol.");
+                throw std::invalid_argument("in_code[start_pos] must begin or end loop symbol.");
             }
-            const char targetChar =
-                inCode[startPos] == InstructionSet::BeginLoop ?
-                InstructionSet::EndLoop : InstructionSet::BeginLoop;
-            const typename CodeType::difference_type searchDir =
-                inCode[startPos] == InstructionSet::BeginLoop ? 1 : -1;
+            const char target_char =
+                in_code[start_pos] == InstructionSet::begin_loop ?
+                InstructionSet::end_loop : InstructionSet::begin_loop;
+            const typename CodeType::difference_type search_dir =
+                in_code[start_pos] == InstructionSet::begin_loop ? 1 : -1;
 
-            typename CodeType::difference_type curCount = 0;
-            typename CodeType::size_type curPos = startPos+searchDir;
-            while (curPos < inCode.size())
+            typename CodeType::difference_type cur_count = 0;
+            typename CodeType::size_type cur_pos = start_pos+search_dir;
+            while (cur_pos < in_code.size())
             {
-                if (inCode[curPos] == targetChar && curCount == 0)
+                if (in_code[cur_pos] == target_char && cur_count == 0)
                 {
                     break;
                 }
-                else if (inCode[curPos] == InstructionSet::BeginLoop)
+                else if (in_code[cur_pos] == InstructionSet::begin_loop)
                 {
-                    ++curCount;
+                    ++cur_count;
                 }
-                else if (inCode[curPos] == InstructionSet::EndLoop)
+                else if (in_code[cur_pos] == InstructionSet::end_loop)
                 {
-                    --curCount;
+                    --cur_count;
                 }
-                curPos += searchDir;
+                cur_pos += search_dir;
             }
-            if (curPos >= inCode.size())
+            if (cur_pos >= in_code.size())
             {
                 throw std::invalid_argument("Could not find matching loop symbol.");
             }
-            return curPos;
+            return cur_pos;
         }
     }
     struct StandardInstructions
     {
-        using InstructionType = char;
-        static const InstructionType MoveLeft = '<';
-        static const InstructionType MoveRight = '>';
-        static const InstructionType IncreaseValue = '+';
-        static const InstructionType DecreaseValue = '-';
-        static const InstructionType ReadValue = ',';
-        static const InstructionType PrintValue = '.';
-        static const InstructionType BeginLoop = '[';
-        static const InstructionType EndLoop = ']';
+        using instruction_type = char;
+        static const instruction_type move_left = '<';
+        static const instruction_type move_right = '>';
+        static const instruction_type increase_value = '+';
+        static const instruction_type decrease_value = '-';
+        static const instruction_type read_value = ',';
+        static const instruction_type print_value = '.';
+        static const instruction_type begin_loop = '[';
+        static const instruction_type end_loop = ']';
     };
     template<typename MemoryType,
              typename InputStream,
@@ -71,110 +71,110 @@ namespace BFM
     class BFMachine
     {
         public:
-            using ValueType = typename MemoryType::ValueType;
-            using PositionType = typename MemoryType::PositionType;
+            using value_type = typename MemoryType::value_type;
+            using position_type = typename MemoryType::position_type;
         private:
             MemoryType memory;
-            PositionType curPosition;
-            InputStream& inputStream;
-            OutputStream& outputStream;
+            position_type cur_position;
+            InputStream& input_stream;
+            OutputStream& output_stream;
             template <typename CodeType>
-            [[nodiscard]] constexpr typename CodeType::size_type executeSingleCommand(
-                    const CodeType& inCode,
-                    const typename CodeType::size_type inCodePosition)
+            [[nodiscard]] constexpr typename CodeType::size_type execute_single_instruction(
+                    const CodeType& in_code,
+                    const typename CodeType::size_type in_code_position)
             {
-                typename CodeType::size_type charNum = inCodePosition;
-                switch (inCode[charNum])
+                typename CodeType::size_type char_num = in_code_position;
+                switch (in_code[char_num])
                 {
-                    case InstructionSet::MoveRight:
-                        ++this->curPosition;
-                        ++charNum;
+                    case InstructionSet::move_right:
+                        ++this->cur_position;
+                        ++char_num;
                         break;
-                    case InstructionSet::MoveLeft:
-                        --this->curPosition;
-                        ++charNum;
+                    case InstructionSet::move_left:
+                        --this->cur_position;
+                        ++char_num;
                         break;
-                    case InstructionSet::DecreaseValue:
-                        decreaseValue(this->memory, this->curPosition);
-                        ++charNum;
+                    case InstructionSet::decrease_value:
+                        decrease_value(this->memory, this->cur_position);
+                        ++char_num;
                         break;
-                    case InstructionSet::IncreaseValue:
-                        increaseValue(this->memory, this->curPosition);
-                        ++charNum;
+                    case InstructionSet::increase_value:
+                        increase_value(this->memory, this->cur_position);
+                        ++char_num;
                         break;
-                    case InstructionSet::PrintValue:
-                        this->outputStream<<this->memory.getValue(this->curPosition);
-                        ++charNum;
+                    case InstructionSet::print_value:
+                        this->output_stream<<this->memory.get_value(this->cur_position);
+                        ++char_num;
                         break;
-                    case InstructionSet::ReadValue:
-                        ValueType newVal;
-                        this->inputStream>>newVal;
-                        this->memory.setValue(this->curPosition, newVal);
-                        ++charNum;
+                    case InstructionSet::read_value:
+                        value_type new_val;
+                        this->input_stream>>new_val;
+                        this->memory.set_value(this->cur_position, new_val);
+                        ++char_num;
                         break;
-                    case InstructionSet::BeginLoop:
-                        if (this->memory.getValue(this->curPosition) != ValueType(0))
+                    case InstructionSet::begin_loop:
+                        if (this->memory.get_value(this->cur_position) != value_type(0))
                         {
-                            ++charNum;
+                            ++char_num;
                         }
                         else
                         {
-                            charNum =
-                                Inner::findMatching<CodeType, InstructionSet>(inCode, charNum);
-                            ++charNum;
+                            char_num =
+                                inner::find_matching<CodeType, InstructionSet>(in_code, char_num);
+                            ++char_num;
                         }
                         break;
-                    case InstructionSet::EndLoop:
-                        if (this->memory.getValue(this->curPosition) != ValueType(0))
+                    case InstructionSet::end_loop:
+                        if (this->memory.get_value(this->cur_position) != value_type(0))
                         {
-                            charNum =
-                                Inner::findMatching<CodeType, InstructionSet>(inCode, charNum);
+                            char_num =
+                                inner::find_matching<CodeType, InstructionSet>(in_code, char_num);
                         }
                         else
                         {
-                            ++charNum;
+                            ++char_num;
                         }
                         break;
                     default:
-                        ++charNum;
+                        ++char_num;
                         break;
                 }
-                return charNum;
+                return char_num;
             }
         public:
-            constexpr BFMachine(InputStream& _inputStream, OutputStream& _outputStream) :
+            constexpr BFMachine(InputStream& in_input_stream, OutputStream& in_output_stream) :
                 memory(),
-                curPosition(memory.getStartingPosition()),
-                inputStream(_inputStream),
-                outputStream(_outputStream)
+                cur_position(memory.get_starting_position()),
+                input_stream(in_input_stream),
+                output_stream(in_output_stream)
             {}
-            [[nodiscard]] constexpr MemoryType getMemory() const
+            [[nodiscard]] constexpr MemoryType get_memory() const
             {
                 return this->memory;
             }
-            [[nodiscard]] constexpr PositionType getMemoryPosition() const
+            [[nodiscard]] constexpr position_type get_memory_position() const
             {
-                return this->curPosition;
+                return this->cur_position;
             }
             template <typename CodeType>
-            constexpr void execute(const CodeType& inCode)
+            constexpr void execute(const CodeType& in_code)
             {
-                typename CodeType::size_type charNum = 0;
-                while (charNum < inCode.size())
+                typename CodeType::size_type char_num = 0;
+                while (char_num < in_code.size())
                 {
-                    charNum = this->executeSingleCommand(inCode, charNum);
+                    char_num = this->execute_single_instruction(in_code, char_num);
                 }
             }
             template <typename ShowDebugData, typename CodeType>
             constexpr void execute(
-                    const CodeType& inCode,
-                    ShowDebugData& showDebugData)
+                    const CodeType& in_code,
+                    ShowDebugData& show_debug_data)
             {
-                typename CodeType::size_type charNum = 0;
-                while (charNum < inCode.size())
+                typename CodeType::size_type char_num = 0;
+                while (char_num < in_code.size())
                 {
-                    showDebugData(inCode, charNum, *this);
-                    charNum = this->executeSingleCommand(inCode, charNum);
+                    show_debug_data(in_code, char_num, *this);
+                    char_num = this->execute_single_instruction(in_code, char_num);
                 }
             }
     };
