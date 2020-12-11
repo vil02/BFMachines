@@ -9,9 +9,9 @@
 #include <unordered_set>
 #include <random>
 #include <exception>
-
+#include <string_view>
 #include "../BFMachineLib/BFMachineLib.hpp"
-
+#include "BfTestCodes.hpp"
 BOOST_AUTO_TEST_CASE(findMatching_test)
 {
     using std::string_literals::operator""s;
@@ -49,9 +49,9 @@ typedef boost::mpl::list<
         bfm::streams::InputVectorStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >
                         > bfm_types;
-template<typename BFMType>
+template<typename BFMType, typename CodeType>
 void check_bf_computation(
-        const std::string& bf_code,
+        const CodeType& bf_code,
         const std::vector<typename BFMType::value_type>& input_vector,
         const typename BFMType::value_type& result_value)
 {
@@ -64,9 +64,9 @@ void check_bf_computation(
     BOOST_CHECK_EQUAL(output_stream.get_data()[0], result_value);
 }
 
-template<typename BFMType, typename TargetValue>
+template<typename BFMType, typename CodeType, typename TargetValue>
 void check_bf_computation_2d_product(
-        const std::string& bf_code,
+        const CodeType& bf_code,
         const typename BFMType::value_type& value_limit,
         const TargetValue& target_value)
 {
@@ -80,9 +80,9 @@ void check_bf_computation_2d_product(
     }
 }
 
-template<typename BFMType, typename TargetValue>
+template<typename BFMType, typename CodeType, typename TargetValue>
 void check_bf_computation_2d_random(
-        const std::string& bf_code,
+        const CodeType& bf_code,
         const std::size_t number_of_trials,
         const typename BFMType::value_type& value_limit,
         const TargetValue& target_value)
@@ -103,11 +103,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, bfm_types)
     using value_type = typename BFMType::value_type;
     const auto result_value =
         [](const value_type& val_a, const value_type& val_b){return val_a+val_b;};
-    using std::string_literals::operator""s;
-    const std::string bf_plus = ",>,<[->+<]>."s;
-    check_bf_computation_2d_product<BFMType, decltype(result_value)>(
+    const auto bf_plus = bf_test_codes::bf_plus<std::string_view>();
+    check_bf_computation_2d_product<BFMType, decltype(bf_plus), decltype(result_value)>(
         bf_plus, 45, result_value);
-    check_bf_computation_2d_random<BFMType, decltype(result_value)>(
+    check_bf_computation_2d_random<BFMType, decltype(bf_plus), decltype(result_value)>(
         bf_plus, 100, 400, result_value);
 }
 
@@ -116,10 +115,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, bfm_types)
     using value_type = typename BFMType::value_type;
     const auto result_value =
         [](const value_type& val_a, const value_type& val_b){return val_a*val_b;};
-    using std::string_literals::operator""s;
-    const std::string bf_times = ",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>."s;
-    check_bf_computation_2d_product<BFMType, decltype(result_value)>(bf_times, 45, result_value);
-    check_bf_computation_2d_random<BFMType, decltype(result_value)>(
+    const auto bf_times = bf_test_codes::bf_times<std::string_view>();
+    check_bf_computation_2d_product<BFMType, decltype(bf_times), decltype(result_value)>(
+        bf_times, 45, result_value);
+    check_bf_computation_2d_random<BFMType, decltype(bf_times), decltype(result_value)>(
         bf_times, 300, 100, result_value);
 }
 
@@ -147,8 +146,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
         bfm::streams::InputVectorStream<std::vector<int> > i_stream({n});
         bfm::streams::OutputVectorStream<std::vector<int> > o_stream;
         BFMType bf_machine(i_stream, o_stream);
-        using std::string_literals::operator""s;
-        bf_machine.execute(",>>+<<[->>[->+>+<<]>>[-<<+>>]<<<[->+<]>>[-<<+>>]<<< ]>."s);
+        bf_machine.execute(bf_test_codes::bf_fibonacci<std::string>());
         BOOST_CHECK_EQUAL(o_stream.get_data().size(), 1);
         BOOST_CHECK_EQUAL(o_stream.get_data()[0], fibonacci(n));
         BOOST_CHECK_EQUAL(fibonacci(n)+fibonacci(n+1), fibonacci(n+2));
