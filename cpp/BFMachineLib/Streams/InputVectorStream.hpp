@@ -18,15 +18,8 @@ namespace bfm::streams
             {}
             InputVectorStream& operator>>(typename ContainerType::value_type& out_value)
             {
-                if (this->cur_position < this->data.size())
-                {
-                    out_value = this->data[this->cur_position];
-                    ++this->cur_position;
-                }
-                else
-                {
-                    throw std::out_of_range("Out of range.");
-                }
+                out_value = this->data.at(this->cur_position);
+                ++this->cur_position;
                 return *this;
             }
    };
