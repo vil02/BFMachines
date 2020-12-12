@@ -5,6 +5,7 @@
 #include <boost/mpl/list.hpp>
 
 #include <vector>
+#include <array>
 #include <map>
 #include <unordered_set>
 #include <random>
@@ -79,6 +80,40 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, memory_types)
         BOOST_CHECK_EQUAL(cur_memory.get_value(cur_position),
                           start_value+plus_num-value_type(minus_num));
     }
+}
+
+BOOST_AUTO_TEST_CASE(array_memory_test)
+{
+    using value_type = int;
+    constexpr std::size_t memory_size = 5;
+    constexpr std::size_t starting_position = 2;
+    constexpr value_type default_value = -1;
+    using memory_type =
+        typename bfm::memory_types::ArrayMemory<
+            std::array<value_type, memory_size>,
+            starting_position,
+            default_value>;
+    using position_type = typename memory_type::position_type;
+    memory_type cur_memory;
+    BOOST_CHECK_EQUAL(cur_memory.get_starting_position(), starting_position);
+    for (position_type cur_pos = 0; cur_pos < memory_size; ++cur_pos)
+    {
+        BOOST_CHECK_EQUAL(cur_memory.get_value(cur_pos), default_value);
+    }
+    const position_type special_pos = 4;
+    cur_memory.set_value(4, default_value+10);
+    for (position_type cur_pos = 0; cur_pos < memory_size; ++cur_pos)
+    {
+        if (cur_pos != special_pos)
+        {
+            BOOST_CHECK_EQUAL(cur_memory.get_value(cur_pos), default_value);
+        }
+    }
+    BOOST_CHECK_EQUAL(cur_memory.get_value(special_pos), default_value+10);
+    BOOST_CHECK_THROW(cur_memory.get_value(memory_size), std::out_of_range);
+    BOOST_CHECK_THROW(cur_memory.get_value(memory_size+1), std::out_of_range);
+    BOOST_CHECK_THROW(cur_memory.set_value(memory_size, default_value), std::out_of_range);
+    BOOST_CHECK_THROW(cur_memory.set_value(memory_size, default_value+1), std::out_of_range);
 }
 
 #endif // TESTMEMORYTYPES_HPP_INCLUDED
