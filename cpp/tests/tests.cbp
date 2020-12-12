@@ -52,9 +52,11 @@
 		<Unit filename="../BFMachineLib/MemoryTypes/MapMemory.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/MemoryTypes.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/VectorMemory.hpp" />
-		<Unit filename="../BFMachineLib/Streams/InputVectorStream.hpp" />
+		<Unit filename="../BFMachineLib/Streams/InputStream.hpp" />
+		<Unit filename="../BFMachineLib/Streams/OutputArrayStream.hpp" />
 		<Unit filename="../BFMachineLib/Streams/OutputVectorStream.hpp" />
 		<Unit filename="../BFMachineLib/Streams/Streams.hpp" />
+		<Unit filename="BfTestCodes.hpp" />
 		<Unit filename="TestBFMachine.hpp" />
 		<Unit filename="TestMemoryTypes.hpp" />
 		<Unit filename="all_tests.cpp" />
