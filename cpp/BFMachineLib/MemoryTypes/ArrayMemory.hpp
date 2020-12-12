@@ -20,7 +20,7 @@ namespace bfm::memory_types
                 data.fill(default_value);
             }
             [[nodiscard]] constexpr value_type get_value(
-                    const position_type& in_position) const noexcept
+                    const position_type& in_position) const
             {
                 return this->data.at(in_position);
             }
