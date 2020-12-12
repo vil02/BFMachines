@@ -12,7 +12,7 @@
 #include <string_view>
 #include "../BFMachineLib/BFMachineLib.hpp"
 #include "BfTestCodes.hpp"
-BOOST_AUTO_TEST_CASE(findMatching_test)
+BOOST_AUTO_TEST_CASE(find_matching_test)
 {
     using std::string_literals::operator""s;
     const auto find_matching =
