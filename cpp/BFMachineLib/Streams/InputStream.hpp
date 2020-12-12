@@ -12,11 +12,11 @@ namespace bfm::streams
             ContainerType data;
             typename ContainerType::size_type cur_position;
         public:
-            explicit InputStream(const ContainerType& in_data) :
+            constexpr explicit InputStream(const ContainerType& in_data) :
                 data(in_data),
                 cur_position(0)
             {}
-            InputStream& operator>>(typename ContainerType::value_type& out_value)
+            constexpr InputStream& operator>>(typename ContainerType::value_type& out_value)
             {
                 out_value = this->data.at(this->cur_position);
                 ++this->cur_position;
