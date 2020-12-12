@@ -34,19 +34,19 @@ BOOST_AUTO_TEST_CASE(find_matching_test)
 
 typedef boost::mpl::list<
     bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<int> >,
-        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >,
     bfm::BFMachine<bfm::memory_types::MapMemory<std::map<int, int> >,
-        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >,
     bfm::BFMachine<bfm::memory_types::MapMemory<std::map<int, int>, false>,
-        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >,
     bfm::BFMachine<bfm::memory_types::MapMemory<std::unordered_map<int, int> >,
-        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >,
     bfm::BFMachine<bfm::memory_types::MapMemory<std::unordered_map<int, int>, false>,
-        bfm::streams::InputVectorStream<std::vector<int> >,
+        bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >
                         > bfm_types;
 template<typename BFMType, typename CodeType>
@@ -56,7 +56,7 @@ void check_bf_computation(
         const typename BFMType::value_type& result_value)
 {
     using value_type = typename BFMType::value_type;
-    bfm::streams::InputVectorStream<std::vector<value_type> > input_stream(input_vector);
+    bfm::streams::InputStream<std::vector<value_type> > input_stream(input_vector);
     bfm::streams::OutputVectorStream<std::vector<value_type> > output_stream;
     BFMType bf_machine(input_stream, output_stream);
     bf_machine.execute(bf_code);
@@ -143,7 +143,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
     BOOST_CHECK_EQUAL(fibonacci(1), 1);
     for (value_type n = 0; n < 20; ++n)
     {
-        bfm::streams::InputVectorStream<std::vector<int> > i_stream({n});
+        bfm::streams::InputStream<std::vector<int> > i_stream({n});
         bfm::streams::OutputVectorStream<std::vector<int> > o_stream;
         BFMType bf_machine(i_stream, o_stream);
         bf_machine.execute(bf_test_codes::bf_fibonacci<std::string>());
@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
         };
     for (const auto cur_code : wrong_bf_codes)
     {
-        bfm::streams::InputVectorStream<std::vector<int> > i_stream({});
+        bfm::streams::InputStream<std::vector<int> > i_stream({});
         bfm::streams::OutputVectorStream<std::vector<int> > o_stream;
         BFMType bf_machine(i_stream, o_stream);
         BOOST_CHECK_THROW(bf_machine.execute(cur_code), std::invalid_argument);
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE(bfm_with_array_memory_test)
     using memory_type =
         typename bfm::memory_types::ArrayMemory<
             std::array<value_type, memory_size> >;
-    using input_stream_type = bfm::streams::InputVectorStream<std::vector<value_type> >;
+    using input_stream_type = bfm::streams::InputStream<std::vector<value_type> >;
     using output_stream_type = bfm::streams::OutputVectorStream<std::vector<value_type> >;
     using bf_machine_type = bfm::BFMachine<memory_type, input_stream_type, output_stream_type>;
     const auto bf_plus = bf_test_codes::bf_plus<std::string_view>();
