@@ -169,4 +169,31 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
     }
 }
 
+BOOST_AUTO_TEST_CASE(bfm_with_array_memory_test)
+{
+    using value_type = int;
+    constexpr std::size_t memory_size = 2;
+    using memory_type =
+        typename bfm::memory_types::ArrayMemory<
+            std::array<value_type, memory_size> >;
+    using input_stream_type = bfm::streams::InputVectorStream<std::vector<value_type> >;
+    using output_stream_type = bfm::streams::OutputVectorStream<std::vector<value_type> >;
+    using bf_machine_type = bfm::BFMachine<memory_type, input_stream_type, output_stream_type>;
+    const auto bf_plus = bf_test_codes::bf_plus<std::string_view>();
+    const auto result_value =
+        [](const value_type& val_a, const value_type& val_b){return val_a+val_b;};
+    check_bf_computation_2d_product<bf_machine_type, decltype(bf_plus), decltype(result_value)>(
+        bf_plus, 45, result_value);
+    check_bf_computation_2d_random<bf_machine_type, decltype(bf_plus), decltype(result_value)>(
+        bf_plus, 100, 400, result_value);
+
+    auto i_stream = input_stream_type({});
+    auto o_stream = output_stream_type();
+    using std::string_literals::operator""s;
+    BOOST_CHECK_THROW(bf_machine_type(i_stream, o_stream).execute(">>>+"s), std::out_of_range);
+    BOOST_CHECK_THROW(bf_machine_type(i_stream, o_stream).execute(">>>-"s), std::out_of_range);
+    BOOST_CHECK_THROW(bf_machine_type(i_stream, o_stream).execute("<+"s), std::out_of_range);
+    BOOST_CHECK_THROW(bf_machine_type(i_stream, o_stream).execute("<-"s), std::out_of_range);
+}
+
 #endif // TESTBFMACHINE_HPP_INCLUDED
