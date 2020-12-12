@@ -3,5 +3,6 @@
 
 #include "InputStream.hpp"
 #include "OutputVectorStream.hpp"
+#include "OutputArrayStream.hpp"
 
 #endif // STREAMS_HPP_INCLUDED
