@@ -10,6 +10,7 @@
 #include <random>
 #include <exception>
 #include <string_view>
+#include <sstream>
 #include "../BFMachineLib/BFMachineLib.hpp"
 #include "BfTestCodes.hpp"
 BOOST_AUTO_TEST_CASE(find_matching_test)
@@ -49,6 +50,16 @@ typedef boost::mpl::list<
         bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >
                         > bfm_types;
+
+typedef boost::mpl::list<
+    bfm::memory_types::VectorMemory<std::vector<char> >,
+    bfm::memory_types::VectorMemory<std::vector<unsigned char> >,
+    bfm::memory_types::MapMemory<std::map<int, char> >,
+    bfm::memory_types::MapMemory<std::map<int, unsigned char> >,
+    bfm::memory_types::MapMemory<std::unordered_map<int, char> >,
+    bfm::memory_types::MapMemory<std::unordered_map<int, unsigned char> >
+                        > char_memory_types;
+
 template<typename BFMType, typename CodeType>
 void check_bf_computation(
         const CodeType& bf_code,
@@ -167,6 +178,22 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
         BFMType bf_machine(i_stream, o_stream);
         BOOST_CHECK_THROW(bf_machine.execute(cur_code), std::invalid_argument);
     }
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(hello_world_test, MemoryType, char_memory_types)
+{
+    std::stringstream ss;
+    using input_stream_type =
+        typename bfm::streams::InputStream<std::array<typename MemoryType::value_type, 0> >;
+    using output_stream_type = decltype(ss);
+    using bfm_type =
+        typename bfm::BFMachine<MemoryType, input_stream_type, output_stream_type>;
+    input_stream_type i_stream = input_stream_type({});
+    std::string_view hello_world_bf_code =
+        "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>"
+        "---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
+    bfm_type(i_stream, ss).execute(hello_world_bf_code);
+    BOOST_CHECK_EQUAL(ss.str(), "Hello World!\n");
 }
 
 BOOST_AUTO_TEST_CASE(bfm_with_array_memory_test)
