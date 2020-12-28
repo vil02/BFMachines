@@ -73,11 +73,13 @@ namespace bfm
         public:
             using value_type = typename MemoryType::value_type;
             using position_type = typename MemoryType::position_type;
+            using input_stream_type = InputStream;
+            using output_stream_type = OutputStream;
         private:
             MemoryType memory;
             position_type cur_position;
-            InputStream& input_stream;
-            OutputStream& output_stream;
+            input_stream_type& input_stream;
+            output_stream_type& output_stream;
             template <typename CodeType>
             [[nodiscard]] constexpr typename CodeType::size_type execute_single_instruction(
                     const CodeType& in_code,
@@ -145,7 +147,9 @@ namespace bfm
                 return char_num;
             }
         public:
-            constexpr BFMachine(InputStream& in_input_stream, OutputStream& in_output_stream) :
+            constexpr BFMachine(
+                    input_stream_type& in_input_stream,
+                    output_stream_type& in_output_stream) :
                 memory(),
                 cur_position(memory.get_starting_position()),
                 input_stream(in_input_stream),
