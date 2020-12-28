@@ -1,6 +1,6 @@
 # [BF](https://esolangs.org/wiki/Brainfuck) interpreter in C++
 
-`BFMachineLib` provides the basic functionality to execute brainf*ck code, namely:
+`BFMachineLib` provides the basic functionality to execute brainfuck code, namely:
 * the class template [`bfm::BFMachine`](BFMachineLib/BFMachine/BFMachine.hpp) having the overloaded method `execute`, which interprets given bf code. The `MemoryType` and `Input/OutputStreamTypes` are some of the template arguments.
 * [_memory models_](BFMachineLib/MemoryTypes), which are useful for brainf*ck. The basic examples are:
     * unbounded memory: 
