@@ -32,7 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="memory_types_performance_comparison.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
