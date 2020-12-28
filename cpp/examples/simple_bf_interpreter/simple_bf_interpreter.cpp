@@ -1,4 +1,4 @@
-//example showing how to create an bf interpreter
+//example showing how to create a bf interpreter
 //and use it to run a code displaying Hello World! in the standard output
 
 #include <iostream>
