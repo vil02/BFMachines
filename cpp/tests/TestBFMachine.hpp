@@ -154,8 +154,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
     BOOST_REQUIRE_EQUAL(fibonacci(1), 1);
     for (value_type n = 0; n < 20; ++n)
     {
-        bfm::streams::InputStream<std::vector<int> > i_stream({n});
-        bfm::streams::OutputVectorStream<std::vector<int> > o_stream;
+        bfm::streams::InputStream<std::vector<value_type> > i_stream({n});
+        bfm::streams::OutputVectorStream<std::vector<value_type> > o_stream;
         BFMType bf_machine(i_stream, o_stream);
         bf_machine.execute(bf_test_codes::bf_fibonacci<std::string>());
         BOOST_CHECK_EQUAL(o_stream.get_data().size(), 1);
