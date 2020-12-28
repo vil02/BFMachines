@@ -150,8 +150,8 @@ constexpr ValueType fibonacci(const ValueType& in_num)
 BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
 {
     using value_type = typename BFMType::value_type;
-    BOOST_CHECK_EQUAL(fibonacci(0), 0);
-    BOOST_CHECK_EQUAL(fibonacci(1), 1);
+    BOOST_REQUIRE_EQUAL(fibonacci(0), 0);
+    BOOST_REQUIRE_EQUAL(fibonacci(1), 1);
     for (value_type n = 0; n < 20; ++n)
     {
         bfm::streams::InputStream<std::vector<int> > i_stream({n});
@@ -160,7 +160,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
         bf_machine.execute(bf_test_codes::bf_fibonacci<std::string>());
         BOOST_CHECK_EQUAL(o_stream.get_data().size(), 1);
         BOOST_CHECK_EQUAL(o_stream.get_data()[0], fibonacci(n));
-        BOOST_CHECK_EQUAL(fibonacci(n)+fibonacci(n+1), fibonacci(n+2));
+        BOOST_REQUIRE_EQUAL(fibonacci(n)+fibonacci(n+1), fibonacci(n+2));
     }
 }
 
