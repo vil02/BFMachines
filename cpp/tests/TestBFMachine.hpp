@@ -164,6 +164,36 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
     }
 }
 
+
+template <typename ValueType>
+constexpr ValueType factorial(const ValueType& in_num)
+{
+    ValueType res = 1;
+    for (ValueType cur_num = 1; cur_num <= in_num; ++cur_num)
+    {
+        res *= cur_num;
+    }
+    return res;
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
+{
+    using value_type = typename BFMType::value_type;
+    BOOST_REQUIRE_EQUAL(factorial(0), 1);
+    BOOST_REQUIRE_EQUAL(factorial(1), 1);
+    for (value_type n = 0; n < 8; ++n)
+    {
+        bfm::streams::InputStream<std::vector<value_type> > i_stream({n});
+        bfm::streams::OutputVectorStream<std::vector<value_type> > o_stream;
+        BFMType bf_machine(i_stream, o_stream);
+        bf_machine.execute(bf_test_codes::bf_factorial<std::string_view>());
+        BOOST_CHECK_EQUAL(o_stream.get_data().size(), 1);
+        BOOST_CHECK_EQUAL(o_stream.get_data()[0], factorial(n));
+        BOOST_REQUIRE_EQUAL(factorial(n)*(n+1), factorial(n+1));
+    }
+}
+
+
 BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
 {
     using std::string_literals::operator""s;

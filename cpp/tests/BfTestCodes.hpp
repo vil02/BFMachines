@@ -19,6 +19,13 @@ namespace bf_test_codes
     {
         return CodeType(",>>+<<[->>[->+>+<<]>>[-<<+>>]<<<[->+<]>>[-<<+>>]<<< ]>.");
     }
+    template <typename CodeType>
+    constexpr CodeType bf_factorial()
+    {
+        return CodeType("+>>,[>>]<<"
+                        "[[->+>+<<]>>[-<<+>>]<-]<<"
+                        "[[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>[-<<<<+>>>>]<<<<>[-]<<]>.");
+    }
 }
 
 #endif // BFTESTCODES_HPP_INCLUDED
