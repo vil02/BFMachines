@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, bfm_types)
 }
 
 template <typename ValueType>
-constexpr ValueType fibonacci(const ValueType& in_num)
+[[nodiscard]] constexpr ValueType fibonacci(const ValueType& in_num)
 {
     ValueType val_a = 0;
     ValueType val_b = 1;
@@ -166,7 +166,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
 
 
 template <typename ValueType>
-constexpr ValueType factorial(const ValueType& in_num)
+[[nodiscard]] constexpr ValueType factorial(const ValueType& in_num)
 {
     ValueType res = 1;
     for (ValueType cur_num = 1; cur_num <= in_num; ++cur_num)
