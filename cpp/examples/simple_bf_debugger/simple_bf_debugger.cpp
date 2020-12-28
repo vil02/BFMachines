@@ -64,35 +64,27 @@ class ConsoleDebugViewer
                 std::cout<<'\t';
             }
             std::cout<<std::endl;
-            system("pause");
+            switch (in_code[in_code_position])
+            {
+                case '.':
+                    std::cout<<"Printing value: ";
+                    break;
+                case ',':
+                    std::cout<<"Enter value: ";
+                    break;
+                default:
+                    system("pause");
+            }
         }
-};
-
-struct DebugIOStream
-{
-    template <typename ValueType>
-    constexpr DebugIOStream& operator>>(ValueType& out_value)
-    {
-        std::cout<<"Enter value: "<<std::endl;
-        std::cin>>out_value;
-        return *this;
-    }
-    template <typename ValueType>
-    constexpr DebugIOStream& operator<<(const ValueType& in_value)
-    {
-        std::cout<<"Printing value: "<<in_value<<std::endl;
-        return *this;
-    }
 };
 
 int main()
 {
     using memory_type = typename bfm::memory_types::MapMemory<std::unordered_map<int, unsigned> >;
-    using bfm_type = typename bfm::BFMachine<memory_type, DebugIOStream, DebugIOStream>;
+    using bfm_type = typename bfm::BFMachine<memory_type, decltype(std::cin), decltype(std::cout)>;
     auto debug_viewer = ConsoleDebugViewer<bfm_type>();
-    DebugIOStream io_stream = DebugIOStream();
     //example bf code adding two numbers
     std::string bf_code = ",>,<[->+<]>.";
-    bfm_type(io_stream, io_stream).execute(bf_code, debug_viewer);
+    bfm_type(std::cin, std::cout).execute(bf_code, debug_viewer);
     return 0;
 }
