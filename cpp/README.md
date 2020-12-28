@@ -13,9 +13,9 @@
     * [`bfm::streams::OutputVectorStream`](BFMachineLib/Streams/OutputVectorStream.hpp), where data is being send to some `std::vector`-like container (unknown size at compile time),
     * [`bfm::streams::OutputArrayStream`](BFMachineLib/Streams/OutputArrayStream.hpp), where data is being send to some `std::array`-like container (known size at compile time),
 
-The folder [examples](cpp/examples) contains some code snippets, which might be useful to look at the beginning. Start with [**simple_bf_interpreter**](cpp/examples/simple_bf_interpreter/simple_bf_interpreter.cpp), [performance_test](cpp/examples/memory_types_performance_comparison/memory_types_performance_comparison.cpp) and [simple_bf_debugger](cpp/examples/simple_bf_debugger/simple_bf_debugger.cpp)
+The folder [examples](examples) contains some code snippets, which might be useful to look at the beginning. Start with [**simple_bf_interpreter**](cpp/examples/simple_bf_interpreter/simple_bf_interpreter.cpp), [performance_test](examples/memory_types_performance_comparison/memory_types_performance_comparison.cpp) and [simple_bf_debugger](examples/simple_bf_debugger/simple_bf_debugger.cpp)
 
 # Requirements, dependencies, ...
 
 The code is basically written in the spirit of C++17. I am using GNU GCC Compiler 9.2.
-[Tests](cpp/tests) use Boost.Test. I am using Boost 1.72.
+[Tests](tests) use Boost.Test. I am using Boost 1.72.
