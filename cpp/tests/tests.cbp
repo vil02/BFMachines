@@ -28,8 +28,8 @@
 				</Linker>
 			</Target>
 			<Target title="Profile">
-				<Option output="bin/Release/tests" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+				<Option output="bin/Profile/tests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Profile/" />
 				<Option type="1" />
 				<Option compiler="gnu_gcc_compiler_92" />
 				<Compiler>
