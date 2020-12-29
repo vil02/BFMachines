@@ -1,4 +1,4 @@
-//This example hows that BFMachineLib is suitable for compile time computations.
+//This example shows that BFMachineLib is suitable for compile time computations.
 //Here sum and product of two unsigned values are evaluated.
 //Because brainfuck is Turing complete,
 //one can also view this example as a proof that compile time C++ is Turing complete.
