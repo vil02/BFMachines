@@ -33,10 +33,27 @@ BOOST_AUTO_TEST_CASE(find_matching_test)
     BOOST_REQUIRE_EQUAL(find_matching("[[][[]]]"s, 3), 6);
 }
 
+struct FlippedInstructions
+{
+    using instruction_type = typename bfm::StandardInstructions::instruction_type;
+    static const instruction_type move_left = bfm::StandardInstructions::move_right;
+    static const instruction_type move_right = bfm::StandardInstructions::move_left;
+    static const instruction_type increase_value = bfm::StandardInstructions::increase_value;
+    static const instruction_type decrease_value = bfm::StandardInstructions::decrease_value;
+    static const instruction_type read_value = bfm::StandardInstructions::read_value;
+    static const instruction_type print_value = bfm::StandardInstructions::print_value;
+    static const instruction_type begin_loop = bfm::StandardInstructions::begin_loop;
+    static const instruction_type end_loop = bfm::StandardInstructions::end_loop;
+};
+
 typedef boost::mpl::list<
     bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<int> >,
         bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >,
+    bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<int> >,
+        bfm::streams::InputStream<std::vector<int> >,
+        bfm::streams::OutputVectorStream<std::vector<int> >,
+        FlippedInstructions>,
     bfm::BFMachine<bfm::memory_types::MapMemory<std::map<int, int> >,
         bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >,
