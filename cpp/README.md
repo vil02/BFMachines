@@ -17,5 +17,5 @@ The folder [examples](examples) contains some code snippets, which might be usef
 
 # Requirements, dependencies, ...
 
-The code is basically written in the spirit of C++17. I am using GNU GCC Compiler 9.2.
-[Tests](tests) use Boost.Test. I am using Boost 1.72.
+The code is basically written in the spirit of C++17. I am using GNU GCC Compiler 9.2 (also tested with 10.2).
+[Tests](tests) use Boost.Test. I am using Boost 1.72 (also tested with 1.75).
