@@ -22,7 +22,7 @@ namespace bfm
             {
                 throw std::invalid_argument("in_code[start_pos] must begin or end loop symbol.");
             }
-            const char target_char =
+            const auto target_char =
                 in_code[start_pos] == InstructionSet::begin_loop ?
                 InstructionSet::end_loop : InstructionSet::begin_loop;
             const typename CodeType::difference_type search_dir =
