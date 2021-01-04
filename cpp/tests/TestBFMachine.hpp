@@ -50,6 +50,9 @@ typedef boost::mpl::list<
     bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<int> >,
         bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> > >,
+    bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<unsigned> >,
+        bfm::streams::InputStream<std::vector<unsigned> >,
+        bfm::streams::OutputVectorStream<std::vector<unsigned> > >,
     bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<int> >,
         bfm::streams::InputStream<std::vector<int> >,
         bfm::streams::OutputVectorStream<std::vector<int> >,
@@ -214,14 +217,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
 BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
 {
     using std::string_literals::operator""s;
+    using value_type = typename BFMType::value_type;
     const std::vector<std::string> wrong_bf_codes =
         {"[+++++"s,
          "+]+++"s,
         };
     for (const auto cur_code : wrong_bf_codes)
     {
-        bfm::streams::InputStream<std::vector<int> > i_stream({});
-        bfm::streams::OutputVectorStream<std::vector<int> > o_stream;
+        bfm::streams::InputStream<std::vector<value_type> > i_stream({});
+        bfm::streams::OutputVectorStream<std::vector<value_type> > o_stream;
         BFMType bf_machine(i_stream, o_stream);
         BOOST_CHECK_THROW(bf_machine.execute(cur_code), std::invalid_argument);
     }
