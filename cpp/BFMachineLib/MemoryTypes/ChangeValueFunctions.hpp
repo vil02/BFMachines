@@ -8,14 +8,22 @@ namespace bfm::memory_types
             MemoryType& in_memory,
             const typename MemoryType::position_type& in_position)
     {
-        in_memory.set_value(in_position, in_memory.get_value(in_position)+1);
+        change_value(in_memory, in_position, 1);
     }
     template<typename MemoryType>
     constexpr void decrease_value(
             MemoryType& in_memory,
             const typename MemoryType::position_type& in_position)
     {
-        in_memory.set_value(in_position, in_memory.get_value(in_position)-1);
+        change_value(in_memory, in_position, -1);
+    }
+    template<typename MemoryType>
+    constexpr void change_value(
+            MemoryType& in_memory,
+            const typename MemoryType::position_type& in_position,
+            const typename MemoryType::value_type& in_value_change)
+    {
+        in_memory.set_value(in_position, in_memory.get_value(in_position)+in_value_change);
     }
 }
 
