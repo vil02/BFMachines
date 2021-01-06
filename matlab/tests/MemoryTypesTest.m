@@ -41,7 +41,7 @@ classdef MemoryTypesTest < matlab.unittest.TestCase
              end
          end
      end
-     
+
      methods
          function res = get_memory_list(~)
              res = ...
