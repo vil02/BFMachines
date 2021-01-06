@@ -1,10 +1,10 @@
 classdef VectorMemory < handle
-    properties
+    properties (GetAccess = public, SetAccess = private)
         positive_data;
         notpositive_data;
         default_value;
     end
-    
+
     methods
         function obj = VectorMemory(in_default_value)
             obj.positive_data = repmat(in_default_value, 0);
