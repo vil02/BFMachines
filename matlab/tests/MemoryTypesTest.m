@@ -40,6 +40,47 @@ classdef MemoryTypesTest < matlab.unittest.TestCase
                  end
              end
          end
+         function test_change_value(testCase)
+             rng(2);
+             cellfun(@test_single_memory, testCase.get_memory_list());
+             function test_single_memory(in_memory)
+                 test_data = ...
+                     containers.Map('KeyType', ...
+                                    in_memory.get_position_type(), ...
+                                    'ValueType', ...
+                                    in_memory.get_value_type());
+                 test_size = 8*10;
+                 for value_num = 1:1:test_size
+                     cur_position = ...
+                         cast(randi(test_size/4)-test_size/8, ...
+                         in_memory.get_position_type());
+                     cur_value = ...
+                         cast(randi(200), in_memory.get_value_type());
+                     in_memory.set_value(cur_position, cur_value);
+                     test_data(cur_position) = cur_value;
+                 end
+                 cellfun(@proc_single_position, test_data.keys());
+                 function proc_single_position(in_position)
+                     for change_num = 1:1:20
+                         value_change = cast(randi(20)-10, in_memory.get_value_type());  
+                         BFMachinePac.MemoryTypes.change_value(...
+                             in_memory, in_position, value_change);
+                         test_data(in_position) = ...
+                             cast(test_data(in_position)+value_change, ...
+                                  in_memory.get_value_type());
+                         check_single_position(in_position);
+                     end
+                 end
+                 function check_single_position(in_position)
+                     testCase.assertEqual(...
+                         in_memory.get_value(in_position), ...
+                         test_data(in_position));
+                     testCase.assertTrue(...
+                         isa(in_memory.get_value(in_position), ...
+                             in_memory.get_value_type()));
+                 end
+             end
+         end
      end
 
      methods
