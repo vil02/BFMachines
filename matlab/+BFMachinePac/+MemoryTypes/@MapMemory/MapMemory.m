@@ -36,4 +36,3 @@ classdef MapMemory < handle
         end
     end
 end
-
