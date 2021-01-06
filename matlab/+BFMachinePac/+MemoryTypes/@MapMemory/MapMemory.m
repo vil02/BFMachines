@@ -4,7 +4,7 @@ classdef MapMemory < handle
         default_value;
         remove_default_values;
     end
-    
+
     methods
         function obj = MapMemory(...
                 in_position_type, in_default_value, in_remove_devault_values)
@@ -25,13 +25,13 @@ classdef MapMemory < handle
             if in_value == obj.default_value
                if obj.data.isKey(in_position)
                    if obj.remove_default_values
-                       obj.data.remove(in_position);   
+                       obj.data.remove(in_position);
                    else
-                       obj.data(in_position) = in_value;       
+                       obj.data(in_position) = in_value;
                    end
                end
             else
-                obj.data(in_position) = in_value; 
+                obj.data(in_position) = in_value;
             end
         end
     end
