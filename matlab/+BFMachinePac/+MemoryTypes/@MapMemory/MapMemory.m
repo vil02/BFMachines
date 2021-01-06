@@ -3,6 +3,7 @@ classdef MapMemory < handle
         data;
         default_value;
         remove_default_values;
+        position_type;
     end
 
     methods
@@ -14,6 +15,7 @@ classdef MapMemory < handle
             obj.default_value = in_default_value;
             assert(isequal(class(in_remove_devault_values), 'logical'));
             obj.remove_default_values = in_remove_devault_values;
+            obj.position_type = in_position_type;
         end
         function res = get_value(obj, in_position)
             res = obj.default_value;
@@ -33,6 +35,9 @@ classdef MapMemory < handle
             else
                 obj.data(in_position) = in_value;
             end
+        end
+        function res = get_starting_position(obj)
+            res = cast(0, obj.position_type);
         end
     end
 end

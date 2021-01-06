@@ -72,6 +72,9 @@ classdef VectorMemory < handle
                 end
             end
         end
+        function res = get_starting_position(~)
+            res = 0;
+        end
     end
 end
 
