@@ -72,8 +72,17 @@ classdef VectorMemory < handle
                 end
             end
         end
+
         function res = get_starting_position(~)
             res = 0;
+        end
+
+        function res = get_value_type(obj)
+            res = class(obj.default_value);
+        end
+
+        function res = get_position_type(~)
+            res = 'double';
         end
     end
 end

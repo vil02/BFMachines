@@ -36,8 +36,17 @@ classdef MapMemory < handle
                 obj.data(in_position) = in_value;
             end
         end
+
         function res = get_starting_position(obj)
             res = cast(0, obj.position_type);
+        end
+
+        function res = get_value_type(obj)
+            res = class(obj.default_value);
+        end
+
+        function res = get_position_type(obj)
+            res = obj.position_type;
         end
     end
 end
