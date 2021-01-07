@@ -113,11 +113,13 @@ namespace bfm
                         ++char_num;
                         break;
                     case InstructionSet::read_value:
-                        value_type new_val;
-                        this->input_stream>>new_val;
-                        this->memory.set_value(this->cur_position, new_val);
-                        ++char_num;
-                        break;
+                        {
+                            value_type new_val = value_type();
+                            this->input_stream>>new_val;
+                            this->memory.set_value(this->cur_position, new_val);
+                            ++char_num;
+                            break;
+                        }
                     case InstructionSet::begin_loop:
                         if (this->memory.get_value(this->cur_position) != value_type(0))
                         {
