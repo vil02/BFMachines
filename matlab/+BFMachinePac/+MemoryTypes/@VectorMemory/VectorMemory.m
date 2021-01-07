@@ -1,15 +1,21 @@
 classdef VectorMemory < handle
     properties (GetAccess = public, SetAccess = private)
+        default_value;
+        starting_position;
         positive_data;
         notpositive_data;
-        default_value;
     end
 
     methods
-        function obj = VectorMemory(in_default_value)
-            obj.positive_data = repmat(in_default_value, 0);
-            obj.notpositive_data = repmat(in_default_value, 0);
-            obj.default_value = in_default_value;
+        function obj = VectorMemory(varargin)
+            input_parser = inputParser;
+            input_parser.addParameter('default_value', 0);
+            input_parser.addParameter('starting_position', 0);
+            input_parser.parse(varargin{:});
+            obj.default_value = input_parser.Results.default_value;
+            obj.starting_position = input_parser.Results.starting_position;
+            obj.positive_data = repmat(obj.default_value, 0);
+            obj.notpositive_data = repmat(obj.default_value, 0);
         end
         function res = get_value(obj, in_position)
             [is_in_positive, position_num] = get_raw_position(in_position);
@@ -73,16 +79,16 @@ classdef VectorMemory < handle
             end
         end
 
-        function res = get_starting_position(~)
-            res = 0;
+        function res = get_starting_position(obj)
+            res = obj.starting_position;
         end
 
         function res = get_value_type(obj)
             res = class(obj.default_value);
         end
 
-        function res = get_position_type(~)
-            res = 'double';
+        function res = get_position_type(obj)
+            res = class(obj.starting_position);
         end
     end
 end

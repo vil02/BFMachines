@@ -1,21 +1,27 @@
 classdef MapMemory < handle
     properties (GetAccess = public, SetAccess = private)
-        data;
         default_value;
+        data;
         remove_default_values;
         position_type;
     end
 
     methods
-        function obj = MapMemory(...
-                in_position_type, in_default_value, in_remove_devault_values)
+        function obj = MapMemory(varargin)
+            input_parser = inputParser;
+            input_parser.addParameter('default_value', 0);
+            input_parser.addParameter('position_type', 'double', @ischar);
+            input_parser.addParameter(...
+                'remove_default_values', true, @islogical);
+            input_parser.parse(varargin{:});
+
+            obj.default_value = input_parser.Results.default_value;
             obj.data = containers.Map(...
-                'KeyType', in_position_type, ...
-                'ValueType', class(in_default_value));
-            obj.default_value = in_default_value;
-            assert(isequal(class(in_remove_devault_values), 'logical'));
-            obj.remove_default_values = in_remove_devault_values;
-            obj.position_type = in_position_type;
+                'KeyType', input_parser.Results.position_type, ...
+                'ValueType', class(obj.default_value));
+            obj.remove_default_values = ...
+                input_parser.Results.remove_default_values;
+            obj.position_type = input_parser.Results.position_type;
         end
         function res = get_value(obj, in_position)
             res = obj.default_value;
