@@ -98,8 +98,7 @@ end
          cur_position = ...
              cast(randi([in_min_pos, in_max_pos]), ...
              memory.get_position_type());
-         cur_value = ...
-             cast(randi(200), memory.get_value_type());
+         cur_value = cast(randi(200), memory.get_value_type());
          memory.set_value(cur_position, cur_value);
          res(cur_position) = cur_value;                 
      end
