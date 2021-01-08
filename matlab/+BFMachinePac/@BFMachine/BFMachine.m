@@ -1,4 +1,4 @@
-classdef BFMachine
+classdef BFMachine < handle
     properties
         memory;
         cur_position;
