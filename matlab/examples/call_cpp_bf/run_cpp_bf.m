@@ -1,4 +1,4 @@
-% this file illustrates how to use the C++ BFMachineLib from MATLAB
+% this file illustrates how to use the C++ BFMachineLib with MATLAB
 % run this script with current MATLAB folder/pwd being
 % .../BFMachines/matlab
 % after running the script add_examples.m
