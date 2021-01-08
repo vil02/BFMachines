@@ -5,7 +5,7 @@ classdef FindMatching < handle
         end_symbol;
         cache_data;
     end
-    
+
     methods
         function obj = FindMatching(...
                 in_code, in_begin_symbol, in_end_symbol)
@@ -19,7 +19,7 @@ classdef FindMatching < handle
             obj.end_symbol = in_end_symbol;
             obj.cache_data = zeros(size(in_code));
         end
-        
+
         function res = find(obj, in_pos)
             res = obj.cache_data(in_pos);
             if res == 0
@@ -29,7 +29,7 @@ classdef FindMatching < handle
             end
         end
     end
-    
+
     methods (Access = private)
         function res = find_raw(obj, in_pos)
             assert(...
@@ -48,7 +48,7 @@ classdef FindMatching < handle
                 elseif cur_symbol == target_symbol
                     cur_count = cur_count-1;
                     if cur_count == 0
-                        res = cur_pos; 
+                        res = cur_pos;
                     end
                 end
                 cur_pos = cur_pos+search_dir;
@@ -56,7 +56,7 @@ classdef FindMatching < handle
             if res == 0
                 error(...
                     'Could not find matching %s to %s at position %d', ...
-                    target_symbol, obj.code(in_pos), in_pos); 
+                    target_symbol, obj.code(in_pos), in_pos);
             end
             function [target_symbol, search_dir, cont_cond] = ...
                     get_search_params(...

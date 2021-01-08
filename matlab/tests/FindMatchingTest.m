@@ -29,7 +29,7 @@ classdef FindMatchingTest < matlab.unittest.TestCase
                 testCase.assertEqual(find_matching_obj.find(3), 9);
                 testCase.assertEqual(find_matching_obj.find(8), 6);
                 testCase.assertEqual(find_matching_obj.find(9), 3);
-                testCase.assertEqual(find_matching_obj.find(6), 8);                
+                testCase.assertEqual(find_matching_obj.find(6), 8);
             end
         end
     end
