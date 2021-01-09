@@ -7,6 +7,8 @@ classdef BFMachineTest < matlab.unittest.TestCase
             function check_single_type(in_bfm_constructor)
                 testCase.check_all_2d(...
                     bf_code, in_bfm_constructor, @sum, 10);
+                testCase.check_for_random_input(...
+                    bf_code, in_bfm_constructor, 2, @sum, 100, 10);
             end
         end
         function test_times(testCase)
@@ -16,6 +18,8 @@ classdef BFMachineTest < matlab.unittest.TestCase
             function check_single_type(in_bfm_constructor)
                 testCase.check_all_2d(...
                     bf_code, in_bfm_constructor, @prod, 10);
+                testCase.check_for_random_input(...
+                    bf_code, in_bfm_constructor, 2, @prod, 20, 10);
             end
         end
         function test_hello_world(testCase)
@@ -74,6 +78,15 @@ classdef BFMachineTest < matlab.unittest.TestCase
                         [val_a, val_b], ...
                         bf_code, bfm_constructor, result_fun);
                 end
+            end
+        end
+        function check_for_random_input(...
+                testCase, bf_code, bfm_constructor, input_size, ...
+                result_fun, max_val, number_of_trials)
+            for trial_num = 1:1:number_of_trials
+                testCase.check_single_computation(...
+                    randi([0, max_val], 1, input_size), ...
+                    bf_code, bfm_constructor, result_fun);                 
             end
         end
         function check_single_computation(...
