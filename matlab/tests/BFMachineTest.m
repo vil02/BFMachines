@@ -6,7 +6,7 @@ classdef BFMachineTest < matlab.unittest.TestCase
                 @check_single_type, testCase.get_bfm_constructor_list());
             function check_single_type(in_bfm_constructor)
                 testCase.check_all_2d(...
-                    bf_code, in_bfm_constructor, @sum, 10); 
+                    bf_code, in_bfm_constructor, @sum, 10);
             end
         end
         function test_times(testCase)
@@ -15,7 +15,7 @@ classdef BFMachineTest < matlab.unittest.TestCase
                 @check_single_type, testCase.get_bfm_constructor_list());
             function check_single_type(in_bfm_constructor)
                 testCase.check_all_2d(...
-                    bf_code, in_bfm_constructor, @prod, 10); 
+                    bf_code, in_bfm_constructor, @prod, 10);
             end
         end
 %         function test_hello_world(testCase)
@@ -36,7 +36,7 @@ classdef BFMachineTest < matlab.unittest.TestCase
 %             end
 %         end
     end
-     
+
     methods
         function res = get_bfm_constructor_list(~)
             res = ...
@@ -66,7 +66,7 @@ classdef BFMachineTest < matlab.unittest.TestCase
                 for val_b = 0:1:max_val
                     testCase.check_single_computation(...
                         [val_a, val_b], ...
-                        bf_code, bfm_constructor, result_fun); 
+                        bf_code, bfm_constructor, result_fun);
                 end
             end
         end
@@ -79,7 +79,7 @@ classdef BFMachineTest < matlab.unittest.TestCase
             bfm.execute(bf_code, input_stream, output_stream);
             res_data = output_stream.get_data();
             testCase.assertEqual(size(res_data), [1, 1]);
-            testCase.assertEqual(res_data(1), result_fun(input_data));             
+            testCase.assertEqual(res_data(1), result_fun(input_data));
         end
     end
 end
