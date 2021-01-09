@@ -3,6 +3,7 @@ classdef VectorMemory < handle
         default_value;
         starting_position;
         extend_data_fun;
+        cast_to_value_type;
         positive_data;
         notpositive_data;
     end
@@ -16,12 +17,28 @@ classdef VectorMemory < handle
                 'extend_data_fun', ...
                 @BFMachinePac.MemoryTypes.extend_by_appending_needed, ...
                 @(s) isa(s, 'function_handle'));
+            input_parser.addParameter(...
+                'cast_to_value_type', ...
+                'simple_cast', ...
+                @(s) isequal(s, 'simple_cast') || ...
+                    isa(s, 'function_handle'));
             input_parser.parse(varargin{:});
             obj.default_value = input_parser.Results.default_value;
             obj.starting_position = input_parser.Results.starting_position;
             obj.extend_data_fun = input_parser.Results.extend_data_fun;
+            if isequal(...
+                    input_parser.Results.cast_to_value_type, 'simple_cast')
+                obj.cast_to_value_type = ...
+                    @(s) cast(s, class(obj.default_value));
+            else
+                obj.cast_to_value_type = ...
+                    input_parser.Results.cast_to_value_type;
+            end
             obj.positive_data = repmat(obj.default_value, 0);
             obj.notpositive_data = repmat(obj.default_value, 0);
+            assert(...
+                obj.cast_to_value_type(obj.default_value) == ...
+                obj.default_value);
         end
         function res = get_value(obj, in_position)
             [is_in_positive, position_num] = get_raw_position(in_position);
@@ -76,8 +93,7 @@ classdef VectorMemory < handle
                     out_vector = ...
                         obj.extend_data_fun(...
                             in_vector, in_position, obj.default_value);
-                     out_vector(in_position) = ...
-                         cast(in_value, 'like', obj.default_value);
+                     out_vector(in_position) = in_value;
                 end
             end
         end
