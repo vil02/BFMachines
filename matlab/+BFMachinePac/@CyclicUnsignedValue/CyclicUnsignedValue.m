@@ -41,13 +41,17 @@ classdef CyclicUnsignedValue
             res = obj.to_same_type(raw_res_val);
         end
         function res = eq(obj, other_value)
-            res = false;
             if isequal('BFMachinePac.CyclicUnsignedValue', class(other_value))
                 res = ...
                     obj.value == other_value.value && ...
                     obj.limit_value == other_value.limit_value && ...
                     isequal(obj.computation_type, other_value.computation_type);
+            else
+                res = obj == obj.to_same_type(other_value);
             end
+        end
+        function res = ne(obj, other_value)
+            res = ~(obj == other_value);
         end
     end
 
