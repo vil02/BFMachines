@@ -1,25 +1,32 @@
 classdef BFMachineTest < matlab.unittest.TestCase
     methods (Test)
         function test_plus(testCase)
-            bf_code = ',>,<[->+<]>.';
             cellfun(...
                 @check_single_type, testCase.get_bfm_constructor_list());
             function check_single_type(in_bfm_constructor)
-                testCase.check_all_2d(...
-                    bf_code, in_bfm_constructor, @sum, 10);
-                testCase.check_for_random_input(...
-                    bf_code, in_bfm_constructor, 2, @sum, 100, 10);
+                sum_test_params.bfm_constructor = in_bfm_constructor;
+                sum_test_params.bf_code = ',>,<[->+<]>.';
+                sum_test_params.result_fun = @sum;
+                sum_test_params.max_value = 10;
+                sum_test_params.random_input_size = 2;
+                sum_test_params.random_max_value = 100;
+                sum_test_params.number_of_trials = 10;
+                testCase.check_computation_2d(sum_test_params);
             end
         end
         function test_times(testCase)
-            bf_code = ',>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>.';
             cellfun(...
                 @check_single_type, testCase.get_bfm_constructor_list());
             function check_single_type(in_bfm_constructor)
-                testCase.check_all_2d(...
-                    bf_code, in_bfm_constructor, @prod, 10);
-                testCase.check_for_random_input(...
-                    bf_code, in_bfm_constructor, 2, @prod, 20, 10);
+                prod_test_params.bfm_constructor = in_bfm_constructor;
+                prod_test_params.bf_code = ...
+                    ',>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>.';
+                prod_test_params.result_fun = @prod;
+                prod_test_params.max_value = 10;
+                prod_test_params.random_input_size = 2;
+                prod_test_params.random_max_value = 23;
+                prod_test_params.number_of_trials = 10;
+                testCase.check_computation_2d(prod_test_params);
             end
         end
         function test_hello_world(testCase)
@@ -56,49 +63,54 @@ classdef BFMachineTest < matlab.unittest.TestCase
                      'memory', BFMachinePac.MemoryTypes.MapMemory(...
                          'remove_default_values', false)), ...
                 };
-       end
-       function res = get_char_bfm_constructor_list(~)
-           res = ...
-               {@() BFMachinePac.BFMachine(...
+        end
+        function res = get_char_bfm_constructor_list(~)
+            res = ...
+                {@() BFMachinePac.BFMachine(...
                     'memory', BFMachinePac.MemoryTypes.VectorMemory(...
                         'default_value', BFMachinePac.CyclicUnsignedValue(0), ...
                         'cast_to_value_type', @(s) BFMachinePac.CyclicUnsignedValue(s))), ...
-                @() BFMachinePac.BFMachine(...
+                 @() BFMachinePac.BFMachine(...
                     'memory', BFMachinePac.MemoryTypes.MapMemory(...
                         'default_value', BFMachinePac.CyclicUnsignedValue(0), ...
                         'cast_to_value_type', @(s) BFMachinePac.CyclicUnsignedValue(s))), ...
-               };
+                };
+        end
+        function check_computation_2d(testCase, test_params)
+            testCase.check_all_2d(test_params);
+            testCase.check_for_random_input(test_params);
         end
         function check_all_2d(...
-                testCase, bf_code, bfm_constructor, ...
-                result_fun, max_val)
-            for val_a = 0:1:max_val
-                for val_b = 0:1:max_val
+                testCase, in_test_params)
+            for val_a = 0:1:in_test_params.max_value
+                for val_b = 0:1:in_test_params.max_value
                     testCase.check_single_computation(...
                         [val_a, val_b], ...
-                        bf_code, bfm_constructor, result_fun);
+                        in_test_params);
                 end
             end
         end
         function check_for_random_input(...
-                testCase, bf_code, bfm_constructor, input_size, ...
-                result_fun, max_val, number_of_trials)
-            for trial_num = 1:1:number_of_trials
+                testCase, in_test_params)
+            for trial_num = 1:1:in_test_params.number_of_trials
+                cur_input = ...
+                    randi([0, in_test_params.random_max_value], ...
+                        1, in_test_params.random_input_size);
                 testCase.check_single_computation(...
-                    randi([0, max_val], 1, input_size), ...
-                    bf_code, bfm_constructor, result_fun);                 
+                    cur_input, in_test_params);
             end
         end
         function check_single_computation(...
-                testCase, input_data, bf_code, ...
-                bfm_constructor, result_fun)
-            input_stream = BFMachinePac.InputStream(input_data);
+                testCase, input_data, test_params)
+            input_stream = ...
+                BFMachinePac.InputStream(input_data);
             output_stream = BFMachinePac.OutputStream();
-            bfm = bfm_constructor();
-            bfm.execute(bf_code, input_stream, output_stream);
+            bfm = test_params.bfm_constructor();
+            bfm.execute(test_params.bf_code, input_stream, output_stream);
             res_data = output_stream.get_data();
             testCase.assertEqual(size(res_data), [1, 1]);
-            testCase.assertEqual(res_data{1}, result_fun(input_data));
+            testCase.assertEqual(...
+                res_data{1}, test_params.result_fun(input_data));
         end
     end
 end
