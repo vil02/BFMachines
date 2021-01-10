@@ -8,7 +8,7 @@
         * [`bfm::memory_types::MapMemory`](BFMachineLib/MemoryTypes/MapMemory.hpp), where data is stored in `std::map` or `std::unordered_map`-like containers.
     * bounded memory:
         * [`bfm::memory_types::ArrayMemory`](BFMachineLib/MemoryTypes/ArrayMemory.hpp), where data is stored in `std::array`-like container. Also useful for [compile time computations](examples/compile_time_arithmetic/compile_time_arithmetic.cpp).
-* [input/output streams types](BFMachineLib/Streams), which can be used for testing or in any other case, when one does not want to use `std::cin` or `std::cout`. Exampels are:
+* [input/output streams types](BFMachineLib/Streams), which can be used for testing or in any other case, when one does not want to use `std::cin` or `std::cout`. Examples are:
     * [`bfm::streams::InputStream`](BFMachineLib/Streams/InputStream.hpp), where data is being send from some `std::vector` or `std::array`-like container,
     * [`bfm::streams::OutputVectorStream`](BFMachineLib/Streams/OutputVectorStream.hpp), where data is being send to some `std::vector`-like container (unknown size at compile time),
     * [`bfm::streams::OutputArrayStream`](BFMachineLib/Streams/OutputArrayStream.hpp), where data is being send to some `std::array`-like container (known size at compile time),
