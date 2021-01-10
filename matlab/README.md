@@ -15,7 +15,7 @@ The folder [examples](examples) contains some code snippets, which might be usef
 
 The example [call_cpp_bf](examples/call_cpp_bf) shows how to use the [C++ BFMachineLib library](../cpp/BFMachineLib) from MATLAB.
 
-Before running any of the examples, please make sure that your curren MATLAB folder/`pwd` is [matlab](.) and execute the script [add_examples.m](add_examples.m). 
+Before running any of the examples, please make sure that your current MATLAB folder/`pwd` is [matlab](.) and execute the script [add_examples.m](add_examples.m). 
 
 # Requirements, dependencies, ...
 
