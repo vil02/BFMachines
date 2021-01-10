@@ -1,7 +1,7 @@
 # [BF](https://esolangs.org/wiki/Brainfuck) interpreter in MATLAB
 
 `BFMachinePac` provides the basic functionality to execute brainfuck code, namely:
-* the class [`BFMachinePac::BFMachine`](%2BBFMachinePac/%40BFMachine/BFMachine.m) having the method `execute`, which interprets given bf code.
+* the class [`BFMachinePac.BFMachine`](%2BBFMachinePac/%40BFMachine/BFMachine.m) having the method `execute`, which interprets given bf code.
 * [_memory models_](%2BBFMachinePac/%2BMemoryTypes), which are useful for brainf*ck. The basic examples are:
     * unbounded memory: 
         * [`BFMachinePac.MemoryTypes.VectorMemory`](%2BBFMachinePac/%2BMemoryTypes/%40VectorMemory/VectorMemory.m), where data is stored in two arrays (first for the indexes 1, 2, 3, ... and second for the the indexes 0, -1, -2, ... ). The way how these arrays are extended can we specified while creating the `VectorMemory` object.
