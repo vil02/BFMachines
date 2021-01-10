@@ -13,7 +13,7 @@
 
 The folder [examples](examples) contains some code snippets, which might be useful to look at the beginning. Start with [**add_bf**](examples/add_bf.m), [**hello_world_bf**](examples/hello_world_bf.m).
 
-The example [call_cpp_bf](examples/call_cpp_bf) shows how to use the [C++ library](../cpp/BFMachineLib) from MATLAB.
+The example [call_cpp_bf](examples/call_cpp_bf) shows how to use the [C++ BFMachineLib library](../cpp/BFMachineLib) from MATLAB.
 
 Before running any of the examples, please make sure that your curren MATLAB folder/`pwd` is [matlab](.) and execute the script [add_examples.m](add_examples.m). 
 
