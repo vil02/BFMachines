@@ -213,6 +213,24 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
     }
 }
 
+BOOST_AUTO_TEST_CASE_TEMPLATE(print_countdown_test, BFMType, bfm_types)
+{
+    using value_type = typename BFMType::value_type;
+    for (value_type n = 0; n < 40; ++n)
+    {
+        bfm::streams::InputStream<std::vector<value_type> > i_stream({n});
+        bfm::streams::OutputVectorStream<std::vector<value_type> > o_stream;
+        BFMType bf_machine(i_stream, o_stream);
+        bf_machine.execute(bf_test_codes::bf_print_countdown<std::string_view>());
+        BOOST_CHECK_EQUAL(o_stream.get_data().size(), n);
+        value_type target_val = n;
+        for (const value_type res_val : o_stream.get_data())
+        {
+            BOOST_CHECK_EQUAL(target_val, res_val);
+            --target_val;
+        }
+    }
+}
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
 {

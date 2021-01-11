@@ -4,6 +4,12 @@
 namespace bf_test_codes
 {
     template <typename CodeType>
+    [[nodiscard]] constexpr CodeType bf_print_countdown()
+    {
+        return CodeType(",[.-]");
+    }
+
+    template <typename CodeType>
     [[nodiscard]] constexpr CodeType bf_plus()
     {
         return CodeType(",>,<[->+<]>.");
