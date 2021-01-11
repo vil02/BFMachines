@@ -184,7 +184,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
     }
 }
 
-
 template <typename ValueType>
 [[nodiscard]] constexpr ValueType factorial(const ValueType& in_num)
 {

@@ -20,11 +20,13 @@ namespace bf_test_codes
     {
         return CodeType(",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>.");
     }
+
     template <typename CodeType>
     [[nodiscard]] constexpr CodeType bf_fibonacci()
     {
         return CodeType(",>>+<<[->>[->+>+<<]>>[-<<+>>]<<<[->+<]>>[-<<+>>]<<< ]>.");
     }
+
     template <typename CodeType>
     [[nodiscard]] constexpr CodeType bf_factorial()
     {
