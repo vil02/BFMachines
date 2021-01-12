@@ -13,6 +13,7 @@ classdef BFMachineTest < matlab.unittest.TestCase
                 testCase.check_computation_2d(sum_test_params);
             end
         end
+
         function test_times(testCase)
             cellfun(@check_single, testCase.get_bfm_constructor_list());
             function check_single(in_bfm_constructor)
@@ -27,6 +28,23 @@ classdef BFMachineTest < matlab.unittest.TestCase
                 testCase.check_computation_2d(prod_test_params);
             end
         end
+
+        function test_factorial(testCase)
+            cellfun(@check_single, testCase.get_bfm_constructor_list());
+            function check_single(in_bfm_constructor)
+                fac_test_params.bfm_constructor = in_bfm_constructor;
+                fac_test_params.bf_code = ...
+                    ['+>>,[>>]<<' ...
+                     '[[->+>+<<]>>[-<<+>>]<-]<<' ...
+                     '[[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>[-<<<<+>>>>]<<<<>[-]<<]>.'];
+                fac_test_params.result_fun = @factorial;
+                for cur_n = 0:7
+                    testCase.check_single_computation(...
+                        cur_n, fac_test_params);
+                end
+            end
+        end
+
         function test_hello_world(testCase)
             cellfun(...
                 @check_single, testCase.get_char_bfm_constructor_list());
