@@ -45,13 +45,20 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../BFMachineLib/BFMDataRef/BFMDataRef.hpp" />
 		<Unit filename="../BFMachineLib/BFMachineLib.hpp" />
 		<Unit filename="../BFMachineLib/BFMachine/BFMachine.hpp" />
+		<Unit filename="../BFMachineLib/BFOperations/BFOperations.hpp" />
+		<Unit filename="../BFMachineLib/BFParser/BFCodeToOperationSeq.hpp" />
+		<Unit filename="../BFMachineLib/BFParser/BFParser.hpp" />
+		<Unit filename="../BFMachineLib/BFParser/inner/BfOperationDataChangeRelated.hpp" />
+		<Unit filename="../BFMachineLib/BFParser/inner/RawParserRelated.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/ArrayMemory.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/ChangeValueFunctions.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/MapMemory.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/MemoryTypes.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/VectorMemory.hpp" />
+		<Unit filename="../BFMachineLib/StandardInstructions/StandardInstructions.hpp" />
 		<Unit filename="../BFMachineLib/Streams/InputStream.hpp" />
 		<Unit filename="../BFMachineLib/Streams/OutputArrayStream.hpp" />
 		<Unit filename="../BFMachineLib/Streams/OutputVectorStream.hpp" />
