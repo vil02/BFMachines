@@ -5,6 +5,8 @@
 #include <exception>
 #include <stdexcept>
 #include <type_traits>
+#include <map>
+#include "../BFMDataRef/BFMDataRef.hpp"
 namespace bfm
 {
     namespace inner
@@ -53,18 +55,6 @@ namespace bfm
             return cur_pos;
         }
     }
-    struct StandardInstructions
-    {
-        using instruction_type = char;
-        static const instruction_type move_left = '<';
-        static const instruction_type move_right = '>';
-        static const instruction_type increase_value = '+';
-        static const instruction_type decrease_value = '-';
-        static const instruction_type read_value = ',';
-        static const instruction_type print_value = '.';
-        static const instruction_type begin_loop = '[';
-        static const instruction_type end_loop = ']';
-    };
     template<typename MemoryType,
              typename InputStream,
              typename OutputStream,
@@ -186,6 +176,23 @@ namespace bfm
                     show_debug_data(in_code, char_num, *this);
                     char_num = this->execute_single_instruction(in_code, char_num);
                 }
+            }
+            template <typename CodeType>
+            constexpr void execute_optimized(const CodeType& in_code)
+            {
+                using data_change_type =
+                    bfm::parser::inner::DataChange<std::map<position_type, value_type> >;
+                const auto bf_code_to_operation_seq = bfm::parser::bf_code_to_operation_seq<
+                        CodeType,
+                        data_change_type,
+                        InstructionSet>;
+                const auto bf_operation_seq = bf_code_to_operation_seq(in_code);
+                auto cur_bf_state = bfm::BFMDataRef(
+                    this->cur_position,
+                    this->memory,
+                    this->input_stream,
+                    this->output_stream);
+                bfm::bfo::execute_seq(bf_operation_seq, cur_bf_state);
             }
     };
 }
