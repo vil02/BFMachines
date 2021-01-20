@@ -2,6 +2,7 @@
 #define BFCODETOOPERATIONSEQ_HPP_INCLUDED
 
 #include <vector>
+#include <map>
 #include <type_traits>
 
 #include "../BFOperations/BFOperations.hpp"
