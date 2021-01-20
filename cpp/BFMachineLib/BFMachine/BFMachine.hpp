@@ -177,6 +177,16 @@ namespace bfm
                     char_num = this->execute_single_instruction(in_code, char_num);
                 }
             }
+            template <typename BFOperationSeq>
+            constexpr void execute_seq(const BFOperationSeq& in_bf_operation_seq)
+            {
+                auto cur_bf_state = bfm::BFMDataRef(
+                    this->cur_position,
+                    this->memory,
+                    this->input_stream,
+                    this->output_stream);
+                bfm::bfo::execute_seq(in_bf_operation_seq, cur_bf_state);
+            }
             template <typename CodeType>
             constexpr void execute_optimized(const CodeType& in_code)
             {
@@ -185,13 +195,7 @@ namespace bfm
                     position_type,
                     value_type,
                     InstructionSet>;
-                const auto bf_operation_seq = bf_code_to_operation_seq(in_code);
-                auto cur_bf_state = bfm::BFMDataRef(
-                    this->cur_position,
-                    this->memory,
-                    this->input_stream,
-                    this->output_stream);
-                bfm::bfo::execute_seq(bf_operation_seq, cur_bf_state);
+                this->execute_seq(bf_code_to_operation_seq(in_code));
             }
     };
 }
