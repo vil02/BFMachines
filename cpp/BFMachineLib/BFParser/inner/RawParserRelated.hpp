@@ -4,6 +4,7 @@
 #include <type_traits>
 #include <exception>
 #include <stdexcept>
+#include <algorithm>
 
 #include "BfOperationDataChangeRelated.hpp"
 
