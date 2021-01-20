@@ -30,5 +30,8 @@ int main()
         "---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
     //we create a temporary bf machine and execute given bf code
     bfm_type(std::cin, std::cout).execute(bf_code);
+    //we can also use the execute_optimized for better performance,
+    //cf. example ../execute_optimized/execute_optimized.hpp
+    //bfm_type(std::cin, std::cout).execute_optimized(bf_code);
     return 0;
 }
