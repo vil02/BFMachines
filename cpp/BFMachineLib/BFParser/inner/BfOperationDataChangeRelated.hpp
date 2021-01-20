@@ -6,20 +6,6 @@
 namespace bfm::parser::inner
 {
     template <typename MemoryChangeType>
-    struct [[nodiscard]] DataChange
-    {
-        MemoryChangeType memory_change;
-        using memory_change_type = MemoryChangeType;
-        using position_type = typename memory_change_type::key_type;
-        using value_type = typename memory_change_type::mapped_type;
-        DataChange::position_type total_shift;
-        DataChange(const MemoryChangeType in_memory_change, const position_type& in_total_shift) :
-            memory_change(in_memory_change),
-            total_shift(in_total_shift)
-        {}
-    };
-
-    template <typename MemoryChangeType>
     void update_memory_change(
             MemoryChangeType& memory_change,
             const typename MemoryChangeType::key_type cur_shift,
