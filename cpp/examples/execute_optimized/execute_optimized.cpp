@@ -45,7 +45,7 @@ int main()
 {
     using value_type = __uint128_t;
     value_type n_limit = 34; //factorial of 33 still fits into 128 bits
-    // if by any reason you do not have access to __uint128_t use the lines below
+    // if for any reason you do not have access to __uint128_t use the lines below
     // using value_type = std::uint64_t;
     // value_type n_limit = 21; //factorial of 20 still fits into 64 bits
 
