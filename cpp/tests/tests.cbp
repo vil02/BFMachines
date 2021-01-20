@@ -51,6 +51,7 @@
 		<Unit filename="../BFMachineLib/BFOperations/BFOperations.hpp" />
 		<Unit filename="../BFMachineLib/BFParser/BFCodeToOperationSeq.hpp" />
 		<Unit filename="../BFMachineLib/BFParser/BFParser.hpp" />
+		<Unit filename="../BFMachineLib/BFParser/DataChange.hpp" />
 		<Unit filename="../BFMachineLib/BFParser/inner/BfOperationDataChangeRelated.hpp" />
 		<Unit filename="../BFMachineLib/BFParser/inner/RawParserRelated.hpp" />
 		<Unit filename="../BFMachineLib/MemoryTypes/ArrayMemory.hpp" />
