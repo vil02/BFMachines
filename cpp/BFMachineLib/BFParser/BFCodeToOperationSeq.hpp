@@ -6,12 +6,13 @@
 
 #include "../BFOperations/BFOperations.hpp"
 #include "./inner/RawParserRelated.hpp"
-namespace bfm::parser
+namespace bfm::parser::general_parser
 {
-    template <typename CodeType,
+    template <
+        typename CodeType,
         typename DataChangeType,
-        typename InstructionSet = bfm::StandardInstructions,
-        bool MakeShrinkToFit = true>
+        typename InstructionSet,
+        bool MakeShrinkToFit>
     [[nodiscard]] std::vector<bfm::bfo::variant_type<DataChangeType> > bf_code_to_operation_seq(
             const CodeType& in_bf_code)
     {
@@ -96,6 +97,21 @@ namespace bfm::parser
         }
         return res;
     }
+}
+
+namespace bfm::parser
+{
+    template <
+            typename CodeType,
+            typename ValueType,
+            typename PositionType,
+            typename InstructionSet = bfm::StandardInstructions,
+            bool MakeShrinkToFit = true>
+    const auto bf_code_to_operation_seq = general_parser::bf_code_to_operation_seq<
+        CodeType,
+        bfm::parser::DataChange<std::map<ValueType, PositionType> >,
+        InstructionSet,
+        MakeShrinkToFit>;
 }
 
 #endif // BFCODETOOPERATIONSEQ_HPP_INCLUDED

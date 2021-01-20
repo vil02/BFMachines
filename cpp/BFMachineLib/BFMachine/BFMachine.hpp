@@ -180,12 +180,11 @@ namespace bfm
             template <typename CodeType>
             constexpr void execute_optimized(const CodeType& in_code)
             {
-                using data_change_type =
-                    bfm::parser::inner::DataChange<std::map<position_type, value_type> >;
                 const auto bf_code_to_operation_seq = bfm::parser::bf_code_to_operation_seq<
-                        CodeType,
-                        data_change_type,
-                        InstructionSet>;
+                    CodeType,
+                    position_type,
+                    value_type,
+                    InstructionSet>;
                 const auto bf_operation_seq = bf_code_to_operation_seq(in_code);
                 auto cur_bf_state = bfm::BFMDataRef(
                     this->cur_position,
