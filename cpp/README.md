@@ -3,7 +3,7 @@
 `BFMachineLib` provides the basic functionality to execute brainfuck code, namely:
 * the class template [`bfm::BFMachine`](BFMachineLib/BFMachine/BFMachine.hpp) having
     * the overloaded method `execute`, which interprets given bf code,
-    * the method `execute_optimized`, which parses/optimizes the given bf code into a _sequence_ of equivalent operations and them executes them,
+    * the method `execute_optimized`, which parses/optimizes the given bf code into a _sequence_ of equivalent operations and them executes them.
     
     The `MemoryType` and `Input/OutputStreamTypes` are some of the template arguments
 * [_memory models_](BFMachineLib/MemoryTypes), which are useful for brainf*ck. The basic examples are:
