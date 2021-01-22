@@ -29,17 +29,7 @@ template <typename ValueType>
     return output_stream.get_data()[0];
 }
 
-std::ostream& operator<<(std::ostream& stream, const __uint128_t& in_val)
-{
-    const unsigned cur_rem = in_val%10;
-    const auto new_val = (in_val-cur_rem)/10;
-    if (new_val != 0)
-    {
-        stream<<new_val;
-    }
-    stream<<cur_rem;
-    return stream;
-}
+std::ostream& operator<<(std::ostream& stream, const __uint128_t& in_val);
 
 int main()
 {
@@ -58,4 +48,17 @@ int main()
     const std::chrono::duration<double> run_time = end_time-start_time;
     std::cout<<"Runtime: "<<run_time.count()<<" [s]"<<std::endl;
     return 0;
+}
+
+
+std::ostream& operator<<(std::ostream& stream, const __uint128_t& in_val)
+{
+    const unsigned cur_rem = in_val%10;
+    const auto new_val = (in_val-cur_rem)/10;
+    if (new_val != 0)
+    {
+        stream<<new_val;
+    }
+    stream<<cur_rem;
+    return stream;
 }
