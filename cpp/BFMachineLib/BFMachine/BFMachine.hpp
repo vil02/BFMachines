@@ -180,7 +180,8 @@ namespace bfm
             template <typename BFOperationSeq>
             constexpr void execute_seq(const BFOperationSeq& in_bf_operation_seq)
             {
-                auto cur_bf_state = bfm::BFMDataRef(
+                auto cur_bf_state = bfm::BFMDataRef<
+                        MemoryType, input_stream_type, output_stream_type>(
                     this->cur_position,
                     this->memory,
                     this->input_stream,
