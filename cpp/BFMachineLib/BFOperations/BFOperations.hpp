@@ -76,7 +76,7 @@ namespace bfm::bfo
             {
                 throw std::invalid_argument("total_shift has to be 0.");
             }
-            if (in_data_change.memory_change.size() == 0)
+            if (in_data_change.memory_change.empty())
             {
                 throw std::invalid_argument("memory_change can not be trivial.");
             }
