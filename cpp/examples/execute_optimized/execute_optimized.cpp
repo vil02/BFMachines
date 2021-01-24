@@ -34,10 +34,10 @@ std::ostream& operator<<(std::ostream& stream, const __uint128_t& in_val);
 int main()
 {
     using value_type = __uint128_t;
-    value_type n_limit = 34; //factorial of 33 still fits into 128 bits
+    const value_type n_limit = 34; //factorial of 33 still fits into 128 bits
     // if for any reason you do not have access to __uint128_t use the lines below
     // using value_type = std::uint64_t;
-    // value_type n_limit = 21; //factorial of 20 still fits into 64 bits
+    // const value_type n_limit = 21; //factorial of 20 still fits into 64 bits
 
     const auto start_time = std::chrono::steady_clock::now();
     for (value_type cur_n = 0; cur_n < n_limit; ++cur_n)
