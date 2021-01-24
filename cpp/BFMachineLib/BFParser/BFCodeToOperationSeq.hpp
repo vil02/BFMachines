@@ -1,12 +1,13 @@
 #ifndef BFCODETOOPERATIONSEQ_HPP_INCLUDED
 #define BFCODETOOPERATIONSEQ_HPP_INCLUDED
 
-#include <vector>
-#include <map>
-#include <type_traits>
-
 #include "../BFOperations/BFOperations.hpp"
 #include "./inner/RawParserRelated.hpp"
+
+#include <map>
+#include <type_traits>
+#include <vector>
+
 namespace bfm::parser::general_parser
 {
     template <typename CodeType,
@@ -62,8 +63,7 @@ namespace bfm::parser::general_parser
                                     new_branch);
                             if (is_simple_loop)
                             {
-                                if (block_data.total_shift != 0 ||
-                                    block_data.memory_change.size() == 0)
+                                if (block_data.total_shift != 0 || block_data.memory_change.empty())
                                 {
                                     is_simple_loop = false;
                                 }
