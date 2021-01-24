@@ -4,4 +4,3 @@
 #include "TestBFMachine.hpp"
 
 #include <boost/test/included/unit_test.hpp>
-
