@@ -1,6 +1,8 @@
 #ifndef TESTMEMORYTYPES_HPP_INCLUDED
 #define TESTMEMORYTYPES_HPP_INCLUDED
 
+#include "../BFMachineLib/BFMachineLib.hpp"
+
 #include <boost/test/included/unit_test.hpp>
 #include <boost/mpl/list.hpp>
 
@@ -9,8 +11,6 @@
 #include <map>
 #include <unordered_set>
 #include <random>
-
-#include "../BFMachineLib/BFMachineLib.hpp"
 
 typedef boost::mpl::list<bfm::memory_types::VectorMemory<std::vector<int> >,
                          bfm::memory_types::VectorMemory<std::vector<long long int> >,

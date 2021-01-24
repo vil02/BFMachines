@@ -1,6 +1,9 @@
 #ifndef TESTBFMACHINE_HPP_INCLUDED
 #define TESTBFMACHINE_HPP_INCLUDED
 
+#include "../BFMachineLib/BFMachineLib.hpp"
+#include "BfTestCodes.hpp"
+
 #include <boost/test/included/unit_test.hpp>
 #include <boost/mpl/list.hpp>
 
@@ -10,8 +13,6 @@
 #include <random>
 #include <string_view>
 #include <sstream>
-#include "../BFMachineLib/BFMachineLib.hpp"
-#include "BfTestCodes.hpp"
 BOOST_AUTO_TEST_CASE(find_matching_test)
 {
     using std::string_literals::operator""s;
