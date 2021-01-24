@@ -1,12 +1,14 @@
 #ifndef BFMACHINE_HPP_INCLUDED
 #define BFMACHINE_HPP_INCLUDED
 
-#include <string>
-#include <exception>
-#include <stdexcept>
-#include <type_traits>
-#include <map>
 #include "../BFMDataRef/BFMDataRef.hpp"
+
+#include <exception>
+#include <map>
+#include <stdexcept>
+#include <string>
+#include <type_traits>
+
 namespace bfm
 {
     namespace inner
