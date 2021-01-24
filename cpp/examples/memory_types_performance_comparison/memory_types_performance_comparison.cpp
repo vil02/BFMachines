@@ -78,7 +78,8 @@ int main()
         <<separator<<"unordered_map [s]"
         <<separator<<"vector [s]"
         <<std::endl;
-    for (value_type cur_n = 0; cur_n < 12; ++cur_n)
+    const value_type test_size = 12;
+    for (value_type cur_n = 0; cur_n < test_size; ++cur_n)
     {
         std::cout<<cur_n
             <<separator<<time_bf_factorial<memory_type_a>(cur_n)
