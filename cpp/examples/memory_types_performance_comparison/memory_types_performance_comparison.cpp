@@ -72,7 +72,7 @@ int main()
     using memory_type_a = bfm::memory_types::MapMemory<std::map<int, value_type> >;
     using memory_type_b = bfm::memory_types::MapMemory<std::unordered_map<int, value_type> >;
     using memory_type_c = bfm::memory_types::VectorMemory<std::vector<value_type> >;
-    const auto separator = "\t";
+    const auto separator = '\t';
     std::cout<<"cur_n"
         <<separator<<"map [s]"
         <<separator<<"unordered_map [s]"
