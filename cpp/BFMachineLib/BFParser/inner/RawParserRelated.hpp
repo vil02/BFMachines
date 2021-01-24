@@ -1,12 +1,12 @@
 #ifndef RAWPARSERRELATED_HPP_INCLUDED
 #define RAWPARSERRELATED_HPP_INCLUDED
 
+#include "BfOperationDataChangeRelated.hpp"
+
 #include <type_traits>
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-
-#include "BfOperationDataChangeRelated.hpp"
 
 namespace bfm::parser::inner
 {
