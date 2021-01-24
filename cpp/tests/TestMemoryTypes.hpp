@@ -111,10 +111,10 @@ BOOST_AUTO_TEST_CASE(array_memory_test)
     }
     BOOST_CHECK_EQUAL(cur_memory.get_value(special_pos), default_value+10);
     value_type tmp_variable = default_value;
-    BOOST_CHECK_THROW(tmp_variable = cur_memory.get_value(memory_size), std::out_of_range);
-    BOOST_CHECK_THROW(tmp_variable = cur_memory.get_value(memory_size+1), std::out_of_range);
     BOOST_CHECK_THROW(cur_memory.set_value(memory_size, tmp_variable), std::out_of_range);
+    BOOST_CHECK_THROW(tmp_variable = cur_memory.get_value(memory_size), std::out_of_range);
     BOOST_CHECK_THROW(cur_memory.set_value(memory_size, tmp_variable+1), std::out_of_range);
+    BOOST_CHECK_THROW(tmp_variable = cur_memory.get_value(memory_size+1), std::out_of_range);
 }
 
 #endif // TESTMEMORYTYPES_HPP_INCLUDED
