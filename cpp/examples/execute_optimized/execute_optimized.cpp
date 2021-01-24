@@ -6,11 +6,11 @@
 // where the method bfm::BFMachine::execute_optimized is used.
 #include "../../BFMachineLib/BFMachineLib.hpp"
 
+#include <array>
+#include <chrono>
 #include <iostream>
 #include <string_view>
 #include <vector>
-#include <array>
-#include <chrono>
 
 template <typename ValueType>
 [[nodiscard]] constexpr ValueType factorial_bf(const ValueType& in_num)
