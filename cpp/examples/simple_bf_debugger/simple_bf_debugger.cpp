@@ -7,8 +7,6 @@
 #include <algorithm>
 #include "../../BFMachineLib/BFMachineLib.hpp"
 
-#include <cstdlib>
-
 //we define a class displaying the current state of the BFMachine and current code
 //objects of this class are used as the second argument of the method
 //BFMachine::execute(const CodeType&, ShowDebugData&)
@@ -72,7 +70,8 @@ class ConsoleDebugViewer
                     std::cout<<"Enter value: ";
                     break;
                 default:
-                    system("pause");
+                    std::cout<<"Press enter to continue...";
+                    std::cin.ignore();
             }
         }
 };
