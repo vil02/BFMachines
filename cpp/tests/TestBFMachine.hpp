@@ -279,7 +279,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
         {"[+++++"s,
          "+]+++"s,
         };
-    for (const auto cur_code : wrong_bf_codes)
+    for (const auto& cur_code : wrong_bf_codes)
     {
         bfm::streams::InputStream<std::vector<value_type> > i_stream({});
         bfm::streams::OutputVectorStream<std::vector<value_type> > o_stream;
