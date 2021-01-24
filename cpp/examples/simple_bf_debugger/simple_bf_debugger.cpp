@@ -1,11 +1,12 @@
 //this example shows how to debug bf code
 //using the method BFMachine::execute(const CodeType&, ShowDebugData&)
+#include "../../BFMachineLib/BFMachineLib.hpp"
+
 #include <iostream>
 #include <limits>
 #include <unordered_map>
 #include <string>
 #include <algorithm>
-#include "../../BFMachineLib/BFMachineLib.hpp"
 
 //we define a class displaying the current state of the BFMachine and current code
 //objects of this class are used as the second argument of the method

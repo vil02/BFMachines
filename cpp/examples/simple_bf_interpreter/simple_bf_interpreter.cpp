@@ -1,10 +1,11 @@
 //example showing how to create a bf interpreter
 //and use it to run a code displaying Hello World! in the standard output
 
+#include "../../BFMachineLib/BFMachineLib.hpp"
+
 #include <iostream>
 #include <unordered_map>
 #include <string_view>
-#include "../../BFMachineLib/BFMachineLib.hpp"
 
 //#include <map>
 //#include <vector>

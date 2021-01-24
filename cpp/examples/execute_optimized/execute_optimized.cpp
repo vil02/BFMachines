@@ -4,12 +4,13 @@
 // Compare this file with the example
 // ../memory_types_performance_comparison/memory_types_performance_comparison/cpp
 // where the method bfm::BFMachine::execute_optimized is used.
+#include "../../BFMachineLib/BFMachineLib.hpp"
+
 #include <iostream>
 #include <string_view>
 #include <vector>
 #include <array>
 #include <chrono>
-#include "../../BFMachineLib/BFMachineLib.hpp"
 
 template <typename ValueType>
 [[nodiscard]] constexpr ValueType factorial_bf(const ValueType& in_num)

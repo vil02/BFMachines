@@ -3,9 +3,9 @@
 //Because brainfuck is Turing complete,
 //one can also view this example as a proof that compile time C++ is Turing complete.
 //This example requires C++20 (I tested it on GCC 10.2 with -std=c++20).
-#include <array>
-
 #include "../../BFMachineLib/BFMachineLib.hpp"
+
+#include <array>
 
 template<typename ValueType>
 constexpr ValueType bf_add(const ValueType& val_a, const ValueType& val_b)

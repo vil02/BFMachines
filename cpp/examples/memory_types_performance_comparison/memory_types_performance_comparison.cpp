@@ -1,13 +1,14 @@
 //this file compares the performance of different unbounded bfm::memory_types
 //the bf code used for the benchmark, factorial computation, is "dense" in the memory usage
 
+#include "../../BFMachineLib/BFMachineLib.hpp"
+
 #include <iostream>
 #include <string_view>
 #include <chrono>
 #include <unordered_map>
 #include <map>
 #include <vector>
-#include "../../BFMachineLib/BFMachineLib.hpp"
 
 template <typename CodeType>
 [[nodiscard]] constexpr CodeType bf_factorial()
