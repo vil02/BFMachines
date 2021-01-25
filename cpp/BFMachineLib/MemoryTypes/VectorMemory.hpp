@@ -47,8 +47,8 @@ namespace bfm::memory_types
         private:
             ContainerType geq_data, less_data;
             using raw_position_type = std::pair<typename ContainerType::size_type, bool>;
-            [[nodiscard]] constexpr raw_position_type get_raw_position(
-                    const position_type& in_position) const noexcept
+            [[nodiscard]] constexpr static raw_position_type get_raw_position(
+                    const position_type& in_position) noexcept
             {
                 return in_position >= 0 ?
                     raw_position_type(in_position, true) :
@@ -83,7 +83,7 @@ namespace bfm::memory_types
             {
                 return this->get_value(this->get_raw_position(in_position));
             }
-            [[nodiscard]] constexpr position_type get_starting_position() const noexcept
+            [[nodiscard]] constexpr static position_type get_starting_position() noexcept
             {
                 return 0;
             }
