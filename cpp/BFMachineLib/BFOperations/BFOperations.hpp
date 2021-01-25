@@ -37,7 +37,7 @@ namespace bfm::bfo
     struct [[nodiscard]] BFRead
     {
         template<typename BFMData>
-        constexpr void execute(BFMData& bfm_data) const
+        constexpr static void execute(BFMData& bfm_data)
         {
             using value_type = typename BFMData::value_type;
             value_type new_value = value_type();
