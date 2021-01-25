@@ -28,7 +28,7 @@ namespace bfm::bfo
     struct [[nodiscard]] BFWrite
     {
         template<typename BFMData>
-        constexpr void execute(BFMData& bfm_data) const
+        constexpr static void execute(BFMData& bfm_data)
         {
             bfm_data.output_stream<<bfm_data.memory.get_value(bfm_data.cur_position);
         }
