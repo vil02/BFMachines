@@ -161,10 +161,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, bfm_types)
     const auto result_value =
         [](const value_type& val_a, const value_type& val_b){return val_a+val_b;};
     const auto bf_plus = bf_test_codes::bf_plus<std::string_view>();
+    const value_type deterministic_test_size = 45;
     check_bf_computation_2d_product<BFMType, decltype(bf_plus), decltype(result_value)>(
-        bf_plus, 45, result_value);
+        bf_plus, deterministic_test_size, result_value);
+    const std::size_t random_test_size = 100;
+    const value_type value_limit = 400;
     check_bf_computation_2d_random<BFMType, decltype(bf_plus), decltype(result_value)>(
-        bf_plus, 100, 400, result_value);
+        bf_plus, random_test_size, value_limit, result_value);
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, bfm_types)
@@ -173,10 +176,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, bfm_types)
     const auto result_value =
         [](const value_type& val_a, const value_type& val_b){return val_a*val_b;};
     const auto bf_times = bf_test_codes::bf_times<std::string_view>();
+    const value_type deterministic_test_size = 45;
     check_bf_computation_2d_product<BFMType, decltype(bf_times), decltype(result_value)>(
-        bf_times, 45, result_value);
+        bf_times, deterministic_test_size, result_value);
+    const std::size_t random_test_size = 300;
+    const value_type value_limit = 100;
     check_bf_computation_2d_random<BFMType, decltype(bf_times), decltype(result_value)>(
-        bf_times, 300, 100, result_value);
+        bf_times, random_test_size, value_limit, result_value);
 }
 
 template <typename ValueType>
@@ -198,7 +204,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
     using value_type = typename BFMType::value_type;
     BOOST_REQUIRE_EQUAL(fibonacci(0), 0);
     BOOST_REQUIRE_EQUAL(fibonacci(1), 1);
-    for (value_type n = 0; n < 20; ++n)
+    const value_type test_size = 20;
+    for (value_type n = 0; n < test_size; ++n)
     {
         bfm::streams::InputStream<std::vector<value_type> > i_stream({n});
         bfm::streams::OutputVectorStream<std::vector<value_type> > o_stream;
@@ -226,7 +233,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
     using value_type = typename BFMType::value_type;
     BOOST_REQUIRE_EQUAL(factorial(0), 1);
     BOOST_REQUIRE_EQUAL(factorial(1), 1);
-    for (value_type n = 0; n < 8; ++n)
+    const value_type test_size = 8;
+    for (value_type n = 0; n < test_size; ++n)
     {
         bfm::streams::InputStream<std::vector<value_type> > i_stream({n});
         bfm::streams::OutputVectorStream<std::vector<value_type> > o_stream;
@@ -241,7 +249,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
 BOOST_AUTO_TEST_CASE_TEMPLATE(print_countdown_test, BFMType, bfm_types)
 {
     using value_type = typename BFMType::value_type;
-    const value_type  test_size = 40;
+    const value_type test_size = 40;
     for (value_type n = 0; n < test_size; ++n)
     {
         bfm::streams::InputStream<std::vector<value_type> > i_stream({n});
@@ -296,7 +304,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(hello_world_test, MemoryType, char_memory_types)
     using output_stream_type = decltype(ss);
     using bfm_type =
         typename bfm::BFMachine<MemoryType, input_stream_type, output_stream_type>;
-    input_stream_type i_stream = input_stream_type({});
+    auto i_stream = input_stream_type({});
     std::string_view hello_world_bf_code =
         "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>"
         "---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
@@ -312,18 +320,20 @@ BOOST_AUTO_TEST_CASE(bfm_with_array_memory_test)
     using value_type = int;
     constexpr std::size_t memory_size = 2;
     using memory_type =
-        typename bfm::memory_types::ArrayMemory<
-            std::array<value_type, memory_size> >;
+        typename bfm::memory_types::ArrayMemory<std::array<value_type, memory_size> >;
     using input_stream_type = bfm::streams::InputStream<std::vector<value_type> >;
     using output_stream_type = bfm::streams::OutputVectorStream<std::vector<value_type> >;
     using bf_machine_type = bfm::BFMachine<memory_type, input_stream_type, output_stream_type>;
     const auto bf_plus = bf_test_codes::bf_plus<std::string_view>();
     const auto result_value =
         [](const value_type& val_a, const value_type& val_b){return val_a+val_b;};
+    const value_type deterministic_test_size = 45;
     check_bf_computation_2d_product<bf_machine_type, decltype(bf_plus), decltype(result_value)>(
-        bf_plus, 45, result_value);
+        bf_plus, deterministic_test_size, result_value);
+    const std::size_t random_test_size = 100;
+    const value_type value_limit = 400;
     check_bf_computation_2d_random<bf_machine_type, decltype(bf_plus), decltype(result_value)>(
-        bf_plus, 100, 400, result_value);
+        bf_plus, random_test_size, value_limit, result_value);
 
     auto i_stream = input_stream_type({});
     auto o_stream = output_stream_type();

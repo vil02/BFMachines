@@ -23,7 +23,9 @@ typedef boost::mpl::list<bfm::memory_types::VectorMemory<std::vector<int> >,
 BOOST_AUTO_TEST_CASE_TEMPLATE(get_value_test, MemoryType, memory_types)
 {
     MemoryType cur_memory;
-    for (typename MemoryType::position_type i = -100; i < 100; ++i)
+    using position_type = typename MemoryType::position_type;
+    const position_type test_size = 100;
+    for (position_type i = -test_size; i < test_size; ++i)
     {
         BOOST_CHECK_EQUAL(cur_memory.get_value(i), 0);
     }
@@ -32,7 +34,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(get_value_test, MemoryType, memory_types)
 BOOST_AUTO_TEST_CASE_TEMPLATE(set_value_test, MemoryType, memory_types)
 {
     MemoryType cur_memory;
-    const typename MemoryType::position_type min_ind = -500, max_ind = 500;
+    const typename MemoryType::position_type min_ind = -500, max_ind = -min_ind;
     for (typename MemoryType::position_type i = min_ind; i < max_ind; ++i)
     {
         if (i%3 == 0)
@@ -54,11 +56,16 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, memory_types)
     using position_type = typename MemoryType::position_type;
     MemoryType cur_memory;
     std::mt19937 random_engine(0);
-    std::uniform_int_distribution<position_type> position_dist{-100, 100};
-    std::uniform_int_distribution<std::size_t> num_dist{1, 100};
-    std::uniform_int_distribution<value_type> value_dist{-300, 300};
+    const position_type position_range = 100;
+    std::uniform_int_distribution<position_type> position_dist{-position_range, position_range};
+    const std::size_t min_op_num = 1;
+    const std::size_t max_op_num = 100;
+    std::uniform_int_distribution<std::size_t> num_dist{min_op_num, max_op_num};
+    const value_type value_range = 300;
+    std::uniform_int_distribution<value_type> value_dist{-value_range, value_range};
 
-    for (std::size_t test_number = 0; test_number < 100; ++test_number)
+    const std::size_t test_size = 100;
+    for (std::size_t test_number = 0; test_number < test_size; ++test_number)
     {
         const auto cur_position = position_dist(random_engine);
         const auto start_value = value_dist(random_engine);
