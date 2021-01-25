@@ -50,7 +50,7 @@ namespace bfm::bfo
     struct [[nodiscard]] BFBlock
     {
         DataChangeType data_change;
-        explicit constexpr BFBlock(const DataChangeType in_data_change) :
+        explicit constexpr BFBlock(DataChangeType in_data_change) :
             data_change(std::move(in_data_change))
         {}
         template<typename BFMData>
@@ -111,7 +111,7 @@ namespace bfm::bfo
             BFLoop<DataChangeType> >;
         using operation_seq_type = typename std::vector<variant_type>;
         operation_seq_type operation_seq;
-        explicit constexpr BFLoop(const operation_seq_type in_operation_seq):
+        explicit constexpr BFLoop(operation_seq_type in_operation_seq):
             operation_seq(std::move(in_operation_seq))
         {}
         template <typename BFMData>
