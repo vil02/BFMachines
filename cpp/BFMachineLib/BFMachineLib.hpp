@@ -4,6 +4,7 @@
 #include "./StandardInstructions/StandardInstructions.hpp"
 #include "./MemoryTypes/MemoryTypes.hpp"
 #include "./Streams/Streams.hpp"
+#include "./FindMatching/FindMatching.hpp"
 #include "./BFParser/BFParser.hpp"
 #include "./BFOperations/BFOperations.hpp"
 #include "./BFMDataRef/BFMDataRef.hpp"

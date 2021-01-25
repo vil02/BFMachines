@@ -16,10 +16,9 @@
 BOOST_AUTO_TEST_CASE(find_matching_test)
 {
     using std::string_literals::operator""s;
-    const auto find_matching =
-        bfm::inner::find_matching<
-            typename std::basic_string<bfm::StandardInstructions::instruction_type>,
-            bfm::StandardInstructions>;
+    const auto find_matching = bfm::find_matching<
+        typename std::basic_string<bfm::StandardInstructions::instruction_type>,
+        bfm::StandardInstructions>;
     BOOST_REQUIRE_EQUAL(find_matching("[]"s, 0), 1);
     BOOST_REQUIRE_EQUAL(find_matching("[]"s, 1), 0);
     BOOST_REQUIRE_EQUAL(find_matching("[[]]"s, 0), 3);
