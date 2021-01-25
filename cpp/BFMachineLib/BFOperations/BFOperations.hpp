@@ -1,8 +1,11 @@
 #ifndef BFOPERATIONS_HPP_INCLUDED
 #define BFOPERATIONS_HPP_INCLUDED
+
 #include <stdexcept>
 #include <variant>
 #include <vector>
+#include <utility>
+
 namespace bfm::bfo::inner
 {
     template <typename DataChangeType, typename BFMData>
