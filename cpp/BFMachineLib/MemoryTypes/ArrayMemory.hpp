@@ -24,7 +24,7 @@ namespace bfm::memory_types
             {
                 return this->data.at(in_position);
             }
-            [[nodiscard]] constexpr position_type get_starting_position() const noexcept
+            [[nodiscard]] constexpr static position_type get_starting_position() noexcept
             {
                 return starting_position;
             }
