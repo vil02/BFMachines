@@ -23,7 +23,7 @@ namespace bfm::memory_types
                 const auto value_it = this->data.find(in_position);
                 return value_it != this->data.end() ? value_it->second : default_value;
             }
-            [[nodiscard]] constexpr position_type get_starting_position() const noexcept
+            [[nodiscard]] constexpr static position_type get_starting_position() noexcept
             {
                 return 0;
             }
