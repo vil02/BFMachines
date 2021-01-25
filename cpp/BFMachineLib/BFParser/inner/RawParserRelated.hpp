@@ -38,7 +38,7 @@ namespace bfm::parser::inner
         const auto check_single =
             [&is_instruction](const instruction_type& in_char) -> bool
             {
-                return is_instruction(in_char) == false || is_simple<InstructionSet>(in_char);
+                return !is_instruction(in_char) || is_simple<InstructionSet>(in_char);
             };
         return std::all_of(in_str.begin(), in_str.end(), check_single);
     }
