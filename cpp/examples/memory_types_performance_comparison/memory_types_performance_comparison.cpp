@@ -51,8 +51,8 @@ template <typename MemoryType>
     using o_stream_type = bfm::streams::OutputArrayStream<std::array<value_type, 1> >;
     using bfm_type = bfm::BFMachine<MemoryType, i_stream_type, o_stream_type>;
 
-    i_stream_type input_stream = i_stream_type({in_num});
-    o_stream_type output_stream = o_stream_type();
+    auto input_stream = i_stream_type({in_num});
+    auto output_stream = o_stream_type();
     const auto start_time = std::chrono::steady_clock::now();
     bfm_type(input_stream, output_stream).execute(bf_factorial<std::string_view>());
     const auto end_time = std::chrono::steady_clock::now();

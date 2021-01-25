@@ -24,8 +24,8 @@ template <typename ValueType>
     using o_stream_type = typename bfm::streams::OutputArrayStream<std::array<ValueType, 1> >;
     using bfm_type = typename bfm::BFMachine<memory_type, i_stream_type, o_stream_type>;
 
-    i_stream_type input_stream = i_stream_type({in_num});
-    o_stream_type output_stream = o_stream_type();
+    auto input_stream = i_stream_type({in_num});
+    auto output_stream = o_stream_type();
     bfm_type(input_stream, output_stream).execute_optimized(factorial_bf_code);
     return output_stream.get_data()[0];
 }
