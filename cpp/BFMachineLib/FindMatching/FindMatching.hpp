@@ -27,13 +27,9 @@ namespace bfm
 
         typename CodeType::difference_type cur_count = 0;
         typename CodeType::size_type cur_pos = start_pos+search_dir;
-        while (cur_pos < in_code.size())
+        while (cur_pos < in_code.size() && !(cur_count == 0 && in_code[cur_pos] == target_char))
         {
-            if (cur_count == 0 && in_code[cur_pos] == target_char)
-            {
-                break;
-            }
-            else if (in_code[cur_pos] == InstructionSet::begin_loop)
+            if (in_code[cur_pos] == InstructionSet::begin_loop)
             {
                 ++cur_count;
             }
