@@ -2,6 +2,7 @@
 #define INPUTSTREAM_HPP_INCLUDED
 
 #include <exception>
+#include <utility>
 
 namespace bfm::streams
 {
@@ -12,8 +13,8 @@ namespace bfm::streams
             ContainerType data;
             typename ContainerType::size_type cur_position;
         public:
-            constexpr explicit InputStream(const ContainerType& in_data) :
-                data(in_data),
+            constexpr explicit InputStream(ContainerType in_data) :
+                data(std::move(in_data)),
                 cur_position(0)
             {}
             constexpr InputStream& operator>>(typename ContainerType::value_type& out_value)
