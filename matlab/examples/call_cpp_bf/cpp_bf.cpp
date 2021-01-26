@@ -72,7 +72,7 @@ class MexFunction : public matlab::mex::Function
 
             i_stream_type input_stream = i_stream_type(input_vec);
             o_stream_type output_stream = o_stream_type();
-            bfm_type(input_stream, output_stream).execute(bf_code);
+            bfm_type(input_stream, output_stream).execute_optimized(bf_code);
 
             matlab::data::ArrayFactory factory;
             const auto tmp_res = output_stream.get_data();
