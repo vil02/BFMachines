@@ -17,6 +17,14 @@
     * [`bfm::streams::InputStream`](BFMachineLib/Streams/InputStream.hpp), where data is being send from some `std::vector` or `std::array`-like container,
     * [`bfm::streams::OutputVectorStream`](BFMachineLib/Streams/OutputVectorStream.hpp), where data is being send to some `std::vector`-like container (unknown size at compile time),
     * [`bfm::streams::OutputArrayStream`](BFMachineLib/Streams/OutputArrayStream.hpp), where data is being send to some `std::array`-like container (known size at compile time),
+* [BF operations](BFMachineLib/BFOperations/BFOperations.hpp), which represent optimised pieces of BF code.
+    * `bfm::bfo::BFWrite`,
+    * `bfm::bfo::BFRead`,
+    * `bfm::bfo::BFBlock`, which corresponds to any block of _simple commands_, i.e. commands like `<`, `>`, `+`, `-`,
+    * `bfm::bfo::BFSimpleLoop`, which corresponds to any bf loop containing only _simple commands_, such that the _total shift_ (i.e. the number of `>` minus the number of `<`) is zero and the value of the memory cell, which is checked at the beginning of the loop decreases by one. Examples are `[->+<]`, `[->++>--->+++<<<]` or `[<++>>--<-]`,
+    * `bfm::bfo::BFLoop`, which represents any BF loop.
+    
+    The function [`bfm::parser::bf_code_to_operation_seq`](BFMachineLib/BFParser/BFCodeToOperationSeq.hpp) _translates_ the given BF code into a _sequence_ of the operations described above. The result is represented as a `std::vector<std::variant<BFRead, BFWrite, BFBlock, BFSimpleLoop, BFLoop > >`. By default, the container storing the memory change information is `std::map`. Other types (for example `std::unordered_map`) can be specified by using the function template [`bfm::parser::general_parser::bf_code_to_operation_seq`](BFMachineLib/BFParser/BFCodeToOperationSeq.hpp).
 
 The folder [examples](examples) contains some code snippets, which might be useful to look at the beginning. Start with [**simple_bf_interpreter**](examples/simple_bf_interpreter/simple_bf_interpreter.cpp), [performance_test](examples/memory_types_performance_comparison/memory_types_performance_comparison.cpp) and [simple_bf_debugger](examples/simple_bf_debugger/simple_bf_debugger.cpp).
 
