@@ -15,7 +15,8 @@ namespace bfm::memory_types
             MemoryType& in_memory,
             const typename MemoryType::position_type& in_position)
     {
-        change_value(in_memory, in_position, -1);
+        using value_type = typename MemoryType::value_type;
+        change_value(in_memory, in_position, value_type(-1));
     }
     template<typename MemoryType>
     constexpr void change_value(

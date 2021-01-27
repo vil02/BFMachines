@@ -14,9 +14,11 @@
 
 typedef boost::mpl::list<bfm::memory_types::VectorMemory<std::vector<int> >,
                          bfm::memory_types::VectorMemory<std::vector<long long int> >,
+                         bfm::memory_types::VectorMemory<std::vector<unsigned> >,
                          bfm::memory_types::MapMemory<std::map<int, int> >,
                          bfm::memory_types::MapMemory<std::map<int, int>, false >,
                          bfm::memory_types::MapMemory<std::unordered_map<int, int> >,
+                         bfm::memory_types::MapMemory<std::unordered_map<int, unsigned> >,
                          bfm::memory_types::MapMemory<std::unordered_map<int, int>, false >
                         > memory_types;
 
@@ -34,18 +36,21 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(get_value_test, MemoryType, memory_types)
 BOOST_AUTO_TEST_CASE_TEMPLATE(set_value_test, MemoryType, memory_types)
 {
     MemoryType cur_memory;
-    const typename MemoryType::position_type min_ind = -500, max_ind = -min_ind;
+    using position_type = typename MemoryType::position_type;
+    using value_type = typename MemoryType::value_type;
+    const position_type min_ind = -500;
+    const position_type max_ind = -min_ind;
     for (typename MemoryType::position_type i = min_ind; i < max_ind; ++i)
     {
         if (i%3 == 0)
         {
-            cur_memory.set_value(i, -i);
-            BOOST_CHECK_EQUAL(cur_memory.get_value(i), -i);
+            cur_memory.set_value(i, value_type(-i));
+            BOOST_CHECK_EQUAL(cur_memory.get_value(i), value_type(-i));
         }
     }
     for (typename MemoryType::position_type i = min_ind; i < max_ind; ++i)
     {
-        const typename MemoryType::value_type target_val = (i%3 == 0) ? -i : 0;
+        const typename MemoryType::value_type target_val = (i%3 == 0) ? value_type(-i) : 0;
         BOOST_CHECK_EQUAL(cur_memory.get_value(i), target_val);
     }
 }
@@ -78,14 +83,14 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, memory_types)
             increase_value(cur_memory, cur_position);
         }
         BOOST_CHECK_EQUAL(cur_memory.get_value(cur_position),
-                          start_value+plus_num);
+                          start_value+value_type(plus_num));
 
         for (std::size_t i = 0; i < minus_num; ++i)
         {
             decrease_value(cur_memory, cur_position);
         }
         BOOST_CHECK_EQUAL(cur_memory.get_value(cur_position),
-                          start_value+plus_num-value_type(minus_num));
+                          start_value+value_type(plus_num)+value_type(-minus_num));
     }
 }
 
