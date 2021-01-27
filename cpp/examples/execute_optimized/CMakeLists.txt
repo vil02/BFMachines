@@ -41,4 +41,3 @@ set_tests_properties(execute_optimized_comp_test
     PROPERTIES PASS_REGULAR_EXPRESSION "18[ \t]*6402373705728000")
 set_tests_properties(execute_optimized_comp_test
     PROPERTIES PASS_REGULAR_EXPRESSION "19[ \t]*121645100408832000")
-
