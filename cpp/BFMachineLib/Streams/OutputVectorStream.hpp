@@ -4,7 +4,7 @@
 namespace bfm::streams
 {
    template <typename ContainerType>
-   class OutputVectorStream
+   class [[nodiscard]] OutputVectorStream
    {
         private:
             ContainerType data;

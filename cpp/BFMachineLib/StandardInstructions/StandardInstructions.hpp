@@ -3,7 +3,7 @@
 
 namespace bfm
 {
-    struct StandardInstructions
+    struct [[nodiscard]] StandardInstructions
     {
         using instruction_type = char;
         static const instruction_type move_left = '<';

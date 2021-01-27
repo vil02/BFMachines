@@ -6,7 +6,7 @@ namespace bfm::memory_types
     template<typename ContainerType,
              bool remove_default_values = true,
              typename ContainerType::mapped_type default_value = 0>
-    class MapMemory
+    class [[nodiscard]] MapMemory
     {
         public:
             using value_type = typename ContainerType::mapped_type;

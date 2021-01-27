@@ -7,7 +7,7 @@
 namespace bfm::streams
 {
    template <typename ContainerType>
-   class InputStream
+   class [[nodiscard]] InputStream
    {
         private:
             ContainerType data;

@@ -6,7 +6,7 @@ namespace bfm::memory_types
     template<typename ContainerType,
          typename ContainerType::size_type starting_position = 0,
          typename ContainerType::value_type default_value = 0>
-    class ArrayMemory
+    class [[nodiscard]] ArrayMemory
     {
         public:
             using value_type = typename ContainerType::value_type;

@@ -13,7 +13,7 @@ namespace bfm
              typename InputStream,
              typename OutputStream,
              typename InstructionSet = StandardInstructions>
-    class BFMachine
+    class [[nodiscard]] BFMachine
     {
         public:
             using value_type = typename MemoryType::value_type;

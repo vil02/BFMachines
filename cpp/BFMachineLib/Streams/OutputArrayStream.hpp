@@ -4,7 +4,7 @@
 namespace bfm::streams
 {
    template <typename ContainerType>
-   class OutputArrayStream
+   class [[nodiscard]] OutputArrayStream
    {
         private:
             using position_type = typename ContainerType::size_type;

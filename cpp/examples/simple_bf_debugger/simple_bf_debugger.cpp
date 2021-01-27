@@ -12,7 +12,7 @@
 //objects of this class are used as the second argument of the method
 //BFMachine::execute(const CodeType&, ShowDebugData&)
 template <typename BFMachine>
-class ConsoleDebugViewer
+class [[nodiscard]] ConsoleDebugViewer
 {
     public:
         using position_type = typename BFMachine::position_type;
