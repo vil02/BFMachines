@@ -1,0 +1,2 @@
+add_subdirectory(execute_optimized)
+add_subdirectory(compile_time_arithmetic)
