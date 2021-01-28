@@ -1,3 +1,5 @@
 add_subdirectory(execute_optimized)
 add_subdirectory(compile_time_arithmetic)
+add_subdirectory(simple_bf_debugger)
 add_subdirectory(simple_bf_interpreter)
+
