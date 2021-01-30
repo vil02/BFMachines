@@ -20,7 +20,6 @@ jobs:
         sudo apt-get install $COMPILER_NAME
         sudo apt-get install clang-tidy
         sudo apt-get install cppcheck
-        sudo apt-get install libboost-all-dev
     - name: Create Build Environment
       working-directory: ${{github.workspace}}/cpp
       run: cmake -E make_directory build
@@ -35,7 +34,7 @@ jobs:
       working-directory: ${{github.workspace}}/cpp/build
       run: |
         pwd
-        (ls ../.clang-tidy && echo yes) || echo no
+        cat ../.clang-tidy
         cppcheck --version
         clang-tidy --version
         clang-tidy --dump-config
