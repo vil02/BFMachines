@@ -30,5 +30,10 @@ The folder [examples](examples) contains some code snippets, which might be usef
 
 # Requirements, dependencies, ...
 
-The code is basically written in the spirit of C++17. I am using GNU GCC Compiler 9.2 (also tested with 10.2).
-[Tests](tests) use Boost.Test. I am using Boost 1.72 (also tested with 1.75).
+The code is basically written in the spirit of C++17 ([example `compile_time_arithmetic`](examples/compile_time_arithmetic/compile_time_arithmetic.cpp) requires C++20).
+If the this _badge_ is green:
+
+![Build ubuntu](https://github.com/vil02/BFMachines/workflows/build_ubuntu_latest/badge.svg)
+
+then the code builds with g++-8, g++-9, g++-10, clang++-9 and clang++-9.
+[Tests](tests) use Boost.Test.
