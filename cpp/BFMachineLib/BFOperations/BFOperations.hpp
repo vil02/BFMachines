@@ -91,12 +91,13 @@ namespace bfm::bfo
             const auto multiplier = bfm_data.memory.get_value(bfm_data.cur_position);
             if (multiplier != 0)
             {
+                using value_type = typename DataChangeType::value_type;
                 for (const auto& [cur_shift, cur_value_change] : this->data_change.memory_change)
                 {
                     change_value(
                         bfm_data.memory,
                         bfm_data.cur_position+cur_shift,
-                        multiplier*cur_value_change);
+                        value_type(multiplier*cur_value_change));
                 }
                 bfm_data.memory.set_value(bfm_data.cur_position, 0);
             }

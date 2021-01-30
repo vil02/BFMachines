@@ -11,7 +11,8 @@ namespace bfm::parser::inner
             const typename MemoryChangeType::key_type cur_shift,
             const typename MemoryChangeType::mapped_type& value_change)
     {
-        memory_change[cur_shift] += value_change;
+        using value_type = typename MemoryChangeType::mapped_type;
+        memory_change[cur_shift] = value_type(memory_change[cur_shift]+value_change);
         if (memory_change[cur_shift] == 0)
         {
             memory_change.erase(cur_shift);
