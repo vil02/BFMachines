@@ -22,9 +22,7 @@ jobs:
         sudo apt-get install cppcheck
     - name: Create Build Environment
       working-directory: ${{github.workspace}}/cpp
-      run: |
-        cmake -E make_directory build
-        cp .clang-tidy ..
+      run: cmake -E make_directory build
 
     - name: Configure CMake
       shell: bash
@@ -35,9 +33,6 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/cpp/build
       run: |
-        pwd
-        cat ../.clang-tidy
         cppcheck --version
         clang-tidy --version
-        clang-tidy --dump-config
-        cmake --build . -v --config $BUILD_TYPE
+        cmake --build . --config $BUILD_TYPE
