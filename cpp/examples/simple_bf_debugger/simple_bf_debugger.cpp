@@ -7,6 +7,7 @@
 #include <limits>
 #include <string>
 #include <unordered_map>
+#include <stdexcept>
 
 //we define a class displaying the current state of the BFMachine and current code
 //objects of this class are used as the second argument of the method
@@ -79,11 +80,25 @@ class [[nodiscard]] ConsoleDebugViewer
 
 int main()
 {
+    int return_value = 0;
     using memory_type = typename bfm::memory_types::MapMemory<std::unordered_map<int, unsigned> >;
     using bfm_type = typename bfm::BFMachine<memory_type, decltype(std::cin), decltype(std::cout)>;
     auto debug_viewer = ConsoleDebugViewer<bfm_type>();
     //example bf code adding two numbers
     std::string bf_code = ",>,<[->+<]>.";
-    bfm_type(std::cin, std::cout).execute(bf_code, debug_viewer);
-    return 0;
+    try
+    {
+        bfm_type(std::cin, std::cout).execute(bf_code, debug_viewer);
+    }
+    catch (const std::exception& ex)
+    {
+        std::cout<<"Error: "<<ex.what()<<'\n';
+        return_value = 1;
+    }
+    catch (...)
+    {
+        std::cout<<"Unknown error\n";
+        return_value = 2;
+    }
+    return return_value;
 }
