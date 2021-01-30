@@ -6,11 +6,13 @@
 #include <iostream>
 #include <string_view>
 #include <unordered_map>
+#include <exception>
 
 //#include <map>
 //#include <vector>
 int main()
 {
+    int return_value = 0;
     //we want to use an unbounded memory, where each cell is a char
     //(int is used to store the addresses/positions in the memory)
     using memory_type = typename bfm::memory_types::MapMemory<std::unordered_map<int, char> >;
@@ -29,10 +31,23 @@ int main()
     const std::string_view bf_code =
         "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>"
         "---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
-    //we create a temporary bf machine and execute given bf code
-    bfm_type(std::cin, std::cout).execute(bf_code);
-    //we can also use the execute_optimized for better performance,
-    //cf. example ../execute_optimized/execute_optimized.hpp
-    //bfm_type(std::cin, std::cout).execute_optimized(bf_code);
-    return 0;
+    try
+    {
+        //we create a temporary bf machine and execute given bf code
+        bfm_type(std::cin, std::cout).execute(bf_code);
+        //we can also use the execute_optimized for better performance,
+        //cf. example ../execute_optimized/execute_optimized.hpp
+        //bfm_type(std::cin, std::cout).execute_optimized(bf_code);
+    }
+    catch (const std::exception& ex)
+    {
+        std::cout<<"Error: "<<ex.what()<<'\n';
+        return_value = 1;
+    }
+    catch (...)
+    {
+        std::cout<<"Unknown error\n";
+        return_value = 2;
+    }
+    return return_value;
 }
