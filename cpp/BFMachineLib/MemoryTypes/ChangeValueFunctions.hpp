@@ -24,7 +24,10 @@ namespace bfm::memory_types
             const typename MemoryType::position_type& in_position,
             const typename MemoryType::value_type& in_value_change)
     {
-        in_memory.set_value(in_position, in_memory.get_value(in_position)+in_value_change);
+        using value_type = typename MemoryType::value_type;
+        in_memory.set_value(
+            in_position,
+            value_type(in_memory.get_value(in_position)+in_value_change));
     }
 }
 
