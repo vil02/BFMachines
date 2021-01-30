@@ -38,4 +38,4 @@ jobs:
         cppcheck --version
         clang-tidy --version
         clang-tidy --dump-config
-        cmake --build . --config $BUILD_TYPE
+        cmake --build . -v --config $BUILD_TYPE
