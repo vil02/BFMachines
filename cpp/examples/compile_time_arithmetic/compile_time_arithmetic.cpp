@@ -26,7 +26,8 @@ constexpr ValueType bf_add(const ValueType& val_a, const ValueType& val_b)
 template<typename ValueType>
 constexpr ValueType bf_multiply(const ValueType& val_a, const ValueType& val_b)
 {
-    using memory_type = typename bfm::memory_types::ArrayMemory<std::array<ValueType, 5> >;
+    constexpr std::size_t memory_size = 5;
+    using memory_type = typename bfm::memory_types::ArrayMemory<std::array<ValueType, memory_size> >;
     using input_stream_type = bfm::streams::InputStream<std::array<ValueType, 2> >;
     using output_stream_type = bfm::streams::OutputArrayStream<std::array<ValueType, 1> >;
     using bf_machine_type =
