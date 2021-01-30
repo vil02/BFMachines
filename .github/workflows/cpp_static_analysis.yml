@@ -1,4 +1,4 @@
-name: static_analysis
+name: cpp_static_analysis
 
 on:
   push:
