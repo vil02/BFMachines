@@ -7,7 +7,7 @@
 #include <limits>
 #include <string>
 #include <unordered_map>
-#include <stdexcept>
+#include <exception>
 
 //we define a class displaying the current state of the BFMachine and current code
 //objects of this class are used as the second argument of the method
