@@ -33,4 +33,8 @@ jobs:
     - name: Build with clang-tidy and cppcheck analysis
       shell: bash
       working-directory: ${{github.workspace}}/cpp/build
-      run: cmake --build . --config $BUILD_TYPE
+      run: |
+        cppcheck --version
+        clang-tidy --version
+        clang-tidy --dump-config
+        cmake --build . --config $BUILD_TYPE
