@@ -18,7 +18,7 @@ jobs:
       run: |
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get install $COMPILER_NAME
-        sudo apt-get install clang-tidy
+        sudo apt-get install clang-tidy-10
         sudo apt-get install cppcheck
     - name: Create Build Environment
       working-directory: ${{github.workspace}}/cpp
