@@ -1,0 +1,5 @@
+---
+Checks:          '*,-llvm-header-guard,-modernize-use-trailing-return-type,-google-readability-namespace-comments,-llvm-namespace-comment,-llvm-include-order,-fuchsia-overloaded-operator,-fuchsia-default-arguments-calls,-fuchsia-trailing-return,-misc-non-private-member-variables-in-classes,-misc-definitions-in-headers'
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*'
+FormatStyle:     none
