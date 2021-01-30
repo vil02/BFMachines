@@ -1,4 +1,4 @@
-name: build_ubuntu_latest_g++_10
+name: build_ubuntu_latest_g++10
 
 on: [push]
 
