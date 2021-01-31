@@ -36,5 +36,5 @@ If the _badge_ below is green:
 
 ![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg)
 
-then the code [builds with g++-8, g++-9, g++-10, clang++-9 and clang++-10](../.github/workflows/cpp_build_ubuntu_latest.yml).
+then the code [builds](../.github/workflows/cpp_build_ubuntu_latest.yml) with g++-8, g++-9, g++-10, clang++-9 and clang++-10.
 [Tests](tests) use Boost.Test.
