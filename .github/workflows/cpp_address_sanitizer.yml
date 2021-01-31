@@ -4,6 +4,7 @@ on:
   push:
     paths: 
       - 'cpp/**'
+      - '.github/workflows/cpp_address_sanitizer.yml'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
