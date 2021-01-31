@@ -4,6 +4,7 @@ on:
   push:
     paths: 
       - 'cpp/**'
+      - '.github/workflows/cpp_static_analysis.yml'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -30,12 +31,13 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{github.workspace}}/cpp/build
-      run: cmake ../ -DCMAKE_BUILD_TYPE=$BUILD_TYPE -D CMAKE_CXX_COMPILER=$COMPILER_NAME -D ENABLE_CLANG_TIDY=ON -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
+      run: cmake ../ -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D CMAKE_CXX_COMPILER=$COMPILER_NAME -D ENABLE_CLANG_TIDY=ON -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
 
     - name: Build with clang-tidy and cppcheck analysis
       shell: bash
       working-directory: ${{github.workspace}}/cpp/build
       run: |
+        $COMPILER_NAME --version
         cppcheck --version
         clang-tidy --version
         cmake --build . --config $BUILD_TYPE
