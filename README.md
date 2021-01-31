@@ -14,5 +14,5 @@ The purpose of this repository is to provide adjustable, reliable and "high perf
 
 # Future languages
 
-* [python](python)
+* python
 * ?
