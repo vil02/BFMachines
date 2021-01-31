@@ -1,4 +1,4 @@
-![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg) ![Static analysis](https://github.com/vil02/BFMachines/workflows/cpp_static_analysis/badge.svg)
+![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg) ![Static analysis](https://github.com/vil02/BFMachines/workflows/cpp_static_analysis/badge.svg) ![Address sanitizer](https://github.com/vil02/BFMachines/workflows/cpp_address_sanitizer/badge.svg)
 # [BF](https://esolangs.org/wiki/Brainfuck) interpreter in C++
 
 `BFMachineLib` provides the basic functionality to execute brainfuck code, namely:
