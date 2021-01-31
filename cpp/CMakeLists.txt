@@ -23,6 +23,10 @@ set_project_warnings(project_warnings)
 # allow for static analysis options
 include(cmake/StaticAnalyzers.cmake)
 
+# sanitizer options if supported by compiler
+include(cmake/Sanitizers.cmake)
+enable_sanitizers(project_options)
+
 option(ENABLE_TESTING "Enable tests" ON)
 if(ENABLE_TESTING)
     enable_testing()
