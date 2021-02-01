@@ -7,6 +7,7 @@
 #include <map>
 #include <type_traits>
 #include <vector>
+#include <string>
 
 namespace bfm::parser::general_parser
 {
