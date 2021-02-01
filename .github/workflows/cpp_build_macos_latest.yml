@@ -19,14 +19,17 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-
+    
+    - name: install boost
+      run: brew install boost
+    
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
 
     - name: Configure CMake
       shell: bash
       working-directory: ${{github.workspace}}/build
-      run: cmake ${{github.workspace}}/cpp -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_BOOST_TESTS=OFF
+      run: cmake ${{github.workspace}}/cpp -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
 
     - name: Build with ${{matrix.compiler}}
       working-directory: ${{github.workspace}}/build
