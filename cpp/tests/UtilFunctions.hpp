@@ -95,6 +95,16 @@ namespace util_functions
         BOOST_CHECK_EQUAL(output_stream.get_data()[0], result_value);
     }
 
+    template<typename BFMType, typename CodeType>
+    void check_bf_computation(
+            const CodeType& bf_code,
+            const std::vector<typename BFMType::value_type>& input_vector,
+            const typename BFMType::value_type& result_value)
+    {
+        check_interpreted_bf_computation<BFMType, CodeType>(bf_code, input_vector, result_value);
+        check_optimized_bf_computation<BFMType, CodeType>(bf_code, input_vector, result_value);
+    }
+
     template<typename BFMType,
              typename CodeType,
              typename SeqType,
@@ -107,8 +117,7 @@ namespace util_functions
         for (const auto cur_data : in_data_seq)
         {
             const auto cur_result = result_fun(cur_data);
-            check_interpreted_bf_computation<BFMType, CodeType>(in_bf_code, cur_data, cur_result);
-            check_optimized_bf_computation<BFMType, CodeType>(in_bf_code, cur_data, cur_result);
+            check_bf_computation<BFMType, CodeType>(in_bf_code, cur_data, cur_result);
         }
     }
 

@@ -134,12 +134,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
     const value_type test_size = 20;
     for (value_type n = 0; n < test_size; ++n)
     {
-        bfm::streams::InputStream<std::vector<value_type> > i_stream({n});
-        bfm::streams::OutputVectorStream<std::vector<value_type> > o_stream;
-        BFMType bf_machine(i_stream, o_stream);
-        bf_machine.execute(bf_test_codes::bf_fibonacci<std::string>());
-        BOOST_CHECK_EQUAL(o_stream.get_data().size(), 1);
-        BOOST_CHECK_EQUAL(o_stream.get_data()[0], fibonacci(n));
+        util_functions::check_bf_computation<BFMType>(
+            bf_test_codes::bf_fibonacci<std::string_view>(),
+            {n},
+            fibonacci(n));
         BOOST_REQUIRE_EQUAL(fibonacci(n)+fibonacci(n+1), fibonacci(n+2));
     }
 }
@@ -163,12 +161,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
     const value_type test_size = 8;
     for (value_type n = 0; n < test_size; ++n)
     {
-        bfm::streams::InputStream<std::vector<value_type> > i_stream({n});
-        bfm::streams::OutputVectorStream<std::vector<value_type> > o_stream;
-        BFMType bf_machine(i_stream, o_stream);
-        bf_machine.execute(bf_test_codes::bf_factorial<std::string_view>());
-        BOOST_CHECK_EQUAL(o_stream.get_data().size(), 1);
-        BOOST_CHECK_EQUAL(o_stream.get_data()[0], factorial(n));
+        util_functions::check_bf_computation<BFMType>(
+            bf_test_codes::bf_factorial<std::string_view>(),
+            {n},
+            factorial(n));
         BOOST_REQUIRE_EQUAL(factorial(n)*(n+1), factorial(n+1));
     }
 }
