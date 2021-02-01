@@ -22,8 +22,7 @@ jobs:
     
     - name: Install boost
       run: |
-          brew install boost
-          brew upgrade boost cmake
+          brew install boost-python
     
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
