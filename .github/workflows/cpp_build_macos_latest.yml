@@ -20,8 +20,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: install boost
-      run: brew install boost
+    - name: Install boost
+      run: |
+          brew install boost
+          brew upgrade boost cmake
     
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
