@@ -25,7 +25,7 @@ jobs:
       working-directory: ${{github.workspace}}\build
       run: cmake "${{github.workspace}}\cpp" -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D ENABLE_BOOST_TESTS=OFF
 
-    - name: Build with ${{matrix.compiler}}
+    - name: Build
       working-directory: ${{github.workspace}}\build
       shell: bash
       run: cmake --build . --config $BUILD_TYPE
