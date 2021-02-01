@@ -1,0 +1,35 @@
+name: cpp_build_windows_latest
+
+on:
+  push:
+    paths: 
+      - 'cpp/**'
+      - '.github/workflows/cpp_build_windows_latest.yml'
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{github.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{github.workspace}}/build
+      run: cmake ${{github.workspace}}/cpp -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D ENABLE_BOOST_TESTS=OFF
+
+    - name: Build with ${{matrix.compiler}}
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: ctest -C $BUILD_TYPE
