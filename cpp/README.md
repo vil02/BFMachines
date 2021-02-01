@@ -1,4 +1,4 @@
-![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg) ![Static analysis](https://github.com/vil02/BFMachines/workflows/cpp_static_analysis/badge.svg) ![Address sanitizer](https://github.com/vil02/BFMachines/workflows/cpp_address_sanitizer/badge.svg)
+![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg) ![Build windows](https://github.com/vil02/BFMachines/workflows/cpp_build_windows_latest/badge.svg) ![Build macos](https://github.com/vil02/BFMachines/workflows/cpp_build_macos_latest/badge.svg) ![Static analysis](https://github.com/vil02/BFMachines/workflows/cpp_static_analysis/badge.svg) ![Address sanitizer](https://github.com/vil02/BFMachines/workflows/cpp_address_sanitizer/badge.svg)
 # [BF](https://esolangs.org/wiki/Brainfuck) interpreter in C++
 
 `BFMachineLib` provides the basic functionality to execute brainfuck code, namely:
@@ -32,9 +32,10 @@ The folder [examples](examples) contains some code snippets, which might be usef
 # Requirements, dependencies, ...
 
 The code is basically written in the spirit of C++17 ([example `compile_time_arithmetic`](examples/compile_time_arithmetic/compile_time_arithmetic.cpp) requires C++20).
-If the _badge_ below is green:
 
-![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg)
 
-then the code [builds](../.github/workflows/cpp_build_ubuntu_latest.yml) with g++-8, g++-9, g++-10, clang++-9 and clang++-10.
+* the code [builds](../.github/workflows/cpp_build_ubuntu_latest.yml) with g++-8, g++-9, g++-10, clang++-9 and clang++-10 ![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg),
+* the code [builds](../.github/workflows/cpp_build_windows_latest.yml) with MSVC 19 ![Build windows](https://github.com/vil02/BFMachines/workflows/cpp_build_windows_latest/badge.svg).
+* the code [builds](../.github/workflows/cpp_build_macos_latest.yml) with Apple clang++ version 12.0.0 ![Build macos](https://github.com/vil02/BFMachines/workflows/cpp_build_macos_latest/badge.svg).
+
 [Tests](tests) use Boost.Test.
