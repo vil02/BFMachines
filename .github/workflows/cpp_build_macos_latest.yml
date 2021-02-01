@@ -27,7 +27,9 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: $BUILD_DIR
-      run: cmake .. -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_BOOST_TESTS=OFF
+      run: |
+        pwd
+        cmake .. -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_BOOST_TESTS=OFF
 
     - name: Build with ${{matrix.compiler}}
       working-directory: $BUILD_DIR
