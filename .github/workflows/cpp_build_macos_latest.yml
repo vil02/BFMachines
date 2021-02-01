@@ -22,7 +22,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Create Build Environment
-      working-directory: CMAINLISTS_PATH
+      working-directory: $CMAINLISTS_PATH
       run: cmake -E make_directory build
 
     - name: Configure CMake
