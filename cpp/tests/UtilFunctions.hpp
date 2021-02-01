@@ -132,7 +132,7 @@ namespace util_functions
     }
 
     template <typename T>
-    const auto get_sum_of_vector_fun()
+    auto get_sum_of_vector_fun()
     {
         return [](const std::vector<T> in_vec)
         {
@@ -141,7 +141,7 @@ namespace util_functions
     }
 
     template <typename T>
-    const auto get_product_of_vector_fun()
+    auto get_product_of_vector_fun()
     {
         return [](const std::vector<T> in_vec)
         {
