@@ -1,6 +1,9 @@
-add_subdirectory(execute_optimized)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    add_subdirectory(execute_optimized)
+else()
+    message(WARNING "skipping: execute_optimized")
+endif()
 add_subdirectory(compile_time_arithmetic)
 add_subdirectory(memory_types_performance_comparison)
 add_subdirectory(simple_bf_debugger)
 add_subdirectory(simple_bf_interpreter)
-
