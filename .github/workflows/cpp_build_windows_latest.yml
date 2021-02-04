@@ -9,9 +9,8 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  CPP_PATH: ${{github.workspace}}/cpp
-  BUILD_FOLDER_NAME: build
-  BUILD_PATH: $CPP_PATH/$BUILD_FOLDER_NAME
+  CPP_PATH: ${{github.workspace}}\cpp
+  BUILD_PATH: ${{github.workspace}}\cpp\build
 
 jobs:
   build:
