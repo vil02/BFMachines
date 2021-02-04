@@ -30,8 +30,8 @@ jobs:
     - name: Build
       working-directory: ${{env.BUILD_PATH}}
       shell: bash
-      run: cmake --build .
+      run: cmake --build . --config ${{env.BUILD_TYPE}}
     - name: Test
       working-directory: ${{env.BUILD_PATH}}
       shell: bash
-      run: ctest
+      run: ctest -C ${{env.BUILD_TYPE}}
