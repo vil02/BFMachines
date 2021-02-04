@@ -24,14 +24,14 @@ jobs:
 
     - name: Configure CMake
       shell: bash
-      working-directory: $BUILD_PATH
+      working-directory: ${{env.BUILD_PATH}}
       run: cmake "${{env.CPP_PATH}}" -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D ENABLE_BOOST_TESTS=OFF
 
     - name: Build
-      working-directory: $BUILD_PATH
+      working-directory: ${{env.BUILD_PATH}}
       shell: bash
       run: cmake --build . --config $BUILD_TYPE
     - name: Test
-      working-directory: $BUILD_PATH
+      working-directory: ${{env.BUILD_PATH}}
       shell: bash
       run: ctest -C $BUILD_TYPE
