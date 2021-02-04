@@ -9,6 +9,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  BUILD_PATH: ${{github.workspace}}/cpp/build
 
 jobs:
   build:
@@ -28,20 +29,19 @@ jobs:
       run: |
         sudo apt-get install libboost-all-dev
     - name: Create Build Environment
-      run: cmake -E make_directory ${{github.workspace}}/build
+      run: cmake -E make_directory ${{env.BIULD_PATH}}
 
     - name: Configure CMake
       shell: bash
-      working-directory: ${{github.workspace}}/build
-      run: cmake ${{github.workspace}}/cpp -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
+      working-directory: ${{env.BIULD_PATH}}
+      run: cmake ../ -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
 
     - name: Build
-      working-directory: ${{github.workspace}}/build
+      working-directory: ${{env.BIULD_PATH}}
       shell: bash
-      run: cmake --build . --config $BUILD_TYPE
+      run: cmake --build . --config ${{env.BUILD_TYPE}}
 
     - name: Test
-      working-directory: ${{github.workspace}}/build
+      working-directory: ${{env.BIULD_PATH}}
       shell: bash
-      run: ctest -C $BUILD_TYPE
-  
+      run: ctest -C ${{env.BUILD_TYPE}}
