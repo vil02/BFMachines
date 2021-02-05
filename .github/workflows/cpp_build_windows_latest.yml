@@ -2,7 +2,7 @@ name: cpp_build_windows_latest
 
 on:
   push:
-    paths: 
+    paths:
       - 'cpp/**'
       - '.github/workflows/cpp_build_windows_latest.yml'
 
@@ -14,7 +14,7 @@ env:
 jobs:
   build:
     runs-on: windows-latest
-    
+
     steps:
     - uses: actions/checkout@v2
 

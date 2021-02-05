@@ -2,7 +2,7 @@ name: cpp_address_sanitizer
 
 on:
   push:
-    paths: 
+    paths:
       - 'cpp/**'
       - '.github/workflows/cpp_address_sanitizer.yml'
 
@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         compiler: [g++-10, clang++-10]
-    
+
     steps:
     - uses: actions/checkout@v2
 

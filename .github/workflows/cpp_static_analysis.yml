@@ -2,7 +2,7 @@ name: cpp_static_analysis
 
 on:
   push:
-    paths: 
+    paths:
       - 'cpp/**'
       - '.github/workflows/cpp_static_analysis.yml'
 

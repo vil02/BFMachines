@@ -2,7 +2,7 @@ name: cpp_build_macos_latest
 
 on:
   push:
-    paths: 
+    paths:
       - 'cpp/**'
       - '.github/workflows/cpp_build_macos_latest.yml'
 
@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         compiler: [g++-8, g++-9, g++-10, clang++]
-    
+
     steps:
     - uses: actions/checkout@v2
 
