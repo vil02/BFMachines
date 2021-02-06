@@ -3,9 +3,12 @@
 
 #include <string>
 #include <sstream>
+#include <map>
 #include "../BFOperations.hpp"
+#include "../../BFParser/DataChange.hpp"
+#include "../../StandardInstructions/StandardInstructions.hpp"
 
-namespace bfm::bfo::translators
+namespace bfm::bfo::translators::general
 {
     namespace inner
     {
@@ -106,6 +109,16 @@ namespace bfm::bfo::translators
                 return ss.str();
             }
     };
+}
+
+namespace bfm::bfo::translators
+{
+    template <typename PositionType = std::int64_t,
+              typename ValueType = std::int64_t,
+              typename InstructionSet = bfm::StandardInstructions>
+    using ToBf = typename general::ToBf<
+        bfm::parser::DataChange<std::map<PositionType, ValueType> >,
+        InstructionSet>;
 }
 
 #endif // TOBF_HPP_INCLUDED
