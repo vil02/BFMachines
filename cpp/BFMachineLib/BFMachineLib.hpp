@@ -6,7 +6,7 @@
 #include "./Streams/Streams.hpp"
 #include "./FindMatching/FindMatching.hpp"
 #include "./BFParser/BFParser.hpp"
-#include "./BFOperations/BFOperations.hpp"
+#include "./BFOperations/BFOperationsMainIncl.hpp"
 #include "./BFMDataRef/BFMDataRef.hpp"
 #include "./BFMachine/BFMachine.hpp"
 

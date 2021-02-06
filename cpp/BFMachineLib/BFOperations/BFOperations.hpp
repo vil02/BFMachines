@@ -131,5 +131,8 @@ namespace bfm::bfo
 
     template <typename DataChangeType>
     using variant_type = typename BFLoop<DataChangeType>::variant_type;
+
+    template <typename DataChangeType>
+    using operation_seq_type = typename BFLoop<DataChangeType>::operation_seq_type;
 }
 #endif // BFOPERATIONS_HPP_INCLUDED
