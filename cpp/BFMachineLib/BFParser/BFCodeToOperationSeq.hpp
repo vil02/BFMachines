@@ -15,12 +15,12 @@ namespace bfm::parser::general_parser
               typename DataChangeType,
               typename InstructionSet,
               bool MakeShrinkToFit>
-    [[nodiscard]] std::vector<bfm::bfo::variant_type<DataChangeType> > bf_code_to_operation_seq(
+    [[nodiscard]] bfm::bfo::operation_seq_type<DataChangeType> bf_code_to_operation_seq(
             const CodeType& in_bf_code)
     {
         static_assert(std::is_same<
             typename CodeType::value_type, typename InstructionSet::instruction_type>::value);
-        std::vector<bfm::bfo::variant_type<DataChangeType> > res;
+        bfm::bfo::operation_seq_type<DataChangeType> res;
         typename CodeType::size_type cur_code_pos = 0;
         while (cur_code_pos < in_bf_code.size())
         {
