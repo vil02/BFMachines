@@ -2,5 +2,6 @@
 
 #include "TestMemoryTypes.hpp"
 #include "TestBFMachine.hpp"
+#include "TestTranslateToBf.hpp"
 
 #include <boost/test/included/unit_test.hpp>
