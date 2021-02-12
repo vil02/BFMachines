@@ -30,9 +30,10 @@ namespace bf_test_codes
     template <typename CodeType>
     [[nodiscard]] constexpr CodeType bf_factorial()
     {
-        return CodeType("+>>,[>>]<<"
-                        "[[->+>+<<]>>[-<<+>>]<-]<<"
-                        "[[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>[-<<<<+>>>>]<<<<>[-]<<]>.");
+        return CodeType(
+            "+>>,[>>]<<"
+            "[[->+>+<<]>>[-<<+>>]<-]<<"
+            "[[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>[-<<<<+>>>>]<<<<>[-]<<]>.");
     }
 }
 
