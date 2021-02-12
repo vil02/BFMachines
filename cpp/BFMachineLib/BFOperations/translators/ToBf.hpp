@@ -65,12 +65,12 @@ namespace bfm::bfo::translators::general
                 return ss.str();
             }
         public:
-            [[nodiscard]] static constexpr auto print(const BFWrite&)
+            [[nodiscard]] static constexpr auto print(const BFWrite& /*unused*/)
             {
                 return InstructionSet::print_value;
             }
 
-            [[nodiscard]] static constexpr auto print(const BFRead&)
+            [[nodiscard]] static constexpr auto print(const BFRead& /*unused*/)
             {
                 return InstructionSet::read_value;
             }
