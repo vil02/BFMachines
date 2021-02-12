@@ -35,6 +35,14 @@ namespace bf_test_codes
             "[[->+>+<<]>>[-<<+>>]<-]<<"
             "[[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>[-<<<<+>>>>]<<<<>[-]<<]>.");
     }
+
+    template <typename CodeType>
+    [[nodiscard]] constexpr CodeType bf_hello_world()
+    {
+        return CodeType(
+            "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>"
+            "---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.");
+    }
 }
 
 #endif // BFTESTCODES_HPP_INCLUDED

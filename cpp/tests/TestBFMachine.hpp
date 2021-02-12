@@ -205,9 +205,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(hello_world_test, MemoryType, char_memory_types)
     using bfm_type =
         typename bfm::BFMachine<MemoryType, input_stream_type, output_stream_type>;
     auto i_stream = input_stream_type({});
-    std::string_view hello_world_bf_code =
-        "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>"
-        "---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
+    const auto hello_world_bf_code = bf_test_codes::bf_hello_world<std::string_view>();
     bfm_type(i_stream, ss).execute(hello_world_bf_code);
     BOOST_CHECK_EQUAL(ss.str(), "Hello World!\n");
     ss.str(std::string());
