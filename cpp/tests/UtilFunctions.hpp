@@ -160,6 +160,31 @@ namespace util_functions
                 std::multiplies<T>());
         };
     }
+
+    template <typename ValueType>
+    [[nodiscard]] constexpr ValueType fibonacci(const ValueType& in_num)
+    {
+        ValueType val_a = 0;
+        ValueType val_b = 1;
+        for (ValueType cur_num = 0; cur_num < in_num; ++cur_num)
+        {
+            const auto tmp_val = val_a+val_b;
+            val_a = val_b;
+            val_b = tmp_val;
+        }
+        return val_a;
+    }
+
+    template <typename ValueType>
+    [[nodiscard]] constexpr ValueType factorial(const ValueType& in_num)
+    {
+        ValueType res = 1;
+        for (ValueType cur_num = 1; cur_num <= in_num; ++cur_num)
+        {
+            res *= cur_num;
+        }
+        return res;
+    }
 }
 
 #endif // UTILFUNCTIONS_HPP_INCLUDED

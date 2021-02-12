@@ -112,60 +112,37 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, bfm_types)
         result_fun);
 }
 
-template <typename ValueType>
-[[nodiscard]] constexpr ValueType fibonacci(const ValueType& in_num)
-{
-    ValueType val_a = 0;
-    ValueType val_b = 1;
-    for (ValueType cur_num = 0; cur_num < in_num; ++cur_num)
-    {
-        const auto tmp_val = val_a+val_b;
-        val_a = val_b;
-        val_b = tmp_val;
-    }
-    return val_a;
-}
-
 BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
 {
     using value_type = typename BFMType::value_type;
-    BOOST_REQUIRE_EQUAL(fibonacci(0), 0);
-    BOOST_REQUIRE_EQUAL(fibonacci(1), 1);
+    BOOST_REQUIRE_EQUAL(util_functions::fibonacci(0), 0);
+    BOOST_REQUIRE_EQUAL(util_functions::fibonacci(1), 1);
     const value_type test_size = 20;
     for (value_type n = 0; n < test_size; ++n)
     {
         util_functions::check_bf_computation<BFMType>(
             bf_test_codes::bf_fibonacci<std::string_view>(),
             {n},
-            fibonacci(n));
-        BOOST_REQUIRE_EQUAL(fibonacci(n)+fibonacci(n+1), fibonacci(n+2));
+            util_functions::fibonacci(n));
+        BOOST_REQUIRE_EQUAL(
+            util_functions::fibonacci(n)+util_functions::fibonacci(n+1),
+            util_functions::fibonacci(n+2));
     }
-}
-
-template <typename ValueType>
-[[nodiscard]] constexpr ValueType factorial(const ValueType& in_num)
-{
-    ValueType res = 1;
-    for (ValueType cur_num = 1; cur_num <= in_num; ++cur_num)
-    {
-        res *= cur_num;
-    }
-    return res;
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
 {
     using value_type = typename BFMType::value_type;
-    BOOST_REQUIRE_EQUAL(factorial(0), 1);
-    BOOST_REQUIRE_EQUAL(factorial(1), 1);
+    BOOST_REQUIRE_EQUAL(util_functions::factorial(0), 1);
+    BOOST_REQUIRE_EQUAL(util_functions::factorial(1), 1);
     const value_type test_size = 8;
     for (value_type n = 0; n < test_size; ++n)
     {
         util_functions::check_bf_computation<BFMType>(
             bf_test_codes::bf_factorial<std::string_view>(),
             {n},
-            factorial(n));
-        BOOST_REQUIRE_EQUAL(factorial(n)*(n+1), factorial(n+1));
+            util_functions::factorial(n));
+        BOOST_REQUIRE_EQUAL(util_functions::factorial(n)*(n+1), util_functions::factorial(n+1));
     }
 }
 
