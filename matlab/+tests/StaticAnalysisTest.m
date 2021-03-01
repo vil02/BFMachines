@@ -8,12 +8,13 @@ classdef StaticAnalysisTest < matlab.unittest.TestCase
                  testCase.assertGreaterThan(in_dir.bytes, 0);
                  checkcode_res = ...
                      checkcode([in_dir.folder, filesep, in_dir.name]);
-                 if ~isequal(in_dir.name, 'run_cpp_bf.m')
-                     testCase.assertEmpty(checkcode_res);
-                 else
+                 if isequal(in_dir.name, 'run_cpp_bf.m')
                      testCase.assertEqual(length(checkcode_res), 1);
                      testCase.assertEqual(checkcode_res.message, ...
-                         'Using CLEAR FUNCTIONS usually decreases code performance and is often unnecessary.')
+                         ['Using CLEAR FUNCTIONS usually decreases ' ...
+                          'code performance and is often unnecessary.']);
+                 else
+                     testCase.assertEmpty(checkcode_res);
                  end
              end
          end
