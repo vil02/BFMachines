@@ -8,8 +8,8 @@ The purpose of this repository is to provide adjustable, reliable and "high perf
 
 * [C++](cpp)
     * interpreter and debugger, code optimisation
-    * ![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg) ![Build windows](https://github.com/vil02/BFMachines/workflows/cpp_build_windows_latest/badge.svg) ![Build macos](https://github.com/vil02/BFMachines/workflows/cpp_build_macos_latest/badge.svg)
-    * ![Static analysis](https://github.com/vil02/BFMachines/workflows/cpp_static_analysis/badge.svg) ![Address sanitizer](https://github.com/vil02/BFMachines/workflows/cpp_address_sanitizer/badge.svg)
+    * [![cpp_build_ubuntu_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu_latest.yml) [![cpp_build_windows_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml) [![cpp_build_macos_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml)
+    * [![cpp_static_analysis](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml) [![cpp_address_sanitizer](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml)
 * [MATLAB](matlab) 
     * interpreter, also shown how to use the C++ [BFMachineLib](cpp/BFMachineLib) from MATLAB (cf. [`call_cpp_bf` example ](matlab/examples/call_cpp_bf/run_cpp_bf.m))
 
