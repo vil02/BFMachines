@@ -1,4 +1,8 @@
-![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg) ![Build windows](https://github.com/vil02/BFMachines/workflows/cpp_build_windows_latest/badge.svg) ![Build macos](https://github.com/vil02/BFMachines/workflows/cpp_build_macos_latest/badge.svg) ![Static analysis](https://github.com/vil02/BFMachines/workflows/cpp_static_analysis/badge.svg) ![Address sanitizer](https://github.com/vil02/BFMachines/workflows/cpp_address_sanitizer/badge.svg)
+[![cpp_build_ubuntu_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu_latest.yml)
+[![cpp_build_windows_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml)
+[![cpp_build_macos_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml)
+[![cpp_static_analysis](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml)
+[![cpp_address_sanitizer](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml)
 # [BF](https://esolangs.org/wiki/Brainfuck) interpreter in C++
 
 `BFMachineLib` provides the basic functionality to execute brainfuck code, namely:
@@ -34,8 +38,8 @@ The folder [examples](examples) contains some code snippets, which might be usef
 The code is basically written in the spirit of C++17 ([example `compile_time_arithmetic`](examples/compile_time_arithmetic/compile_time_arithmetic.cpp) requires C++20).
 
 
-* the code [builds](../.github/workflows/cpp_build_ubuntu_latest.yml) with g++-8, g++-9, g++-10, clang++-9 and clang++-10 ![Build ubuntu](https://github.com/vil02/BFMachines/workflows/cpp_build_ubuntu_latest/badge.svg),
-* the code [builds](../.github/workflows/cpp_build_windows_latest.yml) with MSVC 19 ![Build windows](https://github.com/vil02/BFMachines/workflows/cpp_build_windows_latest/badge.svg).
-* the code [builds](../.github/workflows/cpp_build_macos_latest.yml) with Apple clang++ version 12.0.0 ![Build macos](https://github.com/vil02/BFMachines/workflows/cpp_build_macos_latest/badge.svg).
+* the code [builds](../.github/workflows/cpp_build_ubuntu_latest.yml) with g++-8, g++-9, g++-10, clang++-9 and clang++-10 [![cpp_build_ubuntu_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu_latest.yml),
+* the code [builds](../.github/workflows/cpp_build_windows_latest.yml) with MSVC 19 [![cpp_build_windows_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml).
+* the code [builds](../.github/workflows/cpp_build_macos_latest.yml) with Apple clang++ version 12.0.0 [![cpp_build_macos_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml).
 
 [Tests](tests) use Boost.Test.
