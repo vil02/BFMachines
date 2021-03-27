@@ -8,7 +8,7 @@
 #include "../../BFParser/DataChange.hpp"
 #include "../../StandardInstructions/StandardInstructions.hpp"
 
-namespace bfm::bfo::translators::general
+namespace bfm::bfo::translators::general_to_bf
 {
     namespace inner
     {
@@ -116,7 +116,7 @@ namespace bfm::bfo::translators
     template <typename PositionType = std::int64_t,
               typename ValueType = std::int64_t,
               typename InstructionSet = bfm::StandardInstructions>
-    using ToBf = typename general::ToBf<
+    using ToBf = typename general_to_bf::ToBf<
         bfm::parser::DataChange<std::map<PositionType, ValueType> >,
         InstructionSet>;
 }
