@@ -55,8 +55,7 @@ namespace bfm::bfo::translators::general_to_bf
             for (const auto& [cur_shift, cur_value_change] : in_data_change.memory_change)
             {
                 const auto shift_to_print = cur_shift-cur_total_shift;
-                ss<<ToBf::shift_to_bf(shift_to_print)
-                    <<ToBf::value_change_to_bf(cur_value_change);
+                ss<<ToBf::shift_to_bf(shift_to_print)<<ToBf::value_change_to_bf(cur_value_change);
                 cur_total_shift += shift_to_print;
             }
             ss<<ToBf::shift_to_bf(in_data_change.total_shift-cur_total_shift);
