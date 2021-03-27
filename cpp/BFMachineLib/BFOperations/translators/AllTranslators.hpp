@@ -2,5 +2,6 @@
 #define ALLTRANSLATORS_HPP_INCLUDED
 
 #include "ToBf.hpp"
+#include "ToCpp.hpp"
 
 #endif // ALLTRANSLATORS_HPP_INCLUDED
