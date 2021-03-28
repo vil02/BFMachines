@@ -10,14 +10,6 @@
 
 namespace bfm::bfo::translators::general_to_bf
 {
-    namespace inner
-    {
-        template <typename T>
-        T abs(const T& in_val)
-        {
-            return in_val >= T(0) ? in_val : -in_val;
-        }
-    }
     template <typename DataChangeType, typename InstructionSet>
     class [[nodiscard]] ToBf
     {
@@ -30,7 +22,7 @@ namespace bfm::bfo::translators::general_to_bf
                 const Symbol& negative_symbol, const Symbol& positive_symbol)
         {
             const auto cur_symbol = in_val < Value(0) ? negative_symbol : positive_symbol;
-            return std::string(std::size_t(inner::abs(in_val)), cur_symbol);
+            return std::string(std::size_t(bfm::bfo::translators::util::abs(in_val)), cur_symbol);
         }
 
         template <typename ShiftType>
