@@ -17,7 +17,7 @@ namespace bfm::bfo::translators::general_to_bf
         using bf_simple_loop = BFSimpleLoop<DataChangeType>;
         using bf_loop = BFLoop<DataChangeType>;
         template <typename Value, typename Symbol>
-        [[nodiscard]] static auto repeat_symbol(
+        [[nodiscard]] static constexpr auto repeat_symbol(
                 const Value& in_val,
                 const Symbol& negative_symbol, const Symbol& positive_symbol)
         {
@@ -40,7 +40,7 @@ namespace bfm::bfo::translators::general_to_bf
                 InstructionSet::decrease_value, InstructionSet::increase_value);
         }
 
-        [[nodiscard]] static auto data_change_to_bf(const DataChangeType& in_data_change)
+        [[nodiscard]] static auto constexpr data_change_to_bf(const DataChangeType& in_data_change)
         {
             std::stringstream ss;
             decltype(in_data_change.total_shift) cur_total_shift = 0;
@@ -64,12 +64,12 @@ namespace bfm::bfo::translators::general_to_bf
                 return InstructionSet::read_value;
             }
 
-            [[nodiscard]] static auto print(const ToBf::bf_block& in_operation)
+            [[nodiscard]] static constexpr auto print(const ToBf::bf_block& in_operation)
             {
                 return ToBf::data_change_to_bf(in_operation.data_change);
             }
 
-            [[nodiscard]] static auto print(const ToBf::bf_simple_loop& in_operation)
+            [[nodiscard]] static constexpr auto print(const ToBf::bf_simple_loop& in_operation)
             {
                 std::stringstream ss;
                 ss<<InstructionSet::begin_loop
@@ -78,7 +78,7 @@ namespace bfm::bfo::translators::general_to_bf
                 return ss.str();
             }
 
-            [[nodiscard]] static auto print(const ToBf::bf_loop& in_operation)
+            [[nodiscard]] static constexpr auto print(const ToBf::bf_loop& in_operation)
             {
                 std::stringstream ss;
                 ss<<InstructionSet::begin_loop
@@ -87,7 +87,7 @@ namespace bfm::bfo::translators::general_to_bf
                 return ss.str();
             }
 
-            [[nodiscard]] static std::string print(
+            [[nodiscard]] static constexpr std::string print(
                     const bfm::bfo::operation_seq_type<DataChangeType>& in_bf_operation_seq)
             {
                 std::stringstream ss;

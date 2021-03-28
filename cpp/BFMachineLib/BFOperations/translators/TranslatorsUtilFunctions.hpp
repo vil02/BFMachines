@@ -4,7 +4,7 @@
 namespace bfm::bfo::translators::util
 {
     template <typename T>
-    T abs(const T& in_val)
+    constexpr T abs(const T& in_val)
     {
         return in_val >= T(0) ? in_val : -in_val;
     }
