@@ -49,10 +49,12 @@
 		<Unit filename="../BFMachineLib/BFMachineLib.hpp" />
 		<Unit filename="../BFMachineLib/BFMachine/BFMachine.hpp" />
 		<Unit filename="../BFMachineLib/BFOperations/BFOperations.hpp" />
+		<Unit filename="../BFMachineLib/BFOperations/BFOperations.hpp.save-failed" />
 		<Unit filename="../BFMachineLib/BFOperations/BFOperationsMainIncl.hpp" />
-		<Unit filename="../BFMachineLib/BFOperations/translators/ToBf.hpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="../BFMachineLib/BFOperations/BFOperationsUtilFunctions.hpp" />
+		<Unit filename="../BFMachineLib/BFOperations/translators/AllTranslators.hpp" />
+		<Unit filename="../BFMachineLib/BFOperations/translators/ToBf.hpp" />
+		<Unit filename="../BFMachineLib/BFOperations/translators/ToCpp.hpp" />
 		<Unit filename="../BFMachineLib/BFParser/BFCodeToOperationSeq.hpp" />
 		<Unit filename="../BFMachineLib/BFParser/BFParser.hpp" />
 		<Unit filename="../BFMachineLib/BFParser/DataChange.hpp" />

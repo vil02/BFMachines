@@ -1,6 +1,8 @@
 #ifndef CHANGEVALUEFUNCTIONS_HPP_INCLUDED
 #define CHANGEVALUEFUNCTIONS_HPP_INCLUDED
 
+#include <type_traits>
+
 namespace bfm::memory_types
 {
     template<typename MemoryType>
@@ -15,19 +17,19 @@ namespace bfm::memory_types
             MemoryType& in_memory,
             const typename MemoryType::position_type& in_position)
     {
-        using value_type = typename MemoryType::value_type;
-        change_value(in_memory, in_position, value_type(-1));
+        change_value(in_memory, in_position, -1);
     }
     template<typename MemoryType>
     constexpr void change_value(
             MemoryType& in_memory,
             const typename MemoryType::position_type& in_position,
-            const typename MemoryType::value_type& in_value_change)
+            const typename std::make_signed<typename MemoryType::value_type>::type& in_value_change)
     {
         using value_type = typename MemoryType::value_type;
+        using signed_type = typename std::make_signed<value_type>::type;
         in_memory.set_value(
             in_position,
-            value_type(in_memory.get_value(in_position)+in_value_change));
+            value_type(signed_type(in_memory.get_value(in_position))+in_value_change));
     }
 }
 

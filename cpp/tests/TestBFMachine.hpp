@@ -146,6 +146,33 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
     }
 }
 
+BOOST_AUTO_TEST_CASE_TEMPLATE(simple_loop_crash_test, BFMType, bfm_types)
+{
+    using value_type = typename BFMType::value_type;
+    const value_type test_size = 10;
+    const value_type multip_limit = 10;
+    for (value_type cur_multip = 1; cur_multip < multip_limit; ++cur_multip)
+    {
+        const std::string bf_code_minus =
+            std::string(",[")+std::string(std::size_t(cur_multip), '-')+std::string(">+<]>.");
+        for (value_type n = 0; n < test_size; ++n)
+        {
+            util_functions::check_bf_computation<BFMType>(
+                bf_code_minus, {value_type(cur_multip*n)}, n);
+        }
+        if (std::is_signed<value_type>::value)
+        {
+            const std::string bf_code_plus =
+                std::string(",[")+std::string(std::size_t(cur_multip), '+')+std::string(">++<]>.");
+            for (value_type n = 0; n < test_size; ++n)
+            {
+                util_functions::check_bf_computation<BFMType>(
+                    bf_code_plus, {value_type(-cur_multip*n)}, 2*n);
+            }
+        }
+    }
+}
+
 BOOST_AUTO_TEST_CASE_TEMPLATE(print_countdown_test, BFMType, bfm_types)
 {
     using value_type = typename BFMType::value_type;

@@ -5,6 +5,9 @@
 #include <variant>
 #include <vector>
 #include <utility>
+#include <type_traits>
+
+#include "BFOperationsUtilFunctions.hpp"
 
 namespace bfm::bfo::inner
 {
@@ -14,7 +17,9 @@ namespace bfm::bfo::inner
         static_assert(std::is_same<
             typename DataChangeType::position_type, typename BFMData::position_type>::value);
         static_assert(
-            std::is_same<typename DataChangeType::value_type, typename BFMData::value_type>::value);
+            std::is_same<
+                typename DataChangeType::value_type,
+                typename std::make_signed<typename BFMData::value_type>::type>::value);
     }
 }
 namespace bfm::bfo
@@ -83,21 +88,43 @@ namespace bfm::bfo
             {
                 throw std::invalid_argument("memory_change can not be trivial.");
             }
+            if (in_data_change.memory_change.find(0) == in_data_change.memory_change.end())
+            {
+                throw std::invalid_argument(
+                    "memory_change at cur_pos/with zero shift can not be trivial.");
+            }
         }
         template<typename BFMData>
         constexpr void execute(BFMData& bfm_data) const
         {
             inner::check<DataChangeType, BFMData>();
-            const auto multiplier = bfm_data.memory.get_value(bfm_data.cur_position);
-            if (multiplier != 0)
+            const auto cur_value = bfm_data.memory.get_value(bfm_data.cur_position);
+            if (cur_value != 0)
             {
-                using value_type = typename DataChangeType::value_type;
+                using value_change_type = typename DataChangeType::value_type;
+                if (util::mod(
+                        value_change_type(cur_value),
+                        this->data_change.memory_change.at(0)) != 0)
+                {
+                    throw std::invalid_argument(
+                        "cur_value must be a multiple of value_change with 0 shift");
+                }
+                if (value_change_type(cur_value)*this->data_change.memory_change.at(0) >= 0)
+                {
+                    throw std::invalid_argument("different signs needed!");
+                }
+                const value_change_type multiplier =
+                    value_change_type(cur_value)/
+                    value_change_type((-this->data_change.memory_change.at(0)));
                 for (const auto& [cur_shift, cur_value_change] : this->data_change.memory_change)
                 {
-                    change_value(
-                        bfm_data.memory,
-                        bfm_data.cur_position+cur_shift,
-                        value_type(multiplier*cur_value_change));
+                    if (cur_shift != 0)
+                    {
+                        change_value(
+                            bfm_data.memory,
+                            bfm_data.cur_position+cur_shift,
+                            multiplier*cur_value_change);
+                    }
                 }
                 bfm_data.memory.set_value(bfm_data.cur_position, 0);
             }
