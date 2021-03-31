@@ -115,7 +115,7 @@ namespace bfm::bfo
                 }
                 const value_change_type multiplier =
                     value_change_type(cur_value)/
-                    value_change_type((-this->data_change.memory_change.at(0)));
+                    value_change_type(-this->data_change.memory_change.at(0));
                 for (const auto& [cur_shift, cur_value_change] : this->data_change.memory_change)
                 {
                     if (cur_shift != 0)
