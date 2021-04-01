@@ -7,7 +7,7 @@ The purpose of this repository is to provide adjustable, reliable and "high perf
 # Available languages and implemented features
 
 * [C++](cpp)
-    * interpreter and debugger, code optimisation
+    * interpreter and debugger, code optimisation, translators
     * [![cpp_build_ubuntu_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu_latest.yml) [![cpp_build_windows_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml) [![cpp_build_macos_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml)
     * [![cpp_static_analysis](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml) [![cpp_address_sanitizer](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml)
 * [MATLAB](matlab) 
