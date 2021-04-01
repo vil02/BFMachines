@@ -14,8 +14,8 @@ else()
     message(WARNING "skipping: compile_time_arithmetic")
 endif()
 
+add_subdirectory(bf_to_cpp)
 add_subdirectory(memory_types_performance_comparison)
 add_subdirectory(simple_bf_debugger)
 add_subdirectory(simple_bf_interpreter)
 add_subdirectory(simplify_bf_code)
-
