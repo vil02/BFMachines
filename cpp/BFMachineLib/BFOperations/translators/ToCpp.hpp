@@ -36,21 +36,21 @@ namespace bfm::bfo::translators::general_to_cpp
         using bf_block = BFBlock<DataChangeType>;
         using bf_simple_loop = BFSimpleLoop<DataChangeType>;
         using bf_loop = BFLoop<DataChangeType>;
-        [[nodiscard]] static constexpr auto get_cur_val()
+        [[nodiscard]] static auto get_cur_val()
         {
             std::stringstream ss;
             ss<<NameSet::memory<<".get_value("<<NameSet::cur_pos<<")";
             return ss.str();
         };
         template <typename ValueType>
-        [[nodiscard]] static constexpr auto set_cur_val(const ValueType& in_val)
+        [[nodiscard]] static auto set_cur_val(const ValueType& in_val)
         {
             std::stringstream ss;
             ss<<NameSet::memory<<".set_value("<<NameSet::cur_pos<<", "<<in_val<<")";
             return ss.str();
         }
         template <typename PositionType, typename ChangeType>
-        [[nodiscard]] static constexpr auto change_val_str(
+        [[nodiscard]] static auto change_val_str(
                 const PositionType& in_pos, const ChangeType& in_value_change)
         {
             std::stringstream ss;
@@ -59,7 +59,7 @@ namespace bfm::bfo::translators::general_to_cpp
         }
 
         template <typename ShiftType>
-        [[nodiscard]] static constexpr auto cur_pos_shift_to_str(const ShiftType& in_shift)
+        [[nodiscard]] static auto cur_pos_shift_to_str(const ShiftType& in_shift)
         {
             std::stringstream ss;
             ss<<NameSet::cur_pos;
@@ -75,7 +75,7 @@ namespace bfm::bfo::translators::general_to_cpp
         }
 
         template <typename ShiftType>
-        [[nodiscard]] static constexpr auto print_change_cur_pos(
+        [[nodiscard]] static auto print_change_cur_pos(
                 const ShiftType& in_shift, const std::size_t in_depth = 0)
         {
             std::stringstream ss;
@@ -108,7 +108,7 @@ namespace bfm::bfo::translators::general_to_cpp
             return ss.str();
         }
         template <typename ValueType>
-        [[nodiscard]] static constexpr auto multip_str(const ValueType& in_cur_pos_value_change)
+        [[nodiscard]] static auto multip_str(const ValueType& in_cur_pos_value_change)
         {
             std::stringstream ss;
             ss<<"const "<<NameSet::value_change_type<<" "
@@ -131,7 +131,7 @@ namespace bfm::bfo::translators::general_to_cpp
             return ss.str();
         }
         template <typename ValueType>
-        [[nodiscard]] static constexpr auto multip_value_change(const ValueType& in_value)
+        [[nodiscard]] static auto multip_value_change(const ValueType& in_value)
         {
             std::stringstream ss;
             if (in_value > 0)
@@ -160,7 +160,7 @@ namespace bfm::bfo::translators::general_to_cpp
         }
 
         public:
-            [[nodiscard]] static constexpr auto print(
+            [[nodiscard]] static auto print(
                     const BFWrite& /*unused*/, const std::size_t in_depth = 0)
             {
                 std::stringstream ss;
@@ -168,7 +168,7 @@ namespace bfm::bfo::translators::general_to_cpp
                 return ss.str();
             }
 
-            [[nodiscard]] static constexpr auto print(
+            [[nodiscard]] static auto print(
                     const BFRead& /*unused*/, const std::size_t in_depth = 0)
             {
                 std::stringstream ss;
@@ -181,7 +181,7 @@ namespace bfm::bfo::translators::general_to_cpp
                 return ss.str();
             }
 
-            [[nodiscard]] static constexpr auto print(
+            [[nodiscard]] static auto print(
                     const ToCpp::bf_block& in_operation, const std::size_t in_depth = 0)
             {
                 std::stringstream ss;
@@ -196,7 +196,7 @@ namespace bfm::bfo::translators::general_to_cpp
                 return ss.str();
             }
 
-            [[nodiscard]] static constexpr auto print(
+            [[nodiscard]] static auto print(
                     const ToCpp::bf_simple_loop& in_operation, const std::size_t in_depth = 0)
             {
                 std::stringstream ss;
@@ -234,7 +234,7 @@ namespace bfm::bfo::translators::general_to_cpp
                 return ss.str();
             }
 
-            [[nodiscard]] static constexpr auto print(
+            [[nodiscard]] static auto print(
                     const ToCpp::bf_loop& in_operation, const std::size_t in_depth = 0)
             {
                 std::stringstream ss;
@@ -245,7 +245,7 @@ namespace bfm::bfo::translators::general_to_cpp
                 return ss.str();
             }
 
-            [[nodiscard]] static constexpr std::string print(
+            [[nodiscard]] static std::string print(
                     const bfm::bfo::operation_seq_type<DataChangeType>& in_bf_operation_seq,
                     const std::size_t in_depth = 0)
             {
@@ -258,7 +258,7 @@ namespace bfm::bfo::translators::general_to_cpp
                 }
                 return ss.str();
             }
-            [[nodiscard]] static constexpr std::string print_as_function(
+            [[nodiscard]] static std::string print_as_function(
                 const bfm::bfo::operation_seq_type<DataChangeType>& in_bf_operation_seq,
                 std::string function_name)
             {
@@ -276,7 +276,7 @@ namespace bfm::bfo::translators::general_to_cpp
                     <<"}\n\n";
                 return ss.str();
             }
-            [[nodiscard]] static constexpr std::string print_as_function_in_header(
+            [[nodiscard]] static std::string print_as_function_in_header(
                 const bfm::bfo::operation_seq_type<DataChangeType>& in_bf_operation_seq,
                 std::string function_name)
             {

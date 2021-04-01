@@ -40,7 +40,7 @@ namespace bfm::bfo::translators::general_to_bf
                 InstructionSet::decrease_value, InstructionSet::increase_value);
         }
 
-        [[nodiscard]] static auto constexpr data_change_to_bf(const DataChangeType& in_data_change)
+        [[nodiscard]] static auto data_change_to_bf(const DataChangeType& in_data_change)
         {
             std::stringstream ss;
             decltype(in_data_change.total_shift) cur_total_shift = 0;
@@ -69,7 +69,7 @@ namespace bfm::bfo::translators::general_to_bf
                 return ToBf::data_change_to_bf(in_operation.data_change);
             }
 
-            [[nodiscard]] static constexpr auto print(const ToBf::bf_simple_loop& in_operation)
+            [[nodiscard]] static auto print(const ToBf::bf_simple_loop& in_operation)
             {
                 std::stringstream ss;
                 ss<<InstructionSet::begin_loop
@@ -78,7 +78,7 @@ namespace bfm::bfo::translators::general_to_bf
                 return ss.str();
             }
 
-            [[nodiscard]] static constexpr auto print(const ToBf::bf_loop& in_operation)
+            [[nodiscard]] static auto print(const ToBf::bf_loop& in_operation)
             {
                 std::stringstream ss;
                 ss<<InstructionSet::begin_loop
@@ -87,7 +87,7 @@ namespace bfm::bfo::translators::general_to_bf
                 return ss.str();
             }
 
-            [[nodiscard]] static constexpr std::string print(
+            [[nodiscard]] static std::string print(
                     const bfm::bfo::operation_seq_type<DataChangeType>& in_bf_operation_seq)
             {
                 std::stringstream ss;
