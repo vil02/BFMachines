@@ -260,7 +260,7 @@ namespace bfm::bfo::translators::general_to_cpp
             }
             [[nodiscard]] static std::string print_as_function(
                 const bfm::bfo::operation_seq_type<DataChangeType>& in_bf_operation_seq,
-                std::string function_name)
+                const std::string& function_name)
             {
                 std::stringstream ss;
                 ss<<"template <typename MemoryType, "
@@ -278,7 +278,7 @@ namespace bfm::bfo::translators::general_to_cpp
             }
             [[nodiscard]] static std::string print_as_function_in_header(
                 const bfm::bfo::operation_seq_type<DataChangeType>& in_bf_operation_seq,
-                std::string function_name)
+                const std::string& function_name)
             {
                 std::stringstream ss;
                 const auto include_guard =
