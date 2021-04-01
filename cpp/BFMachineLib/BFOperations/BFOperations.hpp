@@ -113,9 +113,8 @@ namespace bfm::bfo
                 {
                     throw std::invalid_argument("different signs needed!");
                 }
-                const value_change_type multiplier =
-                    value_change_type(cur_value)/
-                    value_change_type(-this->data_change.memory_change.at(0));
+                const auto multiplier = value_change_type(
+                    value_change_type(cur_value)/-this->data_change.memory_change.at(0));
                 for (const auto& [cur_shift, cur_value_change] : this->data_change.memory_change)
                 {
                     if (cur_shift != 0)
@@ -123,7 +122,7 @@ namespace bfm::bfo
                         change_value(
                             bfm_data.memory,
                             bfm_data.cur_position+cur_shift,
-                            multiplier*cur_value_change);
+                            value_change_type(multiplier*cur_value_change));
                     }
                 }
                 bfm_data.memory.set_value(bfm_data.cur_position, 0);
