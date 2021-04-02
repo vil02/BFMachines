@@ -71,7 +71,9 @@ using bfm_types = boost::mpl::list<
     map_memory_bfm<std::map<int, int> >,
     map_memory_bfm<std::map<int, int>, false>,
     map_memory_bfm<std::unordered_map<int, int> >,
-    map_memory_bfm<std::unordered_map<int, int>, false> >;
+    map_memory_bfm<std::unordered_map<int, int>, false>,
+    map_memory_bfm<std::map<char, int>, true, FlippedInstructions>,
+    map_memory_bfm<std::unordered_map<char, int>, false, FlippedInstructions> >;
 
 typedef boost::mpl::list<
     bfm::memory_types::VectorMemory<std::vector<char> >,
