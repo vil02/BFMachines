@@ -15,11 +15,11 @@ namespace bfm::bfo::inner
     constexpr void check()
     {
         static_assert(std::is_same<
-            typename DataChangeType::shift_type, typename BFMData::position_type>::value);
-        static_assert(
-            std::is_same<
-                typename DataChangeType::value_change_type,
-                typename std::make_signed<typename BFMData::value_type>::type>::value);
+            typename DataChangeType::shift_type,
+            typename std::make_signed<typename BFMData::position_type>::type>::value);
+        static_assert(std::is_same<
+            typename DataChangeType::value_change_type,
+            typename std::make_signed<typename BFMData::value_type>::type>::value);
     }
 }
 namespace bfm::bfo
@@ -58,18 +58,24 @@ namespace bfm::bfo
     struct [[nodiscard]] BFBlock
     {
         DataChangeType data_change;
+        using shift_type = typename DataChangeType::shift_type;
         explicit constexpr BFBlock(DataChangeType in_data_change) :
             data_change(std::move(in_data_change))
         {}
         template<typename BFMData>
         constexpr void execute(BFMData& bfm_data) const
         {
+            using position_type = typename BFMData::position_type;
             inner::check<DataChangeType, BFMData>();
             for (const auto& [cur_shift, cur_value_change] : this->data_change.memory_change)
             {
-                change_value(bfm_data.memory, bfm_data.cur_position+cur_shift, cur_value_change);
+                change_value(
+                    bfm_data.memory,
+                    position_type(shift_type(bfm_data.cur_position)+cur_shift),
+                    cur_value_change);
             }
-            bfm_data.cur_position += this->data_change.total_shift;
+            bfm_data.cur_position =
+                position_type(shift_type(bfm_data.cur_position)+this->data_change.total_shift);
         }
     };
 
@@ -77,6 +83,7 @@ namespace bfm::bfo
     struct [[nodiscard]] BFSimpleLoop
     {
         DataChangeType data_change;
+        using shift_type = typename DataChangeType::shift_type;
         explicit constexpr BFSimpleLoop(const DataChangeType& in_data_change) :
             data_change(in_data_change)
         {
@@ -121,7 +128,8 @@ namespace bfm::bfo
                     {
                         change_value(
                             bfm_data.memory,
-                            bfm_data.cur_position+cur_shift,
+                            typename BFMData::position_type(
+                                shift_type(bfm_data.cur_position)+cur_shift),
                             value_change_type(multiplier*cur_value_change));
                     }
                 }

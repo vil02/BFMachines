@@ -144,7 +144,7 @@ namespace bfm
             {
                 const auto bf_code_to_operation_seq = bfm::parser::bf_code_to_operation_seq<
                     CodeType,
-                    position_type,
+                    typename std::make_signed<position_type>::type,
                     typename std::make_signed<value_type>::type,
                     InstructionSet>;
                 this->execute_seq(bf_code_to_operation_seq(in_code));
