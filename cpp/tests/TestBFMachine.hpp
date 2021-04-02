@@ -48,30 +48,30 @@ struct FlippedInstructions
     static const instruction_type end_loop = bfm::StandardInstructions::end_loop;
 };
 
-typedef boost::mpl::list<
-    bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<int> >,
-        bfm::streams::InputStream<std::vector<int> >,
-        bfm::streams::OutputVectorStream<std::vector<int> > >,
-    bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<unsigned> >,
-        bfm::streams::InputStream<std::vector<unsigned> >,
-        bfm::streams::OutputVectorStream<std::vector<unsigned> > >,
-    bfm::BFMachine<bfm::memory_types::VectorMemory<std::vector<int> >,
-        bfm::streams::InputStream<std::vector<int> >,
-        bfm::streams::OutputVectorStream<std::vector<int> >,
-        FlippedInstructions>,
-    bfm::BFMachine<bfm::memory_types::MapMemory<std::map<int, int> >,
-        bfm::streams::InputStream<std::vector<int> >,
-        bfm::streams::OutputVectorStream<std::vector<int> > >,
-    bfm::BFMachine<bfm::memory_types::MapMemory<std::map<int, int>, false>,
-        bfm::streams::InputStream<std::vector<int> >,
-        bfm::streams::OutputVectorStream<std::vector<int> > >,
-    bfm::BFMachine<bfm::memory_types::MapMemory<std::unordered_map<int, int> >,
-        bfm::streams::InputStream<std::vector<int> >,
-        bfm::streams::OutputVectorStream<std::vector<int> > >,
-    bfm::BFMachine<bfm::memory_types::MapMemory<std::unordered_map<int, int>, false>,
-        bfm::streams::InputStream<std::vector<int> >,
-        bfm::streams::OutputVectorStream<std::vector<int> > >
-                        > bfm_types;
+template <typename ValueType, typename InstructionSet = bfm::StandardInstructions>
+using vector_memory_bfm = typename bfm::BFMachine<
+    bfm::memory_types::VectorMemory<std::vector<ValueType> >,
+    bfm::streams::InputStream<std::vector<ValueType> >,
+    bfm::streams::OutputVectorStream<std::vector<ValueType> >,
+    InstructionSet>;
+
+template <typename MapType,
+          bool remove_default_values = true,
+          typename InstructionSet = bfm::StandardInstructions>
+using map_memory_bfm = typename bfm::BFMachine<
+    bfm::memory_types::MapMemory<MapType, remove_default_values>,
+    bfm::streams::InputStream<std::vector<typename MapType::mapped_type> >,
+    bfm::streams::OutputVectorStream<std::vector<typename MapType::mapped_type> >,
+    InstructionSet>;
+
+using bfm_types = boost::mpl::list<
+    vector_memory_bfm<int>,
+    vector_memory_bfm<unsigned>,
+    vector_memory_bfm<int, FlippedInstructions>,
+    map_memory_bfm<std::map<int, int> >,
+    map_memory_bfm<std::map<int, int>, false>,
+    map_memory_bfm<std::unordered_map<int, int> >,
+    map_memory_bfm<std::unordered_map<int, int>, false> >;
 
 typedef boost::mpl::list<
     bfm::memory_types::VectorMemory<std::vector<char> >,
