@@ -103,13 +103,13 @@ namespace bfm::parser::general_parser
 namespace bfm::parser
 {
     template <typename CodeType,
-              typename ValueType,
-              typename PositionType,
+              typename ShiftType,
+              typename ValueChangeType,
               typename InstructionSet = bfm::StandardInstructions,
               bool MakeShrinkToFit = true>
     const auto bf_code_to_operation_seq = general_parser::bf_code_to_operation_seq<
         CodeType,
-        bfm::parser::DataChange<std::map<ValueType, PositionType> >,
+        bfm::parser::DataChange<std::map<ShiftType, ValueChangeType> >,
         InstructionSet,
         MakeShrinkToFit>;
 }

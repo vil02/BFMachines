@@ -15,10 +15,10 @@ namespace bfm::bfo::inner
     constexpr void check()
     {
         static_assert(std::is_same<
-            typename DataChangeType::position_type, typename BFMData::position_type>::value);
+            typename DataChangeType::shift_type, typename BFMData::position_type>::value);
         static_assert(
             std::is_same<
-                typename DataChangeType::value_type,
+                typename DataChangeType::value_change_type,
                 typename std::make_signed<typename BFMData::value_type>::type>::value);
     }
 }
@@ -101,7 +101,7 @@ namespace bfm::bfo
             const auto cur_value = bfm_data.memory.get_value(bfm_data.cur_position);
             if (cur_value != 0)
             {
-                using value_change_type = typename DataChangeType::value_type;
+                using value_change_type = typename DataChangeType::value_change_type;
                 if (util::mod(
                         value_change_type(cur_value),
                         this->data_change.memory_change.at(0)) != 0)

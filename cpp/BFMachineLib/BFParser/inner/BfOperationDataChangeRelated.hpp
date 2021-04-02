@@ -11,8 +11,8 @@ namespace bfm::parser::inner
             const typename MemoryChangeType::key_type cur_shift,
             const typename MemoryChangeType::mapped_type& value_change)
     {
-        using value_type = typename MemoryChangeType::mapped_type;
-        memory_change[cur_shift] = value_type(memory_change[cur_shift]+value_change);
+        using value_change_type = typename MemoryChangeType::mapped_type;
+        memory_change[cur_shift] = value_change_type(memory_change[cur_shift]+value_change);
         if (memory_change[cur_shift] == 0)
         {
             memory_change.erase(cur_shift);
@@ -24,9 +24,9 @@ namespace bfm::parser::inner
     {
         static_assert(std::is_same<
             typename CodeType::value_type, typename InstructionSet::instruction_type>::value);
-        typename DataChangeType::position_type cur_shift = 0;
+        typename DataChangeType::shift_type cur_shift = 0;
         typename DataChangeType::memory_change_type memory_change;
-        using value_type = typename DataChangeType::value_type;
+        using value_change_type = typename DataChangeType::value_change_type;
         for (const auto cur_char : in_str)
         {
             switch (cur_char)
@@ -41,7 +41,7 @@ namespace bfm::parser::inner
                     update_memory_change(memory_change, cur_shift, 1);
                     break;
                 case InstructionSet::decrease_value:
-                    update_memory_change(memory_change, cur_shift, value_type(-1));
+                    update_memory_change(memory_change, cur_shift, value_change_type(-1));
                     break;
                 default:
                     break;
