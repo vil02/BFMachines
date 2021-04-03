@@ -21,7 +21,7 @@ template <typename CodeType,
     return bfm::bfo::translators::ToBf<>::print(bf_seq);
 }
 
-BOOST_AUTO_TEST_CASE(translate__bf_plus_test)
+BOOST_AUTO_TEST_CASE(translate_bf_plus_test)
 {
     using value_type = std::uint64_t;
     using bfm_type = bfm::BFMachine<
