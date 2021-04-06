@@ -111,8 +111,7 @@ namespace bfm::bfo::translators::general_to_cpp
         [[nodiscard]] static auto multip_str(const ValueType& in_cur_pos_value_change)
         {
             std::stringstream ss;
-            ss<<"const "<<NameSet::value_change_type<<" "
-                <<NameSet::multiplier<<" = ";
+            ss<<"const auto "<<NameSet::multiplier<<" = ";
             if (in_cur_pos_value_change == 1)
             {
                 ss<<NameSet::value_change_type<<"(-"<<ToCpp::get_cur_val()<<")";
