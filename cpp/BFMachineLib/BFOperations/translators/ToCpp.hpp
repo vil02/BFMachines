@@ -267,11 +267,12 @@ namespace bfm::bfo::translators::general_to_cpp
                     <<"typename InputStreamType, "
                     <<"typename OutputStreamType>\n"
                     <<"void "<<function_name
-                    <<"(InputStreamType& input_stream, "
-                    <<"OutputStreamType& output_stream)\n"
+                    <<"(InputStreamType& "<<NameSet::input_stream<<", "
+                    <<"OutputStreamType& "<<NameSet::output_stream<<")\n"
                     <<"{\n"
-                    <<indent(1)<<"auto memory = MemoryType();\n"
-                    <<indent(1)<<"auto cur_position = memory.get_starting_position();\n"
+                    <<indent(1)<<"auto "<<NameSet::memory<<" = MemoryType();\n"
+                    <<indent(1)<<"auto "<<NameSet::cur_pos
+                    <<" = "<<NameSet::memory<<".get_starting_position();\n"
                     <<ToCpp::print(in_bf_operation_seq, 1)
                     <<"}\n\n";
                 return ss.str();
