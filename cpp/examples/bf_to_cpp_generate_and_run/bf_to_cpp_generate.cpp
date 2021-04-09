@@ -22,7 +22,6 @@ int main()
 {
     using code_type = std::string;
     proc_single(bf_test_codes::bf_fibonacci<code_type>(), "tmp_fibonacci");
-    proc_single(bf_test_codes::bf_factorial<code_type>(), "tmp_factorial");
     proc_single(bf_test_codes::bf_hello_world<code_type>(), "tmp_hello_world");
     return 0;
 }
