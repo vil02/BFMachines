@@ -14,9 +14,9 @@ template <typename CodeType>
 [[nodiscard]] auto bf_to_cpp(const CodeType& in_bf_code)
 {
     const auto bf_seq = bfm::parser::bf_code_to_operation_seq<
-                        CodeType,
-                        std::int64_t,
-                        std::int64_t>(in_bf_code);
+        CodeType,
+        std::int64_t,
+        std::int64_t>(in_bf_code);
     return bfm::bfo::translators::ToCpp<>::print(bf_seq);
 }
 
