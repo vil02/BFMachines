@@ -50,6 +50,8 @@ CppCheckResults.xml
 
 drafts/
 
+cpp/examples/bf_to_cpp_generate_and_run/tmp_*_bf.hpp
+
 # Created by https://www.toptal.com/developers/gitignore/api/matlab
 # Edit at https://www.toptal.com/developers/gitignore?templates=matlab
 
