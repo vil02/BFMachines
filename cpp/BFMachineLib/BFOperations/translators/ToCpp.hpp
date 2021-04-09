@@ -173,7 +173,8 @@ namespace bfm::bfo::translators::general_to_cpp
                 std::stringstream ss;
                 ss<<indent(in_depth)<<"{\n"
                     <<indent(in_depth+1)
-                    <<NameSet::memory<<"::value_type "<<NameSet::input_value<<" = {};\n"
+                    <<"typename "<<"decltype("<<NameSet::memory<<")"<<"::value_type "
+                    <<NameSet::input_value<<" = {};\n"
                     <<indent(in_depth+1)<<NameSet::input_stream<<">>"<<NameSet::input_value<<";\n"
                     <<indent(in_depth+1)<<set_cur_val(NameSet::input_value)<<";\n"
                     <<indent(in_depth)<<"}\n";
