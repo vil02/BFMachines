@@ -1,4 +1,4 @@
-add_executable(bf_to_cpp_generate.cpp)
+add_executable(bf_to_cpp_generate bf_to_cpp_generate.cpp)
 target_link_libraries(bf_to_cpp_generate
     PRIVATE
         project_options
