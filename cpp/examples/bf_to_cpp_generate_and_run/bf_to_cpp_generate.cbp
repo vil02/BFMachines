@@ -32,7 +32,32 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="../../BFMachineLib/BFMDataRef/BFMDataRef.hpp" />
+		<Unit filename="../../BFMachineLib/BFMachineLib.hpp" />
+		<Unit filename="../../BFMachineLib/BFMachine/BFMachine.hpp" />
+		<Unit filename="../../BFMachineLib/BFOperations/BFOperations.hpp" />
+		<Unit filename="../../BFMachineLib/BFOperations/BFOperationsMainIncl.hpp" />
+		<Unit filename="../../BFMachineLib/BFOperations/BFOperationsUtilFunctions.hpp" />
+		<Unit filename="../../BFMachineLib/BFOperations/translators/AllTranslators.hpp" />
+		<Unit filename="../../BFMachineLib/BFOperations/translators/ToBf.hpp" />
+		<Unit filename="../../BFMachineLib/BFOperations/translators/ToCpp.hpp" />
+		<Unit filename="../../BFMachineLib/BFParser/BFCodeToOperationSeq.hpp" />
+		<Unit filename="../../BFMachineLib/BFParser/BFParser.hpp" />
+		<Unit filename="../../BFMachineLib/BFParser/DataChange.hpp" />
+		<Unit filename="../../BFMachineLib/BFParser/inner/BfOperationDataChangeRelated.hpp" />
+		<Unit filename="../../BFMachineLib/BFParser/inner/RawParserRelated.hpp" />
+		<Unit filename="../../BFMachineLib/FindMatching/FindMatching.hpp" />
+		<Unit filename="../../BFMachineLib/MemoryTypes/ArrayMemory.hpp" />
+		<Unit filename="../../BFMachineLib/MemoryTypes/ChangeValueFunctions.hpp" />
+		<Unit filename="../../BFMachineLib/MemoryTypes/MapMemory.hpp" />
+		<Unit filename="../../BFMachineLib/MemoryTypes/MemoryTypes.hpp" />
+		<Unit filename="../../BFMachineLib/MemoryTypes/VectorMemory.hpp" />
+		<Unit filename="../../BFMachineLib/StandardInstructions/StandardInstructions.hpp" />
+		<Unit filename="../../BFMachineLib/Streams/InputStream.hpp" />
+		<Unit filename="../../BFMachineLib/Streams/OutputArrayStream.hpp" />
+		<Unit filename="../../BFMachineLib/Streams/OutputVectorStream.hpp" />
+		<Unit filename="../../BFMachineLib/Streams/Streams.hpp" />
+		<Unit filename="bf_to_cpp_generate.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
