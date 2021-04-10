@@ -8,6 +8,7 @@
 
 #include "../BFOperations.hpp"
 #include "../../BFParser/DataChange.hpp"
+#include "../../StandardInstructions/StandardInstructions.hpp"
 
 namespace bfm::bfo::translators::general_to_cpp
 {
@@ -262,14 +263,31 @@ namespace bfm::bfo::translators::general_to_cpp
                 const bfm::bfo::operation_seq_type<DataChangeType>& in_bf_operation_seq,
                 const std::string& function_name)
             {
+                const auto bf_code = bfm::bfo::translators::ToBf<>::print(in_bf_operation_seq);
                 std::stringstream ss;
                 ss<<"template <typename MemoryType, "
                     <<"typename InputStreamType, "
                     <<"typename OutputStreamType>\n"
                     <<"void "<<function_name
-                    <<"(InputStreamType& "<<NameSet::input_stream<<", "
-                    <<"OutputStreamType& "<<NameSet::output_stream<<")\n"
-                    <<"{\n"
+                    <<"(InputStreamType& ";
+                if (bf_code.find(bfm::StandardInstructions::read_value) != std::string::npos)
+                {
+                    ss<<NameSet::input_stream;
+                }
+                else
+                {
+                   ss<<"/*unused*/";
+                }
+                ss<<", OutputStreamType& ";
+                if (bf_code.find(bfm::StandardInstructions::print_value) != std::string::npos)
+                {
+                    ss<<NameSet::output_stream;
+                }
+                else
+                {
+                   ss<<"/*unused*/";
+                }
+                ss<<")\n{\n"
                     <<indent(1)<<"auto "<<NameSet::memory<<" = MemoryType();\n"
                     <<indent(1)<<"auto "<<NameSet::cur_pos
                     <<" = "<<NameSet::memory<<".get_starting_position();\n"
