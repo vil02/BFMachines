@@ -141,7 +141,7 @@ namespace bfm::bfo::translators::general_to_cpp
                 }
                 else
                 {
-                    ss<<NameSet::multiplier<<"*"<<in_value;
+                    ss<<NameSet::value_change_type<<"("<<NameSet::multiplier<<"*"<<in_value<<")";
                 }
             }
             else
@@ -152,7 +152,7 @@ namespace bfm::bfo::translators::general_to_cpp
                 }
                 else
                 {
-                    ss<<NameSet::multiplier<<"*("<<in_value<<')';
+                    ss<<NameSet::value_change_type<<"("<<NameSet::multiplier<<"*("<<in_value<<"))";
                 }
             }
             return ss.str();
