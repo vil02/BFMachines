@@ -32,8 +32,9 @@ namespace bfm::bfo::translators::general_to_bf
                 in_shift, InstructionSet::move_left, InstructionSet::move_right);
         }
 
-        template <typename ValueType>
-        [[nodiscard]] static constexpr auto value_change_to_bf(const ValueType& in_value_change)
+        template <typename ValueChangeType>
+        [[nodiscard]] static constexpr auto value_change_to_bf(
+                const ValueChangeType& in_value_change)
         {
             return repeat_symbol(
                 in_value_change,
@@ -102,11 +103,11 @@ namespace bfm::bfo::translators::general_to_bf
 
 namespace bfm::bfo::translators
 {
-    template <typename PositionType = std::int64_t,
-              typename ValueType = std::int64_t,
+    template <typename ShiftType = std::int64_t,
+              typename ValueChangeType = std::int64_t,
               typename InstructionSet = bfm::StandardInstructions>
     using ToBf = typename general_to_bf::ToBf<
-        bfm::parser::DataChange<std::map<PositionType, ValueType> >,
+        bfm::parser::DataChange<std::map<ShiftType, ValueChangeType> >,
         InstructionSet>;
 }
 
