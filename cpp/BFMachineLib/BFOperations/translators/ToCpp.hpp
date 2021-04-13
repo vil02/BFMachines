@@ -313,11 +313,11 @@ namespace bfm::bfo::translators::general_to_cpp
 
 namespace bfm::bfo::translators
 {
-    template <typename PositionType = std::int64_t,
-              typename ValueType = std::int64_t,
+    template <typename ShiftType = std::int64_t,
+              typename ValueChangeType = std::int64_t,
               typename NameSet = general_to_cpp::StandardCppNameSet>
     using ToCpp = typename general_to_cpp::ToCpp<
-        bfm::parser::DataChange<std::map<PositionType, ValueType> >,
+        bfm::parser::DataChange<std::map<ShiftType, ValueChangeType> >,
         NameSet>;
 }
 
