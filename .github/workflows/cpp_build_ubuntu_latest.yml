@@ -1,6 +1,7 @@
 name: cpp_build_ubuntu_latest
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'cpp/**'

@@ -1,6 +1,7 @@
 name: cpp_address_sanitizer
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'cpp/**'

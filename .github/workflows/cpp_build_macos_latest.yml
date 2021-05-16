@@ -1,6 +1,7 @@
 name: cpp_build_macos_latest
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'cpp/**'

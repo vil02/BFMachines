@@ -1,6 +1,7 @@
 name: cpp_build_windows_latest
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'cpp/**'
