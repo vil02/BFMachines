@@ -114,7 +114,7 @@ namespace util_functions
             const SeqType& in_data_seq,
             const ResultFun result_fun)
     {
-        for (const auto cur_data : in_data_seq)
+        for (const auto& cur_data : in_data_seq)
         {
             const auto cur_result = result_fun(cur_data);
             check_bf_computation<BFMType, CodeType>(in_bf_code, cur_data, cur_result);
