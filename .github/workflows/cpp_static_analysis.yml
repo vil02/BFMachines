@@ -40,7 +40,7 @@ jobs:
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
       run: |
-        ${{env.COMPILER_NAME}} --version
+        ${{matrix.compiler}} --version
         cppcheck --version
         clang-tidy --version
         cmake --build . --config ${{env.BUILD_TYPE}}
