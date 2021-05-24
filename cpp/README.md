@@ -1,6 +1,6 @@
 [![cpp_build_ubuntu](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu.yml)
 [![cpp_build_windows_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml)
-[![cpp_build_macos_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml)
+[![cpp_build_macos](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos.yml)
 [![cpp_static_analysis](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml)
 [![cpp_address_sanitizer](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml)
 # [BF](https://esolangs.org/wiki/Brainfuck) interpreter in C++
@@ -41,6 +41,6 @@ The code is basically written in the spirit of C++17 ([example `compile_time_ari
 
 * the code [builds](../.github/workflows/cpp_build_ubuntu.yml) with g++-8, g++-9, g++-10, g++-11, clang++-9, clang++-10, clang++-11 and clang++-12 [![cpp_build_ubuntu](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu.yml),
 * the code [builds](../.github/workflows/cpp_build_windows_latest.yml) with MSVC 19 [![cpp_build_windows_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows_latest.yml).
-* the code [builds](../.github/workflows/cpp_build_macos_latest.yml) with Apple clang++ version 12.0.0 [![cpp_build_macos_latest](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos_latest.yml).
+* the code [builds](../.github/workflows/cpp_build_macos.yml) with Apple clang++ version 12.0.0 [![cpp_build_macos](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos.yml).
 
 [Tests](tests) use Boost.Test.

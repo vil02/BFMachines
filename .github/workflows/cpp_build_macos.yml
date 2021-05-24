@@ -1,0 +1,44 @@
+name: cpp_build_macos
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'cpp/**'
+      - '.github/workflows/cpp_build_macos.yml'
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  BUILD_PATH: ${{github.workspace}}/cpp/build
+
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        compiler: [g++-8, g++-9, g++-10, g++-11, clang++]
+        os: [macos-10.15, macos-11]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{env.BUILD_PATH}}
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{env.BUILD_PATH}}
+      run: cmake ../ -D CMAKE_BUILD_TYPE=$BUILD_TYPE -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_BOOST_TESTS=OFF
+
+    - name: Build with ${{matrix.compiler}}
+      working-directory: ${{env.BUILD_PATH}}
+      shell: bash
+      run: |
+        ${{matrix.compiler}} --version
+        cmake --version
+        cmake --build . --config ${{env.BUILD_TYPE}}
+    - name: Test
+      working-directory: ${{env.BUILD_PATH}}
+      shell: bash
+      run: ctest -C ${{env.BUILD_TYPE}}
