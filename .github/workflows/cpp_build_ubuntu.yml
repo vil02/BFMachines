@@ -1,11 +1,11 @@
-name: cpp_build_ubuntu_latest
+name: cpp_build_ubuntu
 
 on:
   workflow_dispatch:
   push:
     paths:
       - 'cpp/**'
-      - '.github/workflows/cpp_build_ubuntu_latest.yml'
+      - '.github/workflows/cpp_build_ubuntu.yml'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -14,9 +14,10 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
     strategy:
       matrix:
+        os: [ubuntu-18.04, ubuntu-20.04]
         compiler: [g++-8, g++-9, g++-10, g++-11, clang++-9, clang++-10, clang++-11, clang++-12]
 
     steps:
