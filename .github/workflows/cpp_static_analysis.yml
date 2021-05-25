@@ -31,6 +31,8 @@ jobs:
         sudo apt-get install ${{matrix.compiler}}
         sudo apt-get install ${{matrix.clang_tidy}}
         sudo apt-get install cppcheck
+    - name: tmp step
+      run: cmake --version
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}
 
