@@ -29,13 +29,16 @@ jobs:
         sudo apt-get install ${{matrix.compiler}}
         sudo apt-get install ${{matrix.clang_tidy}}
         sudo apt-get install cppcheck
+    - name: Create alias ${{matrix.clang_tidy}}
+      run: |
+        sudo echo "alias clang-tidy='${{matrix.clang_tidy}}'" >> ~/.bashrc
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}
 
     - name: Configure CMake
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
-      run: cmake ../ -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_CLANG_TIDY=ON -D CMAKE_CXX_CLANG_TIDY=${{matrix.clang_tidy}} -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
+      run: cmake ../ -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_CLANG_TIDY=ON -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
 
     - name: Build with ${{matrix.clang_tidy}} and cppcheck analysis
       shell: bash
