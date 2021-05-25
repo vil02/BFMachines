@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04]
+        os: [ubuntu-20.04]
         compiler: [g++-10, clang++-10, clang++-11, clang++-12]
         clang_tidy: [clang-tidy, clang-tidy-11]
 
