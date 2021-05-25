@@ -35,7 +35,6 @@ jobs:
         sudo echo "alias clang-tidy-test='${{matrix.clang_tidy}}'" >> ~/.bashrc
     - name: tmp step
       run: |
-        cat ~/.bashrc
         clang-tidy --version
         clang-tidy-test --version
     - name: Create Build Environment
