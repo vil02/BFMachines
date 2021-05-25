@@ -37,7 +37,7 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
-      run: cmake ../ -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_CLANG_TIDY=ON -D CLANG_TIDY_NAME=${{matrix.clang_tidy}} -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
+      run: cmake ../ -v -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_CLANG_TIDY=ON -D CLANG_TIDY_NAME=${{matrix.clang_tidy}} -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
 
     - name: Build with ${{matrix.clang_tidy}} and cppcheck analysis
       shell: bash
@@ -46,4 +46,4 @@ jobs:
         ${{matrix.compiler}} --version
         cppcheck --version
         ${{matrix.clang_tidy}} --version
-        cmake --build . --config ${{env.BUILD_TYPE}}
+        cmake -v --build . --config ${{env.BUILD_TYPE}}
