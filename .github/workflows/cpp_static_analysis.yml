@@ -14,10 +14,13 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ${{matrix.os}}
     strategy:
+      fail-fast: false
       matrix:
-        compiler: [g++-10, clang++-10, clang++-11, clang++-12]    
+        os: [ubuntu-20.04]
+        compiler: [g++-10, clang++-10, clang++-11, clang++-12]
+        clang_tidy: [clang-tidy, clang-tidy-11]
 
     steps:
     - uses: actions/checkout@v2
@@ -26,7 +29,7 @@ jobs:
       run: |
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get install ${{matrix.compiler}}
-        sudo apt-get install clang-tidy
+        sudo apt-get install ${{matrix.clang_tidy}}
         sudo apt-get install cppcheck
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}
@@ -34,13 +37,13 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
-      run: cmake ../ -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_CLANG_TIDY=ON -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
+      run: cmake ../ -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_CLANG_TIDY=ON -D CLANG_TIDY_NAME=${{matrix.clang_tidy}} -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
 
-    - name: Build with clang-tidy and cppcheck analysis
+    - name: Build with ${{matrix.clang_tidy}} and cppcheck analysis
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
       run: |
         ${{matrix.compiler}} --version
         cppcheck --version
-        clang-tidy --version
+        ${{matrix.clang_tidy}} --version
         cmake --build . --config ${{env.BUILD_TYPE}}

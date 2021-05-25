@@ -30,7 +30,7 @@ template <typename ValueType>
     return output_stream.get_data()[0];
 }
 
-std::ostream& operator<<(std::ostream& stream, const __uint128_t& in_val);
+//std::ostream& operator<<(std::ostream& stream, const __uint128_t& in_val);
 
 int main()
 {
@@ -52,14 +52,14 @@ int main()
 }
 
 
-std::ostream& operator<<(std::ostream& stream, const __uint128_t& in_val)
-{
-    const auto cur_rem = static_cast<unsigned>(in_val%10);
-    const auto new_val = (in_val-cur_rem)/10;
-    if (new_val != 0)
-    {
-        stream<<new_val;
-    }
-    stream<<cur_rem;
-    return stream;
-}
+//std::ostream& operator<<(std::ostream& stream, const __uint128_t& in_val)
+//{
+//    const auto cur_rem = static_cast<unsigned>(in_val%10);
+//    const auto new_val = (in_val-cur_rem)/10;
+//    if (new_val != 0)
+//    {
+//        stream<<new_val;
+//    }
+//    stream<<cur_rem;
+//    return stream;
+//}
