@@ -32,6 +32,12 @@ jobs:
     - name: Create alias ${{matrix.clang_tidy}}
       run: |
         sudo echo "alias clang-tidy='${{matrix.clang_tidy}}'" >> ~/.bashrc
+        sudo echo "alias clang-tidy-test='${{matrix.clang_tidy}}'" >> ~/.bashrc
+    - name: tmp step
+      run: |
+        cat ~/.bashrc
+        clang-tidy --version
+        clang-tidy-test --version
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}
 
