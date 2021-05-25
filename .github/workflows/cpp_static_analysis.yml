@@ -46,4 +46,4 @@ jobs:
         ${{matrix.compiler}} --version
         cppcheck --version
         ${{matrix.clang_tidy}} --version
-        cmake -v --build . --config ${{env.BUILD_TYPE}}
+        cmake --build . --verbose --config ${{env.BUILD_TYPE}}
