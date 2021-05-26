@@ -1,11 +1,11 @@
-name: cpp_build_windows_latest
+name: cpp_build_windows
 
 on:
   workflow_dispatch:
   push:
     paths:
       - 'cpp/**'
-      - '.github/workflows/cpp_build_windows_latest.yml'
+      - '.github/workflows/cpp_build_windows.yml'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -14,7 +14,10 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [windows-2019]
 
     steps:
     - uses: actions/checkout@v2
