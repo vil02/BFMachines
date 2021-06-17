@@ -6,6 +6,8 @@ on:
     paths:
       - 'cpp/**'
       - '.github/workflows/cpp_build_ubuntu.yml'
+  schedule:
+    - cron: '5 7 * * *'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
