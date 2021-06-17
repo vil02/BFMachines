@@ -6,6 +6,8 @@ on:
     paths:
       - 'cpp/**'
       - '.github/workflows/cpp_build_macos.yml'
+  schedule:
+    - cron: '5 8 * * *'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
