@@ -3,7 +3,7 @@ classdef IOStream
         read_fun;
         write_fun;
     end
-    
+
     methods
         function obj = IOStream(varargin)
             input_parser = inputParser;
@@ -19,12 +19,12 @@ classdef IOStream
             obj.read_fun = input_parser.Results.read_fun;
             obj.write_fun = input_parser.Results.write_fun;
         end
-        
+
         function res = get(obj)
             res = obj.read_fun();
         end
         function put(obj, in_val)
-            obj.write_fun(in_val); 
+            obj.write_fun(in_val);
         end
     end
 end
