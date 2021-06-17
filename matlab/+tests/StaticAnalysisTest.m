@@ -25,14 +25,17 @@ classdef StaticAnalysisTest < matlab.unittest.TestCase
                  line_list = read_to_lines(cur_file_path);
                  if ~all(cellfun(@is_line_good, line_list))
                      are_all_good = false;
-                     fprintf('trailing space in: %s\n', cur_file_path);
+                     testCase.log(1, sprintf(...
+                         'trailing space in: %s\n', cur_file_path));
                  end
                  if ~isempty(line_list{end})
                      are_all_good = false;
-                     fprintf('no blank line at the end of: %s\n', cur_file_path);
+                     testCase.log(1, sprintf(...
+                         'no blank line at the end of: %s\n', ...
+                         cur_file_path));
                  end
-                 function res = is_line_good(line_str)
-                     res = ~(length(line_str) >= 1 && line_str(end) == ' ');
+                 function res = is_line_good(in_line)
+                     res = ~(length(in_line) >= 1 && in_line(end) == ' ');
                  end
                  function res = read_to_lines(in_file_path)
                      res = cellfun(...
