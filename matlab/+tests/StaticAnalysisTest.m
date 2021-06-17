@@ -47,7 +47,7 @@ classdef StaticAnalysisTest < matlab.unittest.TestCase
                      end
                  end
              end
-         end         
+         end
      end
      methods (Access = private)
          function dir_data = get_all_matlab_files(testCase)
@@ -56,7 +56,7 @@ classdef StaticAnalysisTest < matlab.unittest.TestCase
          end
      end
 end
- 
+
 function res = to_file_path(in_dir_data)
     res = [in_dir_data.folder, filesep, in_dir_data.name];
 end
