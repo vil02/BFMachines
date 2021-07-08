@@ -26,11 +26,17 @@ jobs:
         - os: ubuntu-18.04
           compiler: clang++-11
         - os: ubuntu-18.04
-          compiler: clang++-12          
+          compiler: clang++-12
 
     steps:
     - uses: actions/checkout@v2
 
+    - name: Prepare to install ${{matrix.compiler}}
+      if: ${{ matrix.compiler == 'clang++-12' }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install libclang1-12
+        sudo apt-get install libclang-common-12-de
     - name: Install ${{matrix.compiler}}
       run: |
         sudo apt-get update
