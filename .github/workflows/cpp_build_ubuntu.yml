@@ -42,6 +42,9 @@ jobs:
         sudo apt-get update
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get install ${{matrix.compiler}}
+    - name: Display compiler version
+      run: |
+        ${{matrix.compiler}} --version
     - name: Install boost
       run: |
         sudo apt-get install libboost-all-dev
