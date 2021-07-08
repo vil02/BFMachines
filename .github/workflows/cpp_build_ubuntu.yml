@@ -33,6 +33,7 @@ jobs:
 
     - name: Install ${{matrix.compiler}}
       run: |
+        sudo apt-get update
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get install ${{matrix.compiler}}
     - name: Install boost
