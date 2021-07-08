@@ -32,7 +32,6 @@ jobs:
         sudo apt-get install libclang-common-12-dev
     - name: Install dependencies
       run: |
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get install ${{matrix.compiler}}
         sudo apt-get install ${{matrix.clang_tidy}}
         sudo apt-get install cppcheck
