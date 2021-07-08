@@ -7,7 +7,7 @@ on:
       - 'cpp/**'
       - '.github/workflows/cpp_build_ubuntu.yml'
   schedule:
-    - cron: '5 7 * * *'
+    - cron: '55 3 */2 * *'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -31,13 +31,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Prepare to install ${{matrix.compiler}}
-      if: ${{ matrix.compiler == 'clang++-12' }}
-      run: |
-        sudo apt-get install libclang1-12
-        sudo apt-get install libclang-common-12-dev
     - name: Install ${{matrix.compiler}}
       run: |
+        sudo apt-get update
         sudo apt-get install ${{matrix.compiler}}
     - name: Display compiler version
       run: |
