@@ -34,12 +34,10 @@ jobs:
     - name: Prepare to install ${{matrix.compiler}}
       if: ${{ matrix.compiler == 'clang++-12' }}
       run: |
-        sudo apt-get update
         sudo apt-get install libclang1-12
         sudo apt-get install libclang-common-12-dev
     - name: Install ${{matrix.compiler}}
       run: |
-        sudo apt-get update
         sudo apt-get install ${{matrix.compiler}}
     - name: Display compiler version
       run: |
