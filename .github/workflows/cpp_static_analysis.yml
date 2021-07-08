@@ -25,6 +25,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Prepare to install ${{matrix.compiler}}
+      if: ${{ matrix.compiler == 'clang++-12' }}
+      run: |
+        sudo apt-get install libclang1-12
+        sudo apt-get install libclang-common-12-dev
     - name: Install dependencies
       run: |
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
