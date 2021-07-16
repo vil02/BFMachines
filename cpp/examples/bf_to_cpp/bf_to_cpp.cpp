@@ -1,4 +1,4 @@
-// this file illustrated the usage of the function
+// this file illustrates the usage of the function
 // bfm::bfo::translators::ToCpp<>::print
 // note the functions:
 // bfm::bfo::translators::ToCpp<>::ToCpp::print_as_function
