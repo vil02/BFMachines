@@ -40,6 +40,7 @@ jobs:
         ${{matrix.compiler}} --version
     - name: Install boost
       run: |
+        sudo apt-get update
         sudo apt-get install libboost-all-dev
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}
