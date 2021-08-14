@@ -10,8 +10,6 @@ on:
     - cron: '5 6 * * *'
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
   BUILD_PATH: ${{github.workspace}}\cpp\build
 
 jobs:
@@ -21,6 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-2019]
+        build_type: [Release, Debug, RelWithDebInfo]
 
     steps:
     - uses: actions/checkout@v2
@@ -31,13 +30,14 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
-      run: cmake ../ -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D ENABLE_BOOST_TESTS=OFF
+      run: cmake ../ -D CMAKE_BUILD_TYPE=${{matrix.build_type}} -D ENABLE_BOOST_TESTS=OFF
 
     - name: Build
       working-directory: ${{env.BUILD_PATH}}
       shell: bash
-      run: cmake --build . --config ${{env.BUILD_TYPE}}
+      run: cmake --build . --config ${{matrix.build_type}}
+
     - name: Test
       working-directory: ${{env.BUILD_PATH}}
       shell: bash
-      run: ctest -C ${{env.BUILD_TYPE}}
+      run: ctest -C ${{matrix.build_type}}
