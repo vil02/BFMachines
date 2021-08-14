@@ -10,8 +10,6 @@ on:
     - cron: '5 7 * * *'
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
   BUILD_PATH: ${{github.workspace}}/cpp/build
 
 jobs:
@@ -22,6 +20,7 @@ jobs:
       matrix:
         os: [ubuntu-18.04, ubuntu-20.04]
         compiler: [g++-8, g++-9, g++-10, g++-11, clang++-9, clang++-10, clang++-11, clang++-12]
+        build_type: [Release, Debug, RelWithDebInfo]
         exclude:
         - os: ubuntu-18.04
           compiler: clang++-11
@@ -35,27 +34,30 @@ jobs:
       if: ${{ matrix.compiler != 'clang++-12' }}
       run: |
         sudo apt-get install ${{matrix.compiler}}
+
     - name: Display compiler version
       run: |
         ${{matrix.compiler}} --version
+
     - name: Install boost
       run: |
         sudo apt-get update
         sudo apt-get install libboost-all-dev
+
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}
 
     - name: Configure CMake
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
-      run: cmake ../ -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
+      run: cmake ../ -D CMAKE_BUILD_TYPE=${{matrix.build_type}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
 
     - name: Build with ${{matrix.compiler}}
       working-directory: ${{env.BUILD_PATH}}
       shell: bash
-      run: cmake --build . --config ${{env.BUILD_TYPE}}
+      run: cmake --build . --config ${{matrix.build_type}}
 
     - name: Test
       working-directory: ${{env.BUILD_PATH}}
       shell: bash
-      run: ctest -C ${{env.BUILD_TYPE}}
+      run: ctest -C ${{matrix.build_type}}
