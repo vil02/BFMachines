@@ -9,7 +9,6 @@ on:
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
   BUILD_PATH: ${{github.workspace}}/cpp/build
 
 jobs:
@@ -21,6 +20,7 @@ jobs:
         os: [ubuntu-20.04]
         compiler: [g++-10, clang++-10, clang++-11, clang++-12]
         clang_tidy: [clang-tidy, clang-tidy-11]
+        build_type: [Release, Debug, RelWithDebInfo]
 
     steps:
     - uses: actions/checkout@v2
@@ -39,7 +39,7 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
-      run: cmake ../ -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_CLANG_TIDY=ON -D CLANG_TIDY_NAME=${{matrix.clang_tidy}} -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
+      run: cmake ../ -D CMAKE_BUILD_TYPE=${{matrix.build_type}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_CLANG_TIDY=ON -D CLANG_TIDY_NAME=${{matrix.clang_tidy}} -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
 
     - name: Build with ${{matrix.clang_tidy}} and cppcheck analysis
       shell: bash
@@ -48,4 +48,4 @@ jobs:
         ${{matrix.compiler}} --version
         cppcheck --version
         ${{matrix.clang_tidy}} --version
-        cmake --build . --config ${{env.BUILD_TYPE}}
+        cmake --build . --config ${{matrix.build_type}}
