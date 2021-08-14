@@ -80,7 +80,11 @@ int main()
         <<separator<<"unordered_map [s]"
         <<separator<<"vector [s]"
         <<std::endl;
+#ifdef NDEBUG
     const value_type test_size = 12;
+#else
+    const value_type test_size = 8;
+#endif
     for (value_type cur_n = 0; cur_n < test_size; ++cur_n)
     {
         std::cout<<cur_n
