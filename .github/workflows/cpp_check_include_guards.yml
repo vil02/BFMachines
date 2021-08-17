@@ -18,4 +18,4 @@ jobs:
       uses: sbeyer/include-guards-check-action@v1.0.0
       with:
         path: 'cpp/'
-        pattern: '{file}'
+        pattern: '{file}_INCLUDED'
