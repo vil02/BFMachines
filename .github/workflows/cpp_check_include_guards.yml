@@ -1,0 +1,21 @@
+name: cpp_check_include_guards
+
+on:
+  workflow_dispatch:
+  [push, pull_request]:
+    paths:
+      - 'cpp/**'
+      - '.github/workflows/cpp_check_include_guards.yml'
+
+jobs:
+  include-guards:
+    name: Check include guards
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Check include guards
+      uses: sbeyer/include-guards-check-action@v1.0.0
+      with:
+        path: 'cpp/'
+        pattern: '{file}'
