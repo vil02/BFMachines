@@ -2,7 +2,7 @@ name: cpp_check_include_guards
 
 on:
   workflow_dispatch:
-  [push, pull_request]:
+  push:
     paths:
       - 'cpp/**'
       - '.github/workflows/cpp_check_include_guards.yml'
