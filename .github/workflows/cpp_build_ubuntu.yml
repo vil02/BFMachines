@@ -59,9 +59,9 @@ jobs:
         ./bootstrap.sh  # this will generate ./b2
         sudo ./b2 --with=all -j $cpuCores install
 
-    - name: Display boost version
-      run: |
-        grep BOOST_LIB_VERSION /usr/include/boost/version.hpp
+    #- name: Display boost version
+    #  run: |
+    #    grep BOOST_LIB_VERSION /usr/include/boost/version.hpp
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}
