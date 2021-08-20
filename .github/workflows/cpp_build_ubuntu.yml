@@ -44,6 +44,10 @@ jobs:
         sudo apt-get update
         sudo apt-get install libboost-all-dev
 
+    - name: Display boost version
+      run: |
+        grep BOOST_LIB_VERSION /usr/include/boost/version.hpp
+
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}
 
