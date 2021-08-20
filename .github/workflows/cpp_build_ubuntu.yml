@@ -39,10 +39,18 @@ jobs:
       run: |
         ${{matrix.compiler}} --version
 
-    - name: Install boost
+    - name: Install boost (new ubuntu)
+      if: ${{ matrix.os != 'ubuntu-18.04' }}
       run: |
         sudo apt-get update
         sudo apt-get install libboost-all-dev
+
+    - name: Install boost (ubuntu-18.04)
+        if: ${{ matrix.os == 'ubuntu-18.04' }}
+        run: |
+          sudo add-apt-repository ppa:mhier/libboost-latest
+          sudo apt-get update
+          sudo apt-get install libboost1.68-dev
 
     - name: Display boost version
       run: |
