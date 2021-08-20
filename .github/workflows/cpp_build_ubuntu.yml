@@ -50,7 +50,7 @@ jobs:
       run: |
         sudo add-apt-repository ppa:mhier/libboost-latest
         sudo apt-get update
-        sudo apt-get install libboost-1.75-dev
+        sudo apt-get install libboost
 
     - name: Display boost version
       run: |
