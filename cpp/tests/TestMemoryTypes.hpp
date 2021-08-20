@@ -2,51 +2,14 @@
 #define TESTMEMORYTYPES_HPP_INCLUDED
 
 #include "../BFMachineLib/BFMachineLib.hpp"
+#include "UsedTestTypes.hpp"
 
 #include <boost/test/included/unit_test.hpp>
-#include <boost/mpl/list.hpp>
-#include <boost/mp11.hpp>
-
-#include <vector>
 #include <array>
-#include <map>
-#include <unordered_map>
+
 #include <random>
-#include <type_traits>
 
-using position_types = boost::mp11::mp_list<int, long long int>;
-using value_types = boost::mp11::mp_list<int, long long int, unsigned>;
-using bool_values = boost::mp11::mp_list<std::true_type, std::false_type>;
-
-using vector_containers = boost::mp11::mp_transform<std::vector, value_types>;
-
-template <typename Container>
-using vector_memory = bfm::memory_types::VectorMemory<Container>;
-
-template <typename Container, typename remove_default_values_type>
-using map_memory = bfm::memory_types::MapMemory<Container, remove_default_values_type::value>;
-
-using map_containers = boost::mp11::mp_append<
-    boost::mp11::mp_product<std::map, position_types, value_types>,
-    boost::mp11::mp_product<std::unordered_map, position_types, value_types> >;
-
-using memory_types = boost::mp11::mp_append<
-    boost::mp11::mp_transform<vector_memory, vector_containers>,
-    boost::mp11::mp_product<map_memory, map_containers, bool_values> >;
-
-
-// typedef boost::mpl::list<bfm::memory_types::VectorMemory<std::vector<int> >,
-//                          bfm::memory_types::VectorMemory<std::vector<long long int> >,
-//                          bfm::memory_types::VectorMemory<std::vector<unsigned> >,
-//                          bfm::memory_types::MapMemory<std::map<int, int> >,
-//                          bfm::memory_types::MapMemory<std::map<int, int>, false >,
-//                          bfm::memory_types::MapMemory<std::unordered_map<int, int> >,
-//                          bfm::memory_types::MapMemory<std::unordered_map<int, unsigned> >,
-//                          bfm::memory_types::MapMemory<std::unordered_map<int, int>, false >
-//                         > memory_types;
-//
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(get_value_test, MemoryType, memory_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(get_value_test, MemoryType, utt::memory_types)
 {
     MemoryType cur_memory;
     using position_type = typename MemoryType::position_type;
@@ -57,7 +20,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(get_value_test, MemoryType, memory_types)
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(set_value_test, MemoryType, memory_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(set_value_test, MemoryType, utt::memory_types)
 {
     MemoryType cur_memory;
     using position_type = typename MemoryType::position_type;
@@ -79,7 +42,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(set_value_test, MemoryType, memory_types)
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, memory_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, utt::memory_types)
 {
     using value_type = typename MemoryType::value_type;
     using position_type = typename MemoryType::position_type;
