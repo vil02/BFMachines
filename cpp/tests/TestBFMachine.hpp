@@ -5,6 +5,7 @@
 #include "BfTestCodes.hpp"
 
 #include "UtilFunctions.hpp"
+#include "UsedTestTypes.hpp"
 
 #include <boost/test/included/unit_test.hpp>
 #include <boost/mpl/list.hpp>
@@ -74,15 +75,6 @@ using bfm_types = boost::mpl::list<
     map_memory_bfm<std::unordered_map<int, int>, false>,
     map_memory_bfm<std::map<char, int>, true, FlippedInstructions>,
     map_memory_bfm<std::unordered_map<char, int>, false, FlippedInstructions> >;
-
-typedef boost::mpl::list<
-    bfm::memory_types::VectorMemory<std::vector<char> >,
-    bfm::memory_types::VectorMemory<std::vector<unsigned char> >,
-    bfm::memory_types::MapMemory<std::map<int, char> >,
-    bfm::memory_types::MapMemory<std::map<int, unsigned char> >,
-    bfm::memory_types::MapMemory<std::unordered_map<int, char> >,
-    bfm::memory_types::MapMemory<std::unordered_map<int, unsigned char> >
-                        > char_memory_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, bfm_types)
 {
@@ -225,7 +217,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(hello_world_test, MemoryType, char_memory_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(hello_world_test, MemoryType, utt::char_memory_types)
 {
     std::stringstream ss;
     using input_stream_type =
