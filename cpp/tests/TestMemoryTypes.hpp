@@ -6,7 +6,7 @@
 
 #include <boost/test/included/unit_test.hpp>
 #include <array>
-
+#include <type_traits>
 #include <random>
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(get_value_test, MemoryType, utt::memory_types)
@@ -45,39 +45,44 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(set_value_test, MemoryType, utt::memory_types)
 BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, utt::memory_types)
 {
     using value_type = typename MemoryType::value_type;
-    using position_type = typename MemoryType::position_type;
-    MemoryType cur_memory;
-    std::mt19937 random_engine(0);
-    const position_type position_range = 100;
-    std::uniform_int_distribution<position_type> position_dist{-position_range, position_range};
-    const std::size_t min_op_num = 1;
-    const std::size_t max_op_num = 100;
-    std::uniform_int_distribution<std::size_t> num_dist{min_op_num, max_op_num};
-    const value_type value_range = 300;
-    std::uniform_int_distribution<value_type> value_dist{-value_range, value_range};
-
-    const std::size_t test_size = 100;
-    for (std::size_t test_number = 0; test_number < test_size; ++test_number)
+    if constexpr (std::is_signed<value_type>::value)
     {
-        const auto cur_position = position_dist(random_engine);
-        const auto start_value = value_dist(random_engine);
-        const auto plus_num = num_dist(random_engine);
-        const auto minus_num = num_dist(random_engine);
+        using position_type = typename MemoryType::position_type;
+        MemoryType cur_memory;
+        std::mt19937 random_engine(0);
+        const position_type position_range = 100;
+        std::uniform_int_distribution<position_type> position_dist{-position_range, position_range};
+        const std::size_t min_op_num = 1;
+        const std::size_t max_op_num = 100;
+        std::uniform_int_distribution<std::size_t> num_dist{min_op_num, max_op_num};
+        const value_type value_range = 300;
+        std::uniform_int_distribution<value_type> value_dist{-value_range, value_range};
 
-        cur_memory.set_value(cur_position, start_value);
-        for (std::size_t i = 0; i < plus_num; ++i)
+        const std::size_t test_size = 100;
+        for (std::size_t test_number = 0; test_number < test_size; ++test_number)
         {
-            increase_value(cur_memory, cur_position);
-        }
-        BOOST_CHECK_EQUAL(cur_memory.get_value(cur_position),
-                          start_value+value_type(plus_num));
+            const auto cur_position = position_dist(random_engine);
+            const auto start_value = value_dist(random_engine);
+            const auto plus_num = num_dist(random_engine);
+            const auto minus_num = num_dist(random_engine);
 
-        for (std::size_t i = 0; i < minus_num; ++i)
-        {
-            decrease_value(cur_memory, cur_position);
+            cur_memory.set_value(cur_position, start_value);
+            for (std::size_t i = 0; i < plus_num; ++i)
+            {
+                increase_value(cur_memory, cur_position);
+            }
+            BOOST_CHECK_EQUAL(
+                cur_memory.get_value(cur_position),
+                static_cast<value_type>(start_value+value_type(plus_num)));
+
+            for (std::size_t i = 0; i < minus_num; ++i)
+            {
+                decrease_value(cur_memory, cur_position);
+            }
+            BOOST_CHECK_EQUAL(
+                cur_memory.get_value(cur_position),
+                static_cast<value_type>(start_value+value_type(plus_num)+value_type(-minus_num)));
         }
-        BOOST_CHECK_EQUAL(cur_memory.get_value(cur_position),
-                          start_value+value_type(plus_num)+value_type(-minus_num));
     }
 }
 

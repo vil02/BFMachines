@@ -25,7 +25,7 @@ namespace utt::inner
     };
 
     using position_types = boost::mp11::mp_list<int, long long int>;
-    using value_types = boost::mp11::mp_list<int, long long int, unsigned>;
+    using value_types = boost::mp11::mp_list<int, long long int, unsigned, unsigned long long int, short int, short unsigned>;
     using char_value_types = boost::mp11::mp_list<char, unsigned char>;
     using bool_values = boost::mp11::mp_list<std::true_type, std::false_type>;
     using instruction_types = boost::mp11::mp_list<bfm::StandardInstructions, FlippedInstructions>;
