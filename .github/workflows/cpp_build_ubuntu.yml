@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04] # [ubuntu-18.04, ubuntu-20.04]
+        os: [ubuntu-18.04, ubuntu-20.04]
         compiler: [g++-8, g++-9, g++-10, g++-11, clang++-9, clang++-10, clang++-11, clang++-12]
         build_type: [Release, Debug, RelWithDebInfo]
         exclude:
@@ -53,15 +53,15 @@ jobs:
         wget https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.gz
         tar -zxvf boost_1_72_0.tar.gz
         cd boost_1_72_0
-        # get the no of cpucores to make faster
-        cpuCores=`cat /proc/cpuinfo | grep "cpu cores" | uniq | awk '{print $NF}'`
-        echo "Available CPU cores: "$cpuCores
+        cpu_cores=$(grep "cpu cores" /proc/cpuinfo | uniq | awk '{print $NF}')
+        printf "Available CPU cores \"%s\"\n" "${cpu_cores}"
         ./bootstrap.sh  # this will generate ./b2
-        sudo ./b2 --with=all -j $cpuCores install
+        sudo ./b2 --with=all -j "$cpu_cores" install
 
-    #- name: Display boost version
-    #  run: |
-    #    grep BOOST_LIB_VERSION /usr/include/boost/version.hpp
+    - name: Display boost version
+      if: ${{ matrix.os != 'ubuntu-18.04' }}
+      run: |
+        dpkg -s libboost-dev | grep Version
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}
