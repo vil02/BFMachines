@@ -53,6 +53,13 @@ namespace utt::inner
         bfm::streams::OutputVectorStream<std::vector<typename MemoryType::value_type> >,
         InstructionSet>;
 
+    template <typename MemoryType, typename InstructionSet>
+    using bfm_stringstream_no_input_type = bfm::BFMachine<
+        MemoryType,
+        bfm::streams::InputStream<std::array<typename MemoryType::value_type, 0> >,
+        std::stringstream,
+        InstructionSet>;
+
     template <typename ValueTypes>
     using memory_types = boost::mp11::mp_append<
         boost::mp11::mp_transform<inner::vector_memory, inner::vector_containers<ValueTypes> >,
@@ -60,6 +67,10 @@ namespace utt::inner
 
     template <typename ValueTypes>
     using bfm_types = boost::mp11::mp_product<bfm_type, memory_types<ValueTypes>, instruction_types>;
+
+    template <typename ValueTypes>
+    using bfm_stringstream_no_input_types = boost::mp11::mp_product<
+        bfm_stringstream_no_input_type, memory_types<ValueTypes>, instruction_types>;
   }
 
 namespace utt
@@ -67,5 +78,6 @@ namespace utt
     using memory_types = inner::memory_types<inner::value_types>;
     using char_memory_types = inner::memory_types<inner::char_value_types>;
     using bfm_types = inner::bfm_types<inner::value_types>;
+    using bfm_stringstream_no_input_type = inner::bfm_stringstream_no_input_types<inner::char_value_types>;
 }
 #endif //USEDTESTTYPES_HPP_INCLUDED

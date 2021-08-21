@@ -175,21 +175,19 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, utt::bfm_types)
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(hello_world_test, MemoryType, utt::char_memory_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(hello_world_test, BFMType, utt::bfm_stringstream_no_input_type)
 {
-    std::stringstream ss;
-    using input_stream_type =
-        typename bfm::streams::InputStream<std::array<typename MemoryType::value_type, 0> >;
-    using output_stream_type = decltype(ss);
-    using bfm_type =
-        typename bfm::BFMachine<MemoryType, input_stream_type, output_stream_type>;
+    using output_stream_type = typename BFMType::output_stream_type;
+    using input_stream_type = typename BFMType::input_stream_type;
+    output_stream_type o_stream;
+
     auto i_stream = input_stream_type({});
     const auto hello_world_bf_code = bf_test_codes::bf_hello_world<std::string_view>();
-    bfm_type(i_stream, ss).execute(hello_world_bf_code);
-    BOOST_CHECK_EQUAL(ss.str(), "Hello World!\n");
-    ss.str(std::string());
-    bfm_type(i_stream, ss).execute_optimized(hello_world_bf_code);
-    BOOST_CHECK_EQUAL(ss.str(), "Hello World!\n");
+    BFMType(i_stream, o_stream).execute(hello_world_bf_code);
+    BOOST_CHECK_EQUAL(o_stream.str(), "Hello World!\n");
+    o_stream.str(std::string());
+    BFMType(i_stream, o_stream).execute_optimized(hello_world_bf_code);
+    BOOST_CHECK_EQUAL(o_stream.str(), "Hello World!\n");
 }
 
 BOOST_AUTO_TEST_CASE(bfm_with_array_memory_test)
