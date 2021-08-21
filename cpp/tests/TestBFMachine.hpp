@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(simple_loop_crash_test, BFMType, utt::bfm_types)
             for (value_type n = 0; n < test_size; ++n)
             {
                 util_functions::check_bf_computation<BFMType>(
-                    bf_code_plus, {value_type(-cur_multip*n)}, 2*n);
+                    bf_code_plus, {value_type(-cur_multip*n)}, value_type(2)*n);
             }
         }
     }
