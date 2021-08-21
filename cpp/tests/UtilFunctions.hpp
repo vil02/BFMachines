@@ -181,7 +181,7 @@ namespace util_functions
         ValueType res = 1;
         for (ValueType cur_num = 1; cur_num <= in_num; ++cur_num)
         {
-            res *= cur_num;
+            res = static_cast<ValueType>(res*cur_num);
         }
         return res;
     }
