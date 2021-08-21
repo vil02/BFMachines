@@ -39,10 +39,29 @@ jobs:
       run: |
         ${{matrix.compiler}} --version
 
-    - name: Install boost
+    - name: Install boost (new ubuntu)
+      if: ${{ matrix.os != 'ubuntu-18.04' }}
       run: |
         sudo apt-get update
         sudo apt-get install libboost-all-dev
+
+    - name: Install boost (ubuntu-18.04)
+      if: ${{ matrix.os == 'ubuntu-18.04' }}
+      run: |
+        sudo apt-get -y install build-essential g++ python-dev autotools-dev libicu-dev libbz2-dev
+        cd
+        wget https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.gz
+        tar -zxvf boost_1_72_0.tar.gz
+        cd boost_1_72_0
+        cpu_cores=$(grep "cpu cores" /proc/cpuinfo | uniq | awk '{print $NF}')
+        printf "Available CPU cores \"%s\"\n" "${cpu_cores}"
+        ./bootstrap.sh  # this will generate ./b2
+        sudo ./b2 --with=all -j "$cpu_cores" install
+
+    - name: Display boost version
+      if: ${{ matrix.os != 'ubuntu-18.04' }}
+      run: |
+        dpkg -s libboost-dev | grep Version
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{env.BUILD_PATH}}

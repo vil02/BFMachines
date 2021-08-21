@@ -5,13 +5,12 @@
 #include "BfTestCodes.hpp"
 
 #include "UtilFunctions.hpp"
+#include "UsedTestTypes.hpp"
 
 #include <boost/test/included/unit_test.hpp>
 #include <boost/mpl/list.hpp>
 
 #include <vector>
-#include <map>
-#include <unordered_map>
 #include <string_view>
 #include <sstream>
 #include <numeric>
@@ -35,56 +34,7 @@ BOOST_AUTO_TEST_CASE(find_matching_test)
     BOOST_REQUIRE_EQUAL(find_matching("[[][[]]]"s, 3), 6);
 }
 
-struct FlippedInstructions
-{
-    using instruction_type = typename bfm::StandardInstructions::instruction_type;
-    static const instruction_type move_left = bfm::StandardInstructions::move_right;
-    static const instruction_type move_right = bfm::StandardInstructions::move_left;
-    static const instruction_type increase_value = bfm::StandardInstructions::increase_value;
-    static const instruction_type decrease_value = bfm::StandardInstructions::decrease_value;
-    static const instruction_type read_value = bfm::StandardInstructions::read_value;
-    static const instruction_type print_value = bfm::StandardInstructions::print_value;
-    static const instruction_type begin_loop = bfm::StandardInstructions::begin_loop;
-    static const instruction_type end_loop = bfm::StandardInstructions::end_loop;
-};
-
-template <typename ValueType, typename InstructionSet = bfm::StandardInstructions>
-using vector_memory_bfm = typename bfm::BFMachine<
-    bfm::memory_types::VectorMemory<std::vector<ValueType> >,
-    bfm::streams::InputStream<std::vector<ValueType> >,
-    bfm::streams::OutputVectorStream<std::vector<ValueType> >,
-    InstructionSet>;
-
-template <typename MapType,
-          bool remove_default_values = true,
-          typename InstructionSet = bfm::StandardInstructions>
-using map_memory_bfm = typename bfm::BFMachine<
-    bfm::memory_types::MapMemory<MapType, remove_default_values>,
-    bfm::streams::InputStream<std::vector<typename MapType::mapped_type> >,
-    bfm::streams::OutputVectorStream<std::vector<typename MapType::mapped_type> >,
-    InstructionSet>;
-
-using bfm_types = boost::mpl::list<
-    vector_memory_bfm<int>,
-    vector_memory_bfm<unsigned>,
-    vector_memory_bfm<int, FlippedInstructions>,
-    map_memory_bfm<std::map<int, int> >,
-    map_memory_bfm<std::map<int, int>, false>,
-    map_memory_bfm<std::unordered_map<int, int> >,
-    map_memory_bfm<std::unordered_map<int, int>, false>,
-    map_memory_bfm<std::map<char, int>, true, FlippedInstructions>,
-    map_memory_bfm<std::unordered_map<char, int>, false, FlippedInstructions> >;
-
-typedef boost::mpl::list<
-    bfm::memory_types::VectorMemory<std::vector<char> >,
-    bfm::memory_types::VectorMemory<std::vector<unsigned char> >,
-    bfm::memory_types::MapMemory<std::map<int, char> >,
-    bfm::memory_types::MapMemory<std::map<int, unsigned char> >,
-    bfm::memory_types::MapMemory<std::unordered_map<int, char> >,
-    bfm::memory_types::MapMemory<std::unordered_map<int, unsigned char> >
-                        > char_memory_types;
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, bfm_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, utt::bfm_types)
 {
     using value_type = typename BFMType::value_type;
     const auto result_fun = util_functions::get_sum_of_vector_fun<value_type>();
@@ -99,7 +49,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(plus_test, BFMType, bfm_types)
         result_fun);
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, bfm_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, utt::bfm_types)
 {
     using value_type = typename BFMType::value_type;
     const auto result_fun = util_functions::get_product_of_vector_fun<value_type>();
@@ -114,7 +64,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(times_test, BFMType, bfm_types)
         result_fun);
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, utt::bfm_types)
 {
     using value_type = typename BFMType::value_type;
     BOOST_REQUIRE_EQUAL(util_functions::fibonacci(0), 0);
@@ -132,7 +82,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fibonacci_test, BFMType, bfm_types)
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, utt::bfm_types)
 {
     using value_type = typename BFMType::value_type;
     BOOST_REQUIRE_EQUAL(util_functions::factorial(0), 1);
@@ -148,7 +98,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(factorial_test, BFMType, bfm_types)
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(simple_loop_crash_test, BFMType, bfm_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(simple_loop_crash_test, BFMType, utt::bfm_types)
 {
     using value_type = typename BFMType::value_type;
     const value_type test_size = 10;
@@ -169,13 +119,14 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(simple_loop_crash_test, BFMType, bfm_types)
             for (value_type n = 0; n < test_size; ++n)
             {
                 util_functions::check_bf_computation<BFMType>(
-                    bf_code_plus, {value_type(-cur_multip*n)}, 2*n);
+                    bf_code_plus, {value_type(-cur_multip*n)},
+                    static_cast<value_type>(static_cast<value_type>(2)*n));
             }
         }
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(print_countdown_test, BFMType, bfm_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(print_countdown_test, BFMType, utt::bfm_types)
 {
     using value_type = typename BFMType::value_type;
     const value_type test_size = 40;
@@ -209,7 +160,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(print_countdown_test, BFMType, bfm_types)
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, utt::bfm_types)
 {
     using std::string_literals::operator""s;
     using value_type = typename BFMType::value_type;
@@ -225,21 +176,19 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(syntax_error_test, BFMType, bfm_types)
     }
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(hello_world_test, MemoryType, char_memory_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(hello_world_test, BFMType, utt::bfm_stringstream_no_input_type)
 {
-    std::stringstream ss;
-    using input_stream_type =
-        typename bfm::streams::InputStream<std::array<typename MemoryType::value_type, 0> >;
-    using output_stream_type = decltype(ss);
-    using bfm_type =
-        typename bfm::BFMachine<MemoryType, input_stream_type, output_stream_type>;
+    using output_stream_type = typename BFMType::output_stream_type;
+    using input_stream_type = typename BFMType::input_stream_type;
+    output_stream_type o_stream;
+
     auto i_stream = input_stream_type({});
     const auto hello_world_bf_code = bf_test_codes::bf_hello_world<std::string_view>();
-    bfm_type(i_stream, ss).execute(hello_world_bf_code);
-    BOOST_CHECK_EQUAL(ss.str(), "Hello World!\n");
-    ss.str(std::string());
-    bfm_type(i_stream, ss).execute_optimized(hello_world_bf_code);
-    BOOST_CHECK_EQUAL(ss.str(), "Hello World!\n");
+    BFMType(i_stream, o_stream).execute(hello_world_bf_code);
+    BOOST_CHECK_EQUAL(o_stream.str(), "Hello World!\n");
+    o_stream.str(std::string());
+    BFMType(i_stream, o_stream).execute_optimized(hello_world_bf_code);
+    BOOST_CHECK_EQUAL(o_stream.str(), "Hello World!\n");
 }
 
 BOOST_AUTO_TEST_CASE(bfm_with_array_memory_test)

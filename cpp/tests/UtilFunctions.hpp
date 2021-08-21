@@ -145,7 +145,7 @@ namespace util_functions
     {
         return [](const std::vector<T> in_vec)
         {
-            return std::accumulate(in_vec.begin(), in_vec.end(), T(0));
+            return static_cast<T>(std::accumulate(in_vec.begin(), in_vec.end(), T(0)));
         };
     }
 
@@ -154,10 +154,10 @@ namespace util_functions
     {
         return [](const std::vector<T> in_vec)
         {
-            return std::accumulate(
+            return static_cast<T>(std::accumulate(
                 in_vec.begin(), in_vec.end(),
                 T(1),
-                std::multiplies<T>());
+                std::multiplies<T>()));
         };
     }
 
@@ -168,7 +168,7 @@ namespace util_functions
         ValueType val_b = 1;
         for (ValueType cur_num = 0; cur_num < in_num; ++cur_num)
         {
-            const auto tmp_val = val_a+val_b;
+            const auto tmp_val = static_cast<ValueType>(val_a+val_b);
             val_a = val_b;
             val_b = tmp_val;
         }
@@ -181,7 +181,7 @@ namespace util_functions
         ValueType res = 1;
         for (ValueType cur_num = 1; cur_num <= in_num; ++cur_num)
         {
-            res *= cur_num;
+            res = static_cast<ValueType>(res*cur_num);
         }
         return res;
     }
