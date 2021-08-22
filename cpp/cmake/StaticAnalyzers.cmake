@@ -7,16 +7,17 @@ message( ${CMAKE_SOURCE_DIR} )
 if(ENABLE_CPPCHECK)
   find_program(CPPCHECK cppcheck)
   if(CPPCHECK)
-    set(CMAKE_CXX_CPPCHECK ${CPPCHECK}
-    --suppress=missingIncludeSystem
-    --enable=all
-    --addon=threadsafety
-    --addon=y2038
-    --addon=cert
-    --inconclusive
-    --force
-    --error-exitcode=1
-    -I ${CMAKE_SOURCE_DIR}/BFMachineLib )
+    set(
+      CMAKE_CXX_CPPCHECK
+      ${CPPCHECK}
+      --suppress=missingIncludeSystem
+      --enable=all
+      --addon=threadsafety
+      --addon=y2038
+      --addon=cert
+      --inconclusive
+      --force
+      --error-exitcode=1)
   else()
     message(SEND_ERROR "cppcheck requested but executable not found")
   endif()
