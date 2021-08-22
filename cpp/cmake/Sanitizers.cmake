@@ -42,4 +42,3 @@ function(enable_sanitizers project_name)
         endif()
     endif()
 endfunction()
-

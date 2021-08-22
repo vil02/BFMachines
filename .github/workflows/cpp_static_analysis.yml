@@ -8,7 +8,6 @@ on:
       - '.github/workflows/cpp_static_analysis.yml'
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_PATH: ${{github.workspace}}/cpp/build
 
 jobs:
@@ -39,7 +38,13 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
-      run: cmake ../ -D CMAKE_BUILD_TYPE=${{matrix.build_type}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_CLANG_TIDY=ON -D CLANG_TIDY_NAME=${{matrix.clang_tidy}} -D ENABLE_CPPCHECK=ON -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
+      run: >
+        cmake ../
+        -D CMAKE_BUILD_TYPE=${{matrix.build_type}}
+        -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
+        -D ENABLE_CLANG_TIDY=ON -D CLANG_TIDY_NAME=${{matrix.clang_tidy}}
+        -D ENABLE_CPPCHECK=ON
+        -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
 
     - name: Build with ${{matrix.clang_tidy}} and cppcheck analysis
       shell: bash

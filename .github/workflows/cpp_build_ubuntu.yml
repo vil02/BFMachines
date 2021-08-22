@@ -69,7 +69,10 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{env.BUILD_PATH}}
-      run: cmake ../ -D CMAKE_BUILD_TYPE=${{matrix.build_type}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
+      run: >
+        cmake ../
+        -D CMAKE_BUILD_TYPE=${{matrix.build_type}}
+        -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
 
     - name: Build with ${{matrix.compiler}}
       working-directory: ${{env.BUILD_PATH}}

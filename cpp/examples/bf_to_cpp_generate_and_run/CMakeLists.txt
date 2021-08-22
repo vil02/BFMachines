@@ -22,4 +22,3 @@ add_dependencies(bf_to_cpp_run bf_to_cpp_generate_execute)
 
 add_test(bf_to_cpp_generate_run_test bf_to_cpp_generate)
 add_test(bf_to_cpp_run_run_test bf_to_cpp_run)
-

@@ -3,4 +3,3 @@ Checks: '*,-llvm-header-guard,-modernize-use-trailing-return-type,-google-readab
 WarningsAsErrors: '*'
 HeaderFilterRegex: '.*'
 FormatStyle: none
-

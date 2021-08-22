@@ -14,4 +14,3 @@ SUBDIRLIST(ALL_EXAMPLES ${CMAKE_CURRENT_SOURCE_DIR})
 FOREACH(subdir ${ALL_EXAMPLES})
     add_subdirectory(${subdir})
 ENDFOREACH()
-
