@@ -9,4 +9,3 @@ add_test(simplify_bf_code_run_test simplify_bf_code)
 add_test(NAME simplify_bf_code_comp_test COMMAND simplify_bf_code)
 set_tests_properties(simplify_bf_code_comp_test PROPERTIES PASS_REGULAR_EXPRESSION
     "Input code:\n,>\\-\\+\\+\\-ABC<>,<><\\[\\->\\-\\+\\+<><\\]>\.\nSimplified code:\n,>,<\\[\\->\\+<\\]>\.")
-
