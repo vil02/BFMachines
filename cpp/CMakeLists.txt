@@ -32,6 +32,12 @@ if(ENABLE_TESTING)
     enable_testing()
 endif()
 
+find_package(Boost 1.66.0 Minimum)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    message(STATUS, ${Boost_INCLUDE_DIRS})
+endif()
+
 option(ENABLE_BOOST_TESTS "Add boost tests" ON)
 if(ENABLE_BOOST_TESTS)
     add_subdirectory(tests)
