@@ -1,5 +1,7 @@
+---
 name: cpp_static_analysis
 
+# yamllint disable-line rule:truthy
 on:
   workflow_dispatch:
   push:
@@ -8,7 +10,7 @@ on:
       - '.github/workflows/cpp_static_analysis.yml'
 
 env:
-  BUILD_PATH: ${{github.workspace}}/cpp/build
+  build_path: ${{github.workspace}}/cpp/build
 
 jobs:
   build:
@@ -22,35 +24,42 @@ jobs:
         build_type: [Release, Debug, RelWithDebInfo]
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Install ${{matrix.compiler}}
-      if: ${{ matrix.compiler != 'clang++-12' }}
-      run: |
-        sudo apt-get install ${{matrix.compiler}}
-    - name: Install static analysis tools
-      run: |
-        sudo apt-get install ${{matrix.clang_tidy}}
-        sudo apt-get install cppcheck
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{env.BUILD_PATH}}
+      - name: Install ${{matrix.compiler}}
+        if: ${{ matrix.compiler != 'clang++-12' }}
+        run: |
+          sudo apt-get install ${{matrix.compiler}}
 
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{env.BUILD_PATH}}
-      run: >
-        cmake ../
-        -D CMAKE_BUILD_TYPE=${{matrix.build_type}}
-        -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
-        -D ENABLE_CLANG_TIDY=ON -D CLANG_TIDY_NAME=${{matrix.clang_tidy}}
-        -D ENABLE_CPPCHECK=ON
-        -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
+      - name: Install static analysis tools
+        run: |
+          sudo apt-get install ${{matrix.clang_tidy}}
+          sudo apt-get install cppcheck
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{env.build_path}}
 
-    - name: Build with ${{matrix.clang_tidy}} and cppcheck analysis
-      shell: bash
-      working-directory: ${{env.BUILD_PATH}}
-      run: |
-        ${{matrix.compiler}} --version
-        cppcheck --version
-        ${{matrix.clang_tidy}} --version
-        cmake --build . --config ${{matrix.build_type}}
+      - name: Display versions
+        run: |
+          ${{matrix.compiler}} --version
+          cmake --version
+          cppcheck --version
+          ${{matrix.clang_tidy}} --version
+
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{env.build_path}}
+        run: >
+          cmake ../
+          -D CMAKE_BUILD_TYPE=${{matrix.build_type}}
+          -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
+          -D ENABLE_CLANG_TIDY=ON -D CLANG_TIDY_NAME=${{matrix.clang_tidy}}
+          -D ENABLE_CPPCHECK=ON
+          -D ENABLE_BOOST_TESTS=OFF -D ENABLE_TESTING=OFF
+
+      - name: Build with ${{matrix.clang_tidy}} and cppcheck
+        shell: bash
+        working-directory: ${{env.build_path}}
+        run: |
+          cmake --build . --config ${{matrix.build_type}}
+...
