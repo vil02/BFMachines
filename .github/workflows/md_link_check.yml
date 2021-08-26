@@ -1,14 +1,17 @@
+---
 name: Check Markdown links
 
-on:
-  workflow_dispatch:
-  push:
+# yamllint disable-line rule:truthy
+on: [workflow_dispatch, push]
 
 jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: gaurav-nelson/github-action-markdown-link-check@v1
-      with:
-        use-quiet-mode: 'yes'
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Run markdown link check
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+...
