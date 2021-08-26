@@ -1,5 +1,7 @@
+---
 name: cpp_build_macos
 
+# yamllint disable-line rule:truthy
 on:
   workflow_dispatch:
   push:
@@ -10,7 +12,7 @@ on:
     - cron: '5 8 * * *'
 
 env:
-  BUILD_PATH: ${{github.workspace}}/cpp/build
+  build_path: ${{github.workspace}}/cpp/build
 
 jobs:
   build:
@@ -23,23 +25,34 @@ jobs:
         build_type: [Release, Debug, RelWithDebInfo]
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{env.BUILD_PATH}}
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{env.BUILD_PATH}}
-      run: cmake ../ -D CMAKE_BUILD_TYPE=${{matrix.build_type}} -D CMAKE_CXX_COMPILER=${{matrix.compiler}} -D ENABLE_BOOST_TESTS=OFF
+      - name: Display versions
+        run: |
+          ${{matrix.compiler}} --version
+          cmake --version
 
-    - name: Build with ${{matrix.compiler}}
-      working-directory: ${{env.BUILD_PATH}}
-      shell: bash
-      run: |
-        ${{matrix.compiler}} --version
-        cmake --version
-        cmake --build . --config ${{matrix.build_type}}
-    - name: Test
-      working-directory: ${{env.BUILD_PATH}}
-      shell: bash
-      run: ctest -C ${{matrix.build_type}}
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{env.build_path}}
+
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{env.build_path}}
+        run: >
+          cmake ../
+          -D CMAKE_BUILD_TYPE=${{matrix.build_type}}
+          -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
+          -D ENABLE_BOOST_TESTS=OFF
+
+      - name: Build with ${{matrix.compiler}}
+        working-directory: ${{env.build_path}}
+        shell: bash
+        run: |
+          cmake --build . --config ${{matrix.build_type}}
+
+      - name: Test
+        working-directory: ${{env.build_path}}
+        shell: bash
+        run: ctest -C ${{matrix.build_type}}
+...
