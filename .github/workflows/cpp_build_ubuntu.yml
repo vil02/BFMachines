@@ -1,5 +1,7 @@
+---
 name: cpp_build_ubuntu
 
+# yamllint disable-line rule:truthy
 on:
   workflow_dispatch:
   push:
@@ -10,7 +12,7 @@ on:
     - cron: '5 7 * * *'
 
 env:
-  BUILD_PATH: ${{github.workspace}}/cpp/build
+  build_path: ${{github.workspace}}/cpp/build
 
 jobs:
   build:
@@ -19,67 +21,79 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-18.04, ubuntu-20.04]
-        compiler: [g++-8, g++-9, g++-10, g++-11, clang++-9, clang++-10, clang++-11, clang++-12]
+        compiler: >
+            [g++-8, g++-9, g++-10, g++-11,
+             clang++-9, clang++-10, clang++-11, clang++-12]
         build_type: [Release, Debug, RelWithDebInfo]
         exclude:
-        - os: ubuntu-18.04
-          compiler: clang++-11
-        - os: ubuntu-18.04
-          compiler: clang++-12
+          - os: ubuntu-18.04
+            compiler: clang++-11
+          - os: ubuntu-18.04
+            compiler: clang++-12
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Install ${{matrix.compiler}}
-      if: ${{ matrix.compiler != 'clang++-12' }}
-      run: |
-        sudo apt-get install ${{matrix.compiler}}
+      - name: Install ${{matrix.compiler}}
+        if: ${{ matrix.compiler != 'clang++-12' }}
+        run: |
+          sudo apt-get install ${{matrix.compiler}}
 
-    - name: Display compiler version
-      run: |
-        ${{matrix.compiler}} --version
+      - name: Display versions
+        run: |
+          ${{matrix.compiler}} --version
+          cmake --version
 
-    - name: Install boost (new ubuntu)
-      if: ${{ matrix.os != 'ubuntu-18.04' }}
-      run: |
-        sudo apt-get update
-        sudo apt-get install libboost-all-dev
+      - name: Install boost (new ubuntu)
+        if: ${{ matrix.os != 'ubuntu-18.04' }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install libboost-all-dev
 
-    - name: Install boost (ubuntu-18.04)
-      if: ${{ matrix.os == 'ubuntu-18.04' }}
-      run: |
-        sudo apt-get -y install build-essential g++ python-dev autotools-dev libicu-dev libbz2-dev
-        cd
-        wget https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.gz
-        tar -zxvf boost_1_72_0.tar.gz
-        cd boost_1_72_0
-        cpu_cores=$(grep "cpu cores" /proc/cpuinfo | uniq | awk '{print $NF}')
-        printf "Available CPU cores \"%s\"\n" "${cpu_cores}"
-        ./bootstrap.sh  # this will generate ./b2
-        sudo ./b2 --with=all -j "$cpu_cores" install
+      - name: Install boost (ubuntu-18.04)
+        if: ${{ matrix.os == 'ubuntu-18.04' }}
+        # yamllint disable rule:line-length
+        run: |
+          sudo apt-get install build-essential
+          sudo apt-get install g++
+          sudo apt-get install python-dev
+          sudo apt-get install autotools-dev
+          sudo apt-get install libicu-dev
+          sudo apt-get install libbz2-dev
+          cd
+          wget https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.gz
+          tar -zxvf boost_1_72_0.tar.gz
+          cd boost_1_72_0
+          cpu_cores=$(grep "cpu cores" /proc/cpuinfo | uniq | awk '{print $NF}')
+          printf "Available CPU cores \"%s\"\n" "${cpu_cores}"
+          ./bootstrap.sh  # this will generate ./b2
+          sudo ./b2 --with=all -j "$cpu_cores" install
+        # yamllint enable rule:line-length
 
-    - name: Display boost version
-      if: ${{ matrix.os != 'ubuntu-18.04' }}
-      run: |
-        dpkg -s libboost-dev | grep Version
+      - name: Display boost version
+        if: ${{ matrix.os != 'ubuntu-18.04' }}
+        run: |
+          dpkg -s libboost-dev | grep Version
 
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{env.BUILD_PATH}}
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{env.build_path}}
 
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{env.BUILD_PATH}}
-      run: >
-        cmake ../
-        -D CMAKE_BUILD_TYPE=${{matrix.build_type}}
-        -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{env.build_path}}
+        run: >
+          cmake ../
+          -D CMAKE_BUILD_TYPE=${{matrix.build_type}}
+          -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
 
-    - name: Build with ${{matrix.compiler}}
-      working-directory: ${{env.BUILD_PATH}}
-      shell: bash
-      run: cmake --build . --config ${{matrix.build_type}}
+      - name: Build with ${{matrix.compiler}}
+        working-directory: ${{env.build_path}}
+        shell: bash
+        run: cmake --build . --config ${{matrix.build_type}}
 
-    - name: Test
-      working-directory: ${{env.BUILD_PATH}}
-      shell: bash
-      run: ctest -C ${{matrix.build_type}}
+      - name: Test
+        working-directory: ${{env.build_path}}
+        shell: bash
+        run: ctest -C ${{matrix.build_type}}
+...
