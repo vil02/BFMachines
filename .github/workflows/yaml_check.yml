@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Install yamllint
-        run: sudo apt-get install yamlint
+        run: sudo apt-get install yamllint
       - name: Display yamllint version
         run: yamllint --version
       - name: run yamllint
