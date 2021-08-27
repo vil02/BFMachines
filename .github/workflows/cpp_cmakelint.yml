@@ -1,0 +1,25 @@
+---
+name: cpp_cmakelint
+
+# yamllint disable-line rule:truthy
+on: [workflow_dispatch, push]
+
+jobs:
+  run_cmakelint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Set up Python ${{matrix.python-version}}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install cmakelint
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install cmakelint
+      - name: run cmakelint
+        working-directory: ${{github.workspace}}/cpp/
+        run: ./run_cmakelint.sh
+
+...
