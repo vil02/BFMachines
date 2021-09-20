@@ -30,10 +30,14 @@ namespace utt::inner
     using bool_values = boost::mp11::mp_list<std::true_type, std::false_type>;
     using instruction_types = boost::mp11::mp_list<bfm::StandardInstructions, FlippedInstructions>;
 
+    template <typename ValueType>
+    using vector_like_types = boost::mp11::mp_list<std::vector<ValueType>, std::deque<ValueType> >;
+
     template <typename ValueTypes>
-    using vector_containers = boost::mp11::mp_append<
-        boost::mp11::mp_transform<std::vector, ValueTypes>,
-        boost::mp11::mp_transform<std::deque, ValueTypes> >;
+    using vector_containers = boost::mp11::mp_apply<
+        boost::mp11::mp_append,
+        boost::mp11::mp_transform<vector_like_types, ValueTypes> >;
+
 
     template <typename ValueTypes>
     using map_containers = boost::mp11::mp_append<
