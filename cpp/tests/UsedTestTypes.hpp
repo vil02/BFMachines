@@ -33,16 +33,19 @@ namespace utt::inner
     template <typename ValueType>
     using vector_like_types = boost::mp11::mp_list<std::vector<ValueType>, std::deque<ValueType> >;
 
+    template <typename PositionType, typename ValueType>
+    using map_like_types = boost::mp11::mp_list<
+        std::map<PositionType, ValueType>, std::unordered_map<PositionType, ValueType> >;
+
     template <typename ValueTypes>
     using vector_containers = boost::mp11::mp_apply<
         boost::mp11::mp_append,
         boost::mp11::mp_transform<vector_like_types, ValueTypes> >;
 
-
     template <typename ValueTypes>
-    using map_containers = boost::mp11::mp_append<
-        boost::mp11::mp_product<std::map, position_types, ValueTypes>,
-        boost::mp11::mp_product<std::unordered_map, position_types, ValueTypes> >;
+    using map_containers = boost::mp11::mp_apply<
+        boost::mp11::mp_append,
+        boost::mp11::mp_product<map_like_types, position_types, ValueTypes> >;
 
     template <typename Container>
     using vector_memory = bfm::memory_types::VectorMemory<Container>;
