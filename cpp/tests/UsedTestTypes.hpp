@@ -69,8 +69,8 @@ namespace utt::inner
 
     template <typename ValueTypes>
     using memory_types = boost::mp11::mp_append<
-        boost::mp11::mp_transform<inner::vector_memory, inner::vector_containers<ValueTypes> >,
-        boost::mp11::mp_product<inner::map_memory, inner::map_containers<ValueTypes>, inner::bool_values> >;
+        boost::mp11::mp_transform<vector_memory, vector_containers<ValueTypes> >,
+        boost::mp11::mp_product<map_memory, map_containers<ValueTypes>, bool_values> >;
 
     template <typename ValueTypes>
     using bfm_types = boost::mp11::mp_product<bfm_type, memory_types<ValueTypes>, instruction_types>;
