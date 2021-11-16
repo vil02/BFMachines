@@ -15,5 +15,5 @@ jobs:
       - name: Display yamllint version
         run: yamllint --version
       - name: run yamllint
-        run: yamllint .
+        run: yamllint --strict .
 ...
