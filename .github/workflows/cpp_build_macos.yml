@@ -27,6 +27,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
+      - name: Install Boost
+        run: |
+          brew install boost
 
       - name: Display versions
         run: |
@@ -43,7 +47,7 @@ jobs:
           cmake ../
           -D CMAKE_BUILD_TYPE=${{matrix.build_type}}
           -D CMAKE_CXX_COMPILER=${{matrix.compiler}}
-          -D ENABLE_BOOST_TESTS=OFF
+          -D ENABLE_BOOST_TESTS=ON
 
       - name: Build with ${{matrix.compiler}}
         working-directory: ${{env.build_path}}
