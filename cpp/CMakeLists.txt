@@ -37,6 +37,13 @@ endif()
 
 option(ENABLE_BOOST_TESTS "Add boost tests" ON)
 if(ENABLE_BOOST_TESTS)
+    find_package(Boost 1.66 REQUIRED)
+    if (NOT Boost_FOUND)
+        message(FATAL_ERROR "Fatal error: Boost (version >= 1.66.0) required.\n")
+    endif (NOT Boost_FOUND)
+
+    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+    LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
     add_subdirectory(tests)
 endif()
 add_subdirectory(examples)
