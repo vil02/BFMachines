@@ -43,8 +43,6 @@ if(ENABLE_BOOST_TESTS)
             FATAL_ERROR "Fatal error: Boost (version >= 1.66.0) required.\n")
     endif()
 
-    include_directories(${Boost_INCLUDE_DIRS})
-    link_directories(${Boost_LIBRARY_DIRS})
     add_subdirectory(tests)
 endif()
 add_subdirectory(examples)
