@@ -27,6 +27,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install boost
+        run: vcpkg install boost
+
       - name: Create Build Environment
         run: cmake -E make_directory ${{env.build_path}}
 
@@ -36,7 +39,7 @@ jobs:
         run: >
           cmake ../
           -D CMAKE_BUILD_TYPE=${{matrix.build_type}}
-          -D ENABLE_BOOST_TESTS=OFF
+          -D ENABLE_BOOST_TESTS=ON
 
       - name: Build
         working-directory: ${{env.build_path}}
