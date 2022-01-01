@@ -96,10 +96,10 @@ jobs:
       - name: Build with ${{matrix.compiler}}
         working-directory: ${{env.build_path}}
         shell: bash
-        run: cmake --build . --config ${{matrix.build_type}}
+        run: cmake --build . --config ${{matrix.build_type}} --parallel 2
 
       - name: Test
         working-directory: ${{env.build_path}}
         shell: bash
-        run: ctest -C ${{matrix.build_type}}
+        run: ctest -C ${{matrix.build_type}} --parallel 2
 ...
