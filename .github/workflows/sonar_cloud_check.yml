@@ -49,7 +49,7 @@ jobs:
           unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
           echo "$HOME/.sonar/build-wrapper-linux-x86" >> $GITHUB_PATH
       - name: Run build-wrapper
-        working-directory: ${{env.build_path}}
+        working-directory: ${{env.cpp_path}}
         run: |
           mkdir build
           cmake -S . -B build
