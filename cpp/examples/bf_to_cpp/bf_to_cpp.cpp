@@ -38,5 +38,7 @@ int main()
         std::cout<<"Unknown error\n";
         return_value = 2;
     }
+    std::cout<<std::string("dummy_string")+std::string("dummy_string")+std::string("dummy_string")+std::string("dummy_string")+std::string("dummy_string")+std::string("dummy_string")<<'\n';
+    std::cout<<(std::string("dummy_string")+std::string("dummy_string")+std::string("dummy_string")+std::string("dummy_string")+std::string("dummy_string")+std::string("dummy_string")).size()<<'\n';
     return return_value;
 }
