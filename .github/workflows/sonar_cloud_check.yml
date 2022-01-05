@@ -8,9 +8,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
-env:
-  cpp_path: ${{github.workspace}}/cpp
-
 jobs:
   sonarcloud:
     name: Build
@@ -54,10 +51,9 @@ jobs:
           unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
           echo "$HOME/.sonar/build-wrapper-linux-x86" >> $GITHUB_PATH
       - name: Run build-wrapper
-        working-directory: ${{env.cpp_path}}
         run: |
           mkdir build
-          cmake -S . -B build
+          cmake -S cpp/ -B build
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
       - name: Run sonar-scanner
         env:
