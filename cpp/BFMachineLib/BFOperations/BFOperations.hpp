@@ -16,10 +16,10 @@ namespace bfm::bfo::inner
     {
         static_assert(std::is_same_v<
             typename DataChangeType::shift_type,
-            typename std::make_signed<typename BFMData::position_type>::type>);
+            typename std::make_signed_t<typename BFMData::position_type> >);
         static_assert(std::is_same_v<
             typename DataChangeType::value_change_type,
-            typename std::make_signed<typename BFMData::value_type>::type>);
+            typename std::make_signed_t<typename BFMData::value_type> >);
     }
 }
 namespace bfm::bfo
