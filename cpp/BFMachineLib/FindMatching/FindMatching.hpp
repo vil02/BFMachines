@@ -12,8 +12,8 @@ namespace bfm
             const typename CodeType::size_type start_pos)
     {
         static_assert(
-            std::is_same<typename CodeType::value_type,
-                         typename InstructionSet::instruction_type>::value);
+            std::is_same_v<typename CodeType::value_type,
+                           typename InstructionSet::instruction_type>);
         if (in_code[start_pos] != InstructionSet::begin_loop &&
             in_code[start_pos] != InstructionSet::end_loop)
         {

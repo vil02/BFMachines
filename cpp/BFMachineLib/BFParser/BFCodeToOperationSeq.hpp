@@ -18,8 +18,8 @@ namespace bfm::parser::general_parser
     [[nodiscard]] bfm::bfo::operation_seq_type<DataChangeType> bf_code_to_operation_seq(
             const CodeType& in_bf_code)
     {
-        static_assert(std::is_same<
-            typename CodeType::value_type, typename InstructionSet::instruction_type>::value);
+        static_assert(std::is_same_v<
+            typename CodeType::value_type, typename InstructionSet::instruction_type>);
         bfm::bfo::operation_seq_type<DataChangeType> res;
         typename CodeType::size_type cur_code_pos = 0;
         while (cur_code_pos < in_bf_code.size())
