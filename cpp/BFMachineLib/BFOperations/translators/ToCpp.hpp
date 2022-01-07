@@ -254,7 +254,7 @@ namespace bfm::bfo::translators::general_to_cpp
                 for (const auto& cur_operation : in_bf_operation_seq)
                 {
                     std::visit(
-                        [&ss, &in_depth](const auto x) -> void {ss<<ToCpp::print(x, in_depth);},
+                        [&ss, &in_depth](const auto x){ss<<ToCpp::print(x, in_depth);},
                         cur_operation);
                 }
                 return ss.str();
