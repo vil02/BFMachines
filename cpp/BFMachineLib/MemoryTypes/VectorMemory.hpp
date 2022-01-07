@@ -45,7 +45,8 @@ namespace bfm::memory_types
             using value_type = typename ContainerType::value_type;
             using position_type = std::ptrdiff_t;
         private:
-            ContainerType geq_data, less_data;
+            ContainerType geq_data;
+            ContainerType less_data;
             using raw_position_type = std::pair<typename ContainerType::size_type, bool>;
             [[nodiscard]] constexpr static raw_position_type get_raw_position(
                     const position_type& in_position) noexcept
