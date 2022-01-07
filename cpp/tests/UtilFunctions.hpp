@@ -54,9 +54,9 @@ namespace util_functions
     {
         const auto deterministic_data = get_all_2d(deterministic_value_limit);
         const auto random_data = get_random_2d(random_value_limit, number_of_trials, in_seed);
-        static_assert(std::is_same<
+        static_assert(std::is_same_v<
             typename decltype(deterministic_data)::value_type,
-            typename decltype(random_data)::value_type>::value);
+            typename decltype(random_data)::value_type>);
         std::vector<typename decltype(deterministic_data)::value_type> res;
         std::set_intersection(
             deterministic_data.begin(), deterministic_data.end(),

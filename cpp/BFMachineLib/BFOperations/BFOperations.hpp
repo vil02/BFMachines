@@ -14,12 +14,12 @@ namespace bfm::bfo::inner
     template <typename DataChangeType, typename BFMData>
     constexpr void check()
     {
-        static_assert(std::is_same<
+        static_assert(std::is_same_v<
             typename DataChangeType::shift_type,
-            typename std::make_signed<typename BFMData::position_type>::type>::value);
-        static_assert(std::is_same<
+            typename std::make_signed<typename BFMData::position_type>::type>);
+        static_assert(std::is_same_v<
             typename DataChangeType::value_change_type,
-            typename std::make_signed<typename BFMData::value_type>::type>::value);
+            typename std::make_signed<typename BFMData::value_type>::type>);
     }
 }
 namespace bfm::bfo

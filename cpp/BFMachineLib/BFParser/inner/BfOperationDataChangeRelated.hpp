@@ -22,8 +22,8 @@ namespace bfm::parser::inner
     template <typename CodeType, typename DataChangeType, typename InstructionSet>
     [[nodiscard]] DataChangeType proc_str_piece(const CodeType& in_str)
     {
-        static_assert(std::is_same<
-            typename CodeType::value_type, typename InstructionSet::instruction_type>::value);
+        static_assert(std::is_same_v<
+            typename CodeType::value_type, typename InstructionSet::instruction_type>);
         typename DataChangeType::shift_type cur_shift = 0;
         typename DataChangeType::memory_change_type memory_change;
         using value_change_type = typename DataChangeType::value_change_type;

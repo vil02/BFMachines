@@ -24,7 +24,7 @@ namespace bfm::parser::inner
     [[nodiscard]] constexpr bool is_branch_simple(const CodeType& in_str)
     {
         using instruction_type = typename InstructionSet::instruction_type;
-        static_assert(std::is_same<typename CodeType::value_type, instruction_type>::value);
+        static_assert(std::is_same_v<typename CodeType::value_type, instruction_type>);
 
         const auto is_instruction =
             [](const instruction_type& in_char) -> bool

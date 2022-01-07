@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(set_value_test, MemoryType, utt::memory_types)
 BOOST_AUTO_TEST_CASE_TEMPLATE(incr_decr_value_test, MemoryType, utt::memory_types)
 {
     using value_type = typename MemoryType::value_type;
-    if constexpr (std::is_signed<value_type>::value)
+    if constexpr (std::is_signed_v<value_type>)
     {
         using position_type = typename MemoryType::position_type;
         MemoryType cur_memory;

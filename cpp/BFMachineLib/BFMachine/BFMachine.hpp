@@ -31,8 +31,8 @@ namespace bfm
                     const typename CodeType::size_type in_code_position)
             {
                 static_assert(
-                    std::is_same<typename CodeType::value_type,
-                                 typename InstructionSet::instruction_type>::value);
+                    std::is_same_v<typename CodeType::value_type,
+                                   typename InstructionSet::instruction_type>);
                 typename CodeType::size_type char_num = in_code_position;
                 switch (in_code[char_num])
                 {
