@@ -18,7 +18,8 @@ class [[nodiscard]] ConsoleDebugViewer
     public:
         using position_type = typename BFMachine::position_type;
     private:
-        position_type min_pos, max_pos;
+        position_type min_pos;
+        position_type max_pos;
         std::size_t cur_step{0};
     public:
         ConsoleDebugViewer() :
