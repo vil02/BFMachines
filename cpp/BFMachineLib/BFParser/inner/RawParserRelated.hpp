@@ -27,7 +27,7 @@ namespace bfm::parser::inner
         static_assert(std::is_same_v<typename CodeType::value_type, instruction_type>);
 
         const auto is_instruction =
-            [](const instruction_type& in_char) -> bool
+            [](const instruction_type& in_char)
             {
                 return is_simple<InstructionSet>(in_char) ||
                     in_char == InstructionSet::begin_loop ||
@@ -36,7 +36,7 @@ namespace bfm::parser::inner
                     in_char == InstructionSet::print_value;
             };
         const auto check_single =
-            [&is_instruction](const instruction_type& in_char) -> bool
+            [&is_instruction](const instruction_type& in_char)
             {
                 return !is_instruction(in_char) || is_simple<InstructionSet>(in_char);
             };
