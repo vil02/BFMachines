@@ -22,8 +22,7 @@ class [[nodiscard]] ConsoleDebugViewer
         position_type max_pos = std::numeric_limits<position_type>::min();
         std::size_t cur_step{0};
     public:
-        ConsoleDebugViewer()
-        {}
+        ConsoleDebugViewer() = default;
         void operator()(
                 const std::string& in_code,
                 const std::size_t in_code_position,
