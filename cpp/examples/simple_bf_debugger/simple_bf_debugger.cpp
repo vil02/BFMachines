@@ -18,13 +18,11 @@ class [[nodiscard]] ConsoleDebugViewer
     public:
         using position_type = typename BFMachine::position_type;
     private:
-        position_type min_pos;
-        position_type max_pos;
+        position_type min_pos = std::numeric_limits<position_type>::max();
+        position_type max_pos = std::numeric_limits<position_type>::min();
         std::size_t cur_step{0};
     public:
-        ConsoleDebugViewer() :
-            min_pos(std::numeric_limits<position_type>::max()),
-            max_pos(std::numeric_limits<position_type>::min())
+        ConsoleDebugViewer()
         {}
         void operator()(
                 const std::string& in_code,
