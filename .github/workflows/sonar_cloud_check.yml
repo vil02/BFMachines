@@ -58,16 +58,20 @@ jobs:
           unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
           echo "$HOME/.sonar/build-wrapper-linux-x86" >> $GITHUB_PATH
 
+      - name: Install g++-11
+        run: |
+          apt-get install g++-11
+
       - name: Run build-wrapper
         run: |
           mkdir build
-          cmake -S cpp/ -B build
+          cmake -S cpp/ -B build -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_COMPILER=g++-11
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
 
       - name: Coverage build
         run: |
           mkdir coverage_build
-          cmake -S cpp/ -B coverage_build -D ENABLE_CODE_COVERAGE=ON -D ENABLE_BOOST_TESTS=ON -D CMAKE_BUILD_TYPE=Debug
+          cmake -S cpp/ -B coverage_build -D ENABLE_CODE_COVERAGE=ON -D ENABLE_BOOST_TESTS=ON -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_COMPILER=g++-11
           cmake --build coverage_build/ --config Debug
           cd coverage_build
           for cur_file in **/*gcda; do gcov --branch-count $cur_file; done
