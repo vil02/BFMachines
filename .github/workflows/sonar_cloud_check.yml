@@ -64,6 +64,14 @@ jobs:
           cmake -S cpp/ -B build
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
 
+      - name: Coverage build
+        run: |
+          mkdir coverage_build
+          cmake -S cpp/ -B coverage_build -D ENABLE_CODE_COVERAGE=ON -D ENABLE_BOOST_TESTS=ON -D CMAKE_BUILD_TYPE=Debug
+          cmake --build coverage_build/ --config Debug
+          cd coverage_build
+          for cur_file in **/*gcda; do gcov --branch-count $cur_file; done
+
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
