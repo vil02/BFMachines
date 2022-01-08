@@ -11,11 +11,10 @@ namespace bfm::streams
    {
         private:
             ContainerType data;
-            typename ContainerType::size_type cur_position;
+            typename ContainerType::size_type cur_position = 0;
         public:
             constexpr explicit InputStream(ContainerType in_data) :
-                data(std::move(in_data)),
-                cur_position(0)
+                data(std::move(in_data))
             {}
             constexpr InputStream& operator>>(typename ContainerType::value_type& out_value)
             {

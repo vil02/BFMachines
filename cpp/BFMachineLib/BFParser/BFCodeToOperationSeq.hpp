@@ -56,20 +56,14 @@ namespace bfm::parser::general_parser
                             std::string new_branch;
                             inner::extract_branch<std::string, InstructionSet>(
                                 std::string(in_bf_code), cur_code_pos, new_branch);
-                            bool is_simple_loop =
-                                inner::is_branch_simple<decltype(new_branch), InstructionSet>(
-                                    new_branch);
                             const auto block_data =
                                 inner::proc_str_piece<CodeType, DataChangeType, InstructionSet>(
                                     new_branch);
-                            if (is_simple_loop)
-                            {
-                                if (block_data.total_shift != 0 || block_data.memory_change.empty())
-                                {
-                                    is_simple_loop = false;
-                                }
-                            }
-                            if (is_simple_loop)
+                            if (const auto is_simple_loop =
+                                inner::is_branch_simple<decltype(new_branch), InstructionSet>(
+                                    new_branch)
+                                && block_data.total_shift == 0
+                                && !block_data.memory_change.empty(); is_simple_loop)
                             {
                                 res.push_back(bfm::bfo::variant_type<DataChangeType>(
                                     bfm::bfo::BFSimpleLoop<DataChangeType>(block_data)));

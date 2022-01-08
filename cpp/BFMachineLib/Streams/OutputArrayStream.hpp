@@ -9,11 +9,10 @@ namespace bfm::streams
         private:
             using position_type = typename ContainerType::size_type;
             ContainerType data;
-            position_type cur_position;
+            position_type cur_position = 0;
         public:
             constexpr OutputArrayStream() :
-                data(),
-                cur_position(0)
+                data()
             {}
             constexpr OutputArrayStream& operator<<(
                     const typename ContainerType::value_type& in_value)
