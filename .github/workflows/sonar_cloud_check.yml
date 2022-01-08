@@ -62,6 +62,17 @@ jobs:
         run: |
           sudo apt-get install g++-11
 
+      - name: Set up Python ${{matrix.python-version}}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install gcovr
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          sudo pip install gcovr
+
       - name: Run build-wrapper
         run: |
           mkdir cpp/build
@@ -75,8 +86,7 @@ jobs:
           cmake --build cpp/coverage_build/ --config Debug
           cd cpp/coverage_build
           ctest
-          shopt -s globstar
-          for cur_file in **/*gcda; do gcov --branch-count $cur_file; done
+          gcovr -r ../ . --sonarqube coverage_report.xml
 
       - name: Run sonar-scanner
         env:
