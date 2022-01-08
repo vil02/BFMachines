@@ -59,12 +59,11 @@ namespace bfm::parser::general_parser
                             const auto block_data =
                                 inner::proc_str_piece<CodeType, DataChangeType, InstructionSet>(
                                     new_branch);
-                            const bool is_simple_loop =
+                            if (const auto is_simple_loop =
                                 inner::is_branch_simple<decltype(new_branch), InstructionSet>(
                                     new_branch)
                                 && block_data.total_shift == 0
-                                && !block_data.memory_change.empty();
-                            if (is_simple_loop)
+                                && !block_data.memory_change.empty(); is_simple_loop)
                             {
                                 res.push_back(bfm::bfo::variant_type<DataChangeType>(
                                     bfm::bfo::BFSimpleLoop<DataChangeType>(block_data)));
