@@ -60,7 +60,7 @@ jobs:
 
       - name: Install g++-11
         run: |
-          apt-get install g++-11
+          sudo apt-get install g++-11
 
       - name: Run build-wrapper
         run: |
