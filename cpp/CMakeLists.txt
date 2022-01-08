@@ -35,6 +35,10 @@ if(ENABLE_TESTING)
     enable_testing()
 endif()
 
+option(ENABLE_CODE_COVERAGE "Generate coverage data" OFF)
+include(cmake/CodeCoverage.cmake)
+enable_code_coverage(project_options)
+
 option(ENABLE_BOOST_TESTS "Add boost tests" ON)
 if(ENABLE_BOOST_TESTS)
     find_package(Boost 1.66 REQUIRED)
