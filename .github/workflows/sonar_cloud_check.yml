@@ -75,6 +75,7 @@ jobs:
           cmake --build coverage_build/ --config Debug
           cd coverage_build
           ctest
+          shopt -s globstar
           for cur_file in **/*gcda; do gcov --branch-count $cur_file; done
 
       - name: Run sonar-scanner
