@@ -88,6 +88,20 @@ jobs:
           ctest
           gcovr -r ../../ --sonarqube ../coverage_report.xml
 
+      - name: Html coverage data
+        run: |
+          cd cpp/coverage_build
+          mkdir coverate_html_data
+          gcovr -r ../../ --html-details coverate_html_data/cov_data.html
+
+      - name: Upload generated html data
+        uses: actions/upload-artifact@v2
+        with:
+          name: html_coverage_data
+          path: cpp/coverage_build/coverate_html_data
+          if-no-files-found: error
+          retention-days: 5
+
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
