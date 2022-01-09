@@ -79,26 +79,22 @@ jobs:
           cmake -S cpp/ -B cpp/build -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_COMPILER=g++-10
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build cpp/build/ --config Debug
 
-      - name: Coverage build
+      - name: Generate coverage data xml report
         run: |
-          mkdir cpp/coverage_build
-          cmake -S cpp/ -B cpp/coverage_build -D ENABLE_CODE_COVERAGE=ON -D ENABLE_BOOST_TESTS=ON -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_COMPILER=g++-10
-          cmake --build cpp/coverage_build/
-          cd cpp/coverage_build
-          ctest
-          gcovr -r ../../ --sonarqube ../coverage_report.xml
+          cd cpp/scripts
+          ./generate_raw_coverage_data_gxx.sh
+          ./run_gcovr_sonarqube.sh
 
-      - name: Html coverage data
+      - name: lcov-Html coverage data
         run: |
-          cd cpp/coverage_build
-          mkdir coverate_html_data
-          gcovr -r ../../ --html-details coverate_html_data/cov_data.html
+          cd cpp/scripts
+          ./run_lcov_and_genhtml.sh
 
-      - name: Upload generated html data
+      - name: Upload generated reports
         uses: actions/upload-artifact@v2
         with:
-          name: html_coverage_data
-          path: cpp/coverage_build/coverate_html_data
+          name: reports
+          path: reports
           if-no-files-found: error
           retention-days: 5
 
