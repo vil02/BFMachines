@@ -12,7 +12,7 @@ fi
 raw_data_dir=$(./get_gxx_coverage_data_path.sh) ||
 {
     ./remove_lock.sh "$script_lock"
-    printf "Cannot get the result folder\n"
+    printf "Cannot get the raw data directory\n"
     exit 1
 }
 readonly raw_data_dir
