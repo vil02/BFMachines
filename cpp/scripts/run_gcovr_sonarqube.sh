@@ -32,7 +32,7 @@ output_xml_path="$output_dir"/coverage_report.xml ||
 }
 readonly output_xml_path
 
-gcovr -r "$(./get_proj_root.sh)"/.. --sonarqube "$output_xml_path" ||
+gcovr -r "$(./get_proj_root.sh)" --sonarqube "$output_xml_path" ||
 {
     ./remove_lock.sh "$script_lock"
     printf "Error while running gcovr.\n"
