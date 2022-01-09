@@ -85,20 +85,6 @@ jobs:
           ./generate_raw_coverage_data_gxx.sh
           ./run_gcovr_sonarqube.sh
 
-      - name: lcov-Html coverage data
-        run: |
-          sudo apt-get install lcov
-          cd cpp/scripts
-          ./run_lcov_and_genhtml.sh
-
-      - name: Upload generated reports
-        uses: actions/upload-artifact@v2
-        with:
-          name: reports
-          path: reports
-          if-no-files-found: error
-          retention-days: 5
-
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
