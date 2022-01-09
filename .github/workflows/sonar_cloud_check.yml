@@ -82,7 +82,7 @@ jobs:
       - name: Coverage build
         run: |
           mkdir cpp/coverage_build
-          cmake -S cpp/ -B cpp/coverage_build -D ENABLE_CODE_COVERAGE=ON -D ENABLE_BOOST_TESTS=OFF -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_COMPILER=g++-10
+          cmake -S cpp/ -B cpp/coverage_build -D ENABLE_CODE_COVERAGE=ON -D ENABLE_BOOST_TESTS=ON -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_COMPILER=g++-10
           cmake --build cpp/coverage_build/
           cd cpp/coverage_build
           ctest
