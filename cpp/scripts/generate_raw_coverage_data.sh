@@ -37,7 +37,7 @@ readonly cpp_source
 {
     cmake -S "$cpp_source" -B "$output_dir" \
         -D ENABLE_CODE_COVERAGE=ON \
-        -D ENABLE_BOOST_TESTS=OFF \
+        -D ENABLE_BOOST_TESTS=ON \
         -D CMAKE_BUILD_TYPE=Debug \
         -D CMAKE_CXX_COMPILER="$compiler_name" &&
     cmake --build "$output_dir" &&
