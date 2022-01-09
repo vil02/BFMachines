@@ -42,7 +42,7 @@ jobs:
           sudo pip install gcovr
 
       - name: Generate coverage reports (cpp)
-        working-directory: ${{env.cpp_scripts_path}
+        working-directory: ${{env.cpp_scripts_path}}
         run: |
           ./generate_raw_coverage_data_gxx.sh
           ./run_gcovr_html.sh
