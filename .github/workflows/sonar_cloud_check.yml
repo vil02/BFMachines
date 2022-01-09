@@ -86,7 +86,7 @@ jobs:
           cmake --build cpp/coverage_build/ --config Debug
           cd cpp/coverage_build
           ctest
-          gcovr -r ../ --sonarqube ../coverage_report.xml
+          gcovr -r ../../ --sonarqube ../coverage_report.xml
 
       - name: Run sonar-scanner
         env:
