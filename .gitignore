@@ -89,3 +89,5 @@ codegen/
 octave-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/matlab
+
+/all_cpp_build_data/
