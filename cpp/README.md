@@ -1,8 +1,9 @@
 [![cpp_build_ubuntu](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_ubuntu.yml)
 [![cpp_build_windows](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_windows.yml)
-[![cpp_build_macos](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos.yml)
+[![cpp_build_macos](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_build_macos.yml) \
 [![cpp_static_analysis](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_static_analysis.yml)
 [![cpp_address_sanitizer](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml/badge.svg)](https://github.com/vil02/BFMachines/actions/workflows/cpp_address_sanitizer.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vil02_BFMachines&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vil02_BFMachines)
 # [BF](https://esolangs.org/wiki/Brainfuck) interpreter in C++
 
 `BFMachineLib` provides the basic functionality to execute brainfuck code, namely:
@@ -10,10 +11,10 @@
     * the overloaded method `execute`, which interprets given bf code,
     * the method `execute_optimized`, which parses/optimizes the given bf code into a _sequence_ of equivalent operations and them executes them,
     * the method `execute_seq`, which executes already parsed bf code.
-    
+
     The `MemoryType` and `Input/OutputStreamTypes` are some of the template arguments
 * [_memory models_](BFMachineLib/MemoryTypes), which are useful for brainf*ck. The basic examples are:
-    * unbounded memory: 
+    * unbounded memory:
         * [`bfm::memory_types::VectorMemory`](BFMachineLib/MemoryTypes/VectorMemory.hpp), where data is stored in two `std::vector`-like containers (first for the _positive_ and second for the _negative direction_),
         * [`bfm::memory_types::MapMemory`](BFMachineLib/MemoryTypes/MapMemory.hpp), where data is stored in `std::map` or `std::unordered_map`-like containers.
     * bounded memory:
@@ -28,7 +29,7 @@
     * `bfm::bfo::BFBlock`, which corresponds to any block of _simple commands_, i.e. commands like `<`, `>`, `+`, `-`,
     * `bfm::bfo::BFSimpleLoop`, which corresponds to any bf loop containing only _simple commands_, such that the _total shift_ (i.e. the number of `>` minus the number of `<`) is zero and the value of the memory cell, which is checked at the beginning of the loop decreases by one. Examples are `[->+<]`, `[->++>--->+++<<<]` or `[<++>>--<-]`,
     * `bfm::bfo::BFLoop`, which represents any BF loop.
-    
+
     The function [`bfm::parser::bf_code_to_operation_seq`](BFMachineLib/BFParser/BFCodeToOperationSeq.hpp) _translates_ the given BF code into a _sequence_ of the operations described above. The result is represented as a `std::vector<std::variant<BFRead, BFWrite, BFBlock, BFSimpleLoop, BFLoop > >`. The example ['bf_to_cpp'](examples/bf_to_cpp/bf_to_cpp.cpp) can be used to ilustrate which BF code is _translated_ into which _sequence_. By default, the container storing the memory change information is `std::map`. Other types (for example `std::unordered_map`) can be specified by using the function template [`bfm::parser::general_parser::bf_code_to_operation_seq`](BFMachineLib/BFParser/BFCodeToOperationSeq.hpp).
     A _sequence_ of [BF operations](BFMachineLib/BFOperations/BFOperations.hpp) can be translated to other [programming languages](BFMachineLib/BFOperations/translators).
 
