@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-echo "$(./get_proj_root.sh)"/cpp
+echo "$(dirname "${0}")/../.."

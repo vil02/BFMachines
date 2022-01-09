@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-echo "$(dirname "${0}")/../../all_cpp_build_data"
+echo "$(./get_proj_root.sh)"/all_cpp_build_data
