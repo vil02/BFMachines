@@ -87,6 +87,7 @@ jobs:
 
       - name: lcov-Html coverage data
         run: |
+          sudo apt-get install lcov
           cd cpp/scripts
           ./run_lcov_and_genhtml.sh
 
