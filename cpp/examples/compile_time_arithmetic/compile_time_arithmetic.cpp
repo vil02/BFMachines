@@ -7,37 +7,38 @@
 
 #include <array>
 
-template<typename ValueType>
-constexpr ValueType bf_add(const ValueType& val_a, const ValueType& val_b)
+template<std::size_t memory_size, typename CodeType, typename InputDataType>
+constexpr typename InputDataType::value_type
+compute(const CodeType& bf_code, InputDataType input_data)
 {
-    using memory_type = typename bfm::memory_types::ArrayMemory<std::array<ValueType, 2> >;
-    using input_stream_type = bfm::streams::InputStream<std::array<ValueType, 2> >;
-    using output_stream_type = bfm::streams::OutputArrayStream<std::array<ValueType, 1> >;
+    using value_type = InputDataType::value_type;
+    using memory_type =
+        typename bfm::memory_types::ArrayMemory<std::array<value_type, memory_size> >;
+    using input_stream_type = bfm::streams::InputStream<InputDataType>;
+    using output_stream_type = bfm::streams::OutputArrayStream<std::array<value_type, 1> >;
     using bf_machine_type =
         typename bfm::BFMachine<memory_type, input_stream_type, output_stream_type>;
-    input_stream_type i_stream({val_a, val_b});
+    input_stream_type i_stream(input_data);
     output_stream_type o_stream;
     bf_machine_type bf_machine(i_stream, o_stream);
-    std::string_view bf_code(",>,<[->+<]>.");
     bf_machine.execute(bf_code);
     return o_stream.get_data()[0];
 }
 
 template<typename ValueType>
+constexpr ValueType bf_add(const ValueType& val_a, const ValueType& val_b)
+{
+    return compute<2>(
+        std::string_view(",>,<[->+<]>."),
+        std::array<ValueType, 2>({val_a, val_b}));
+}
+
+template<typename ValueType>
 constexpr ValueType bf_multiply(const ValueType& val_a, const ValueType& val_b)
 {
-    constexpr std::size_t memory_size = 5;
-    using memory_type = typename bfm::memory_types::ArrayMemory<std::array<ValueType, memory_size> >;
-    using input_stream_type = bfm::streams::InputStream<std::array<ValueType, 2> >;
-    using output_stream_type = bfm::streams::OutputArrayStream<std::array<ValueType, 1> >;
-    using bf_machine_type =
-        typename bfm::BFMachine<memory_type, input_stream_type, output_stream_type>;
-    input_stream_type i_stream({val_a, val_b});
-    output_stream_type o_stream;
-    bf_machine_type bf_machine(i_stream, o_stream);
-    std::string_view bf_code(",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>.");
-    bf_machine.execute(bf_code);
-    return o_stream.get_data()[0];
+    return compute<5>(
+        std::string_view(",>,<[>[->+>+<<]>>[-<<+>>]<[->>+<<]<<-]>>>>."),
+        std::array<ValueType, 2>({val_a, val_b}));
 }
 
 int main()
