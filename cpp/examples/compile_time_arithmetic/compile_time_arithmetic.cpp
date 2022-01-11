@@ -11,7 +11,7 @@ template<std::size_t memory_size, typename CodeType, typename InputDataType>
 constexpr typename InputDataType::value_type
 compute(const CodeType& bf_code, InputDataType input_data)
 {
-    using value_type = InputDataType::value_type;
+    using value_type = typename InputDataType::value_type;
     using memory_type =
         typename bfm::memory_types::ArrayMemory<std::array<value_type, memory_size> >;
     using input_stream_type = bfm::streams::InputStream<InputDataType>;
