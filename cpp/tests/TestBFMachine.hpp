@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(simple_loop_crash_test, BFMType, utt::bfm_types)
             util_functions::check_bf_computation<BFMType>(
                 bf_code_minus, {value_type(cur_multip*n)}, n);
         }
-        if (std::is_signed_v<value_type>)
+        constexpr if (std::is_signed_v<value_type>)
         {
             const std::string bf_code_plus =
                 std::string(",[")+std::string(std::size_t(cur_multip), '+')+std::string(">++<]>.");
