@@ -22,7 +22,7 @@ jobs:
         compiler: [g++-10, clang++-10]
 
     steps:
-      - name: Checout
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Install ${{matrix.compiler}}
