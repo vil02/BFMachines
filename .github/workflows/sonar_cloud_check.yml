@@ -71,7 +71,7 @@ jobs:
         shell: bash
         run: |
           python -m pip install --upgrade pip
-          sudo pip install gcovr
+          sudo pip install git+https://github.com/gcovr/gcovr.git
 
       - name: Run build-wrapper
         run: |
