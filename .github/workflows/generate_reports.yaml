@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install boost
         run: |
@@ -38,7 +38,7 @@ jobs:
           sudo apt-get install llvm
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.8
 
@@ -66,7 +66,7 @@ jobs:
           ./run_llvm-cov.sh
 
       - name: Upload generated reports
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: reports
           path: reports
