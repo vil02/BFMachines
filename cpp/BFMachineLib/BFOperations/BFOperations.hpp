@@ -93,12 +93,12 @@ namespace bfm::bfo
             }
             if (in_data_change.memory_change.empty())
             {
-                throw std::invalid_argument("memory_change can not be trivial.");
+                throw std::invalid_argument("memory_change cannot be trivial.");
             }
             if (in_data_change.memory_change.find(0) == in_data_change.memory_change.end())
             {
                 throw std::invalid_argument(
-                    "memory_change at cur_pos/with zero shift can not be trivial.");
+                    "memory_change at cur_pos/with zero shift cannot be trivial.");
             }
         }
         template<typename BFMData>
