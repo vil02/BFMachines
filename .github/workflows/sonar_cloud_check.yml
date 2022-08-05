@@ -63,7 +63,7 @@ jobs:
           sudo apt-get install g++-10
 
       - name: Set up Python ${{matrix.python-version}}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: 3.8
 
