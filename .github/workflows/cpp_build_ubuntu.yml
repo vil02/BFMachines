@@ -9,7 +9,7 @@ on:
       - 'cpp/**'
       - '.github/workflows/cpp_build_ubuntu.yml'
   schedule:
-    - cron: '5 7 * * *'
+    - cron: '5 7 * * 1,4'
 
 env:
   build_path: ${{github.workspace}}/cpp/build
