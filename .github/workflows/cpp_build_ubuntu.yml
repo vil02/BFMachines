@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04]
+        os: [ubuntu-20.04, ubuntu-22.04]
         compiler:
           - g++-8
           - g++-9
@@ -31,11 +31,6 @@ jobs:
           - clang++-11
           - clang++-12
         build_type: [Release, Debug, RelWithDebInfo]
-        exclude:
-          - os: ubuntu-18.04
-            compiler: clang++-11
-          - os: ubuntu-18.04
-            compiler: clang++-12
 
     steps:
       - name: Checkout
@@ -51,34 +46,12 @@ jobs:
           ${{matrix.compiler}} --version
           cmake --version
 
-      - name: Install boost (new ubuntu)
-        if: ${{ matrix.os != 'ubuntu-18.04' }}
+      - name: Install boost
         run: |
           sudo apt-get update
           sudo apt-get install libboost-all-dev
 
-      - name: Install boost (ubuntu-18.04)
-        if: ${{ matrix.os == 'ubuntu-18.04' }}
-        # yamllint disable rule:line-length
-        run: |
-          sudo apt-get install build-essential
-          sudo apt-get install g++
-          sudo apt-get install python-dev
-          sudo apt-get install autotools-dev
-          sudo apt-get install libicu-dev
-          sudo apt-get install libbz2-dev
-          cd
-          wget https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.gz
-          tar -zxvf boost_1_72_0.tar.gz
-          cd boost_1_72_0
-          cpu_cores=$(grep "cpu cores" /proc/cpuinfo | uniq | awk '{print $NF}')
-          printf "Available CPU cores \"%s\"\n" "${cpu_cores}"
-          ./bootstrap.sh  # this will generate ./b2
-          sudo ./b2 --with=all -j "$cpu_cores" install
-        # yamllint enable rule:line-length
-
       - name: Display boost version
-        if: ${{ matrix.os != 'ubuntu-18.04' }}
         run: |
           dpkg -s libboost-dev | grep Version
 
