@@ -31,6 +31,13 @@ jobs:
           - clang++-11
           - clang++-12
         build_type: [Release, Debug, RelWithDebInfo]
+        exclude:
+          - os: ubuntu-22.04
+            compiler: g++-8
+          - os: ubuntu-22.04
+            compiler: clang++-9
+          - os: ubuntu-22.04
+            compiler: clang++-10
 
     steps:
       - name: Checkout
