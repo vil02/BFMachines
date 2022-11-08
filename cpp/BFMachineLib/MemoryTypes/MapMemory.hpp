@@ -12,11 +12,9 @@ namespace bfm::memory_types
             using value_type = typename ContainerType::mapped_type;
             using position_type = typename ContainerType::key_type;
         private:
-            ContainerType data;
+            ContainerType data = {};
         public:
-            constexpr MapMemory() :
-                data()
-            {}
+            constexpr MapMemory() = default;
             [[nodiscard]] constexpr value_type get_value(
                     const position_type& in_position) const noexcept
             {
