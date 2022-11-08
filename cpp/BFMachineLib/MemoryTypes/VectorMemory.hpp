@@ -75,7 +75,7 @@ namespace bfm::memory_types
                         this->less_data, in_raw_position.first, in_value, default_value);
             }
         public:
-            constexpr VectorMemory() {}
+            constexpr VectorMemory() = default;
             [[nodiscard]] constexpr value_type get_value(
                     const position_type& in_position) const noexcept
             {
