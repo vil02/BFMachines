@@ -21,7 +21,7 @@ namespace bfm
             using input_stream_type = InputStream;
             using output_stream_type = OutputStream;
         private:
-            MemoryType memory;
+            MemoryType memory = {};
             position_type cur_position;
             input_stream_type& input_stream;
             output_stream_type& output_stream;
@@ -95,7 +95,6 @@ namespace bfm
             constexpr BFMachine(
                     input_stream_type& in_input_stream,
                     output_stream_type& in_output_stream) :
-                memory(),
                 cur_position(memory.get_starting_position()),
                 input_stream(in_input_stream),
                 output_stream(in_output_stream)
