@@ -12,10 +12,9 @@ namespace bfm::memory_types
             using value_type = typename ContainerType::value_type;
             using position_type = typename ContainerType::size_type;
         private:
-            ContainerType data;
+            ContainerType data = {};
         public:
-            constexpr ArrayMemory() :
-                data()
+            constexpr ArrayMemory()
             {
                 data.fill(default_value);
             }
