@@ -7,11 +7,9 @@ namespace bfm::streams
    class [[nodiscard]] OutputVectorStream
    {
         private:
-            ContainerType data;
+            ContainerType data = {};
         public:
-            OutputVectorStream() :
-                data()
-            {}
+            OutputVectorStream() = default;
             OutputVectorStream& operator<<(const typename ContainerType::value_type& in_value)
             {
                 this->data.push_back(in_value);
@@ -23,6 +21,5 @@ namespace bfm::streams
             }
    };
 }
-
 
 #endif // OUTPUTVECTORSTREAM_HPP_INCLUDED
