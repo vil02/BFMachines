@@ -30,7 +30,7 @@ jobs:
           - clang++-10
           - clang++-11
           - clang++-12
-        build_type: [Release, Debug, RelWithDebInfo]
+        build_type: [Release, Debug]
         exclude:
           - os: ubuntu-22.04
             compiler: g++-8

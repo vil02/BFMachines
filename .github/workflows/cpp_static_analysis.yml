@@ -21,7 +21,7 @@ jobs:
         os: [ubuntu-20.04]
         compiler: [g++-10, clang++-10, clang++-11, clang++-12]
         clang_tidy: [clang-tidy, clang-tidy-11]
-        build_type: [Release, Debug, RelWithDebInfo]
+        build_type: [Release, Debug]
 
     steps:
       - name: Checkout
