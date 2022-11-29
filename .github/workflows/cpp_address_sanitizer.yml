@@ -18,11 +18,11 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
-        compiler: [g++-10, clang++-11]
+        compiler: [g++-10, clang++-10]
 
     steps:
       - name: Checkout
@@ -31,7 +31,11 @@ jobs:
       - name: Install ${{matrix.compiler}}
         run: |
           sudo apt-get install ${{matrix.compiler}}
+
+      - name: Display versions
+        run: |
           ${{matrix.compiler}} --version
+          cmake --version
 
       - name: Install boost
         run: |
