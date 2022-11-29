@@ -40,7 +40,7 @@ namespace bfm
             return this->cur_position;
         }
 
-        constexpr void shift_position(const shift_type in_shift)
+        constexpr void shift_position(const shift_type& in_shift)
         {
             this->cur_position += static_cast<position_type>(in_shift);
         }
@@ -67,7 +67,7 @@ namespace bfm
 
         constexpr void change_value_at_shift(
               const std::make_signed_t<value_type>& in_value_change,
-              const shift_type in_shift)
+              const shift_type& in_shift)
         {
             bfm::memory_types::change_value(
                 this->memory, this->cur_position+static_cast<position_type>(in_shift), in_value_change);
