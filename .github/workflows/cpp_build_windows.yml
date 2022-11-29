@@ -5,11 +5,14 @@ name: cpp_build_windows
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - 'cpp/**'
       - '.github/workflows/cpp_build_windows.yml'
+  pull_request:
   schedule:
-    - cron: '5 6 * * *'
+    - cron: '30 0 1,10,20 * 0'
 
 env:
   build_path: ${{github.workspace}}\cpp\build

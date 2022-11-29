@@ -5,9 +5,12 @@ name: cpp_address_sanitizer
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - 'cpp/**'
       - '.github/workflows/cpp_address_sanitizer.yml'
+  pull_request:
 
 env:
   build_type: Release

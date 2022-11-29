@@ -5,11 +5,14 @@ name: cpp_build_macos
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - 'cpp/**'
       - '.github/workflows/cpp_build_macos.yml'
+  pull_request:
   schedule:
-    - cron: '5 8 * * *'
+    - cron: '10 0 1,10,20 * 0'
 
 env:
   build_path: ${{github.workspace}}/cpp/build
