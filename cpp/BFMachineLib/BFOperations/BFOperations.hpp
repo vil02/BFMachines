@@ -11,46 +11,43 @@
 
 namespace bfm::bfo::inner
 {
-    template <typename DataChangeType, typename BFMData>
+    template <typename DataChangeType, typename BFMState>
     constexpr void check()
     {
         static_assert(std::is_same_v<
             typename DataChangeType::shift_type,
-            typename std::make_signed_t<typename BFMData::position_type> >);
+            typename std::make_signed_t<typename BFMState::position_type> >);
         static_assert(std::is_same_v<
             typename DataChangeType::value_change_type,
-            typename std::make_signed_t<typename BFMData::value_type> >);
+            typename std::make_signed_t<typename BFMState::value_type> >);
     }
 }
 namespace bfm::bfo
 {
-    template <typename BFOperationSeq, typename BFMData>
-    void execute_seq(const BFOperationSeq& in_bf_operation_seq, BFMData& bfm_data)
+    template <typename BFOperationSeq, typename BFMState>
+    void execute_seq(const BFOperationSeq& in_bf_operation_seq, BFMState& bfm_state)
     {
         for (const auto& cur_operation : in_bf_operation_seq)
         {
-            std::visit([&bfm_data](const auto x){x.execute(bfm_data);}, cur_operation);
+            std::visit([&bfm_state](const auto x){x.execute(bfm_state);}, cur_operation);
         }
     }
 
     struct [[nodiscard]] BFWrite
     {
-        template<typename BFMData>
-        constexpr static void execute(BFMData& bfm_data)
+        template<typename BFMState>
+        constexpr static void execute(BFMState& bfm_state)
         {
-            bfm_data.output_stream<<bfm_data.memory.get_value(bfm_data.cur_position);
+            bfm_state.print_value();
         }
     };
 
     struct [[nodiscard]] BFRead
     {
-        template<typename BFMData>
-        constexpr static void execute(BFMData& bfm_data)
+        template<typename BFMState>
+        constexpr static void execute(BFMState& bfm_state)
         {
-            using value_type = typename BFMData::value_type;
-            value_type new_value = value_type();
-            bfm_data.input_stream>>new_value;
-            bfm_data.memory.set_value(bfm_data.cur_position, new_value);
+            bfm_state.read_value();
         }
     };
 
@@ -62,20 +59,15 @@ namespace bfm::bfo
         explicit constexpr BFBlock(DataChangeType in_data_change) :
             data_change(std::move(in_data_change))
         {}
-        template<typename BFMData>
-        constexpr void execute(BFMData& bfm_data) const
+        template<typename BFMState>
+        constexpr void execute(BFMState& bfm_state) const
         {
-            using position_type = typename BFMData::position_type;
-            inner::check<DataChangeType, BFMData>();
+            inner::check<DataChangeType, BFMState>();
             for (const auto& [cur_shift, cur_value_change] : this->data_change.memory_change)
             {
-                change_value(
-                    bfm_data.memory,
-                    position_type(shift_type(bfm_data.cur_position)+cur_shift),
-                    cur_value_change);
+                bfm_state.change_value_at_shift(cur_value_change, cur_shift);
             }
-            bfm_data.cur_position =
-                position_type(shift_type(bfm_data.cur_position)+this->data_change.total_shift);
+            bfm_state.shift_position(this->data_change.total_shift);
         }
     };
 
@@ -101,11 +93,11 @@ namespace bfm::bfo
                     "memory_change at cur_pos/with zero shift cannot be trivial.");
             }
         }
-        template<typename BFMData>
-        constexpr void execute(BFMData& bfm_data) const
+        template<typename BFMState>
+        constexpr void execute(BFMState& bfm_state) const
         {
-            inner::check<DataChangeType, BFMData>();
-            const auto cur_value = bfm_data.memory.get_value(bfm_data.cur_position);
+            inner::check<DataChangeType, BFMState>();
+            const auto cur_value = bfm_state.get_cur_value();
             if (cur_value != 0)
             {
                 using value_change_type = typename DataChangeType::value_change_type;
@@ -126,14 +118,12 @@ namespace bfm::bfo
                 {
                     if (cur_shift != 0)
                     {
-                        change_value(
-                            bfm_data.memory,
-                            typename BFMData::position_type(
-                                shift_type(bfm_data.cur_position)+cur_shift),
-                            value_change_type(multiplier*cur_value_change));
+                        bfm_state.change_value_at_shift(
+                              value_change_type(multiplier*cur_value_change),
+                              cur_shift);
                     }
                 }
-                bfm_data.memory.set_value(bfm_data.cur_position, 0);
+                bfm_state.set_value(0);
             }
         }
     };
@@ -152,13 +142,13 @@ namespace bfm::bfo
         explicit constexpr BFLoop(operation_seq_type in_operation_seq):
             operation_seq(std::move(in_operation_seq))
         {}
-        template <typename BFMData>
-        constexpr void execute(BFMData& bfm_data) const
+        template <typename BFMState>
+        constexpr void execute(BFMState& bfm_state) const
         {
-            inner::check<DataChangeType, BFMData>();
-            while (bfm_data.memory.get_value(bfm_data.cur_position) != 0)
+            inner::check<DataChangeType, BFMState>();
+            while (bfm_state.is_current_value_not_zero())
             {
-                execute_seq<operation_seq_type, BFMData>(this->operation_seq, bfm_data);
+                execute_seq<operation_seq_type, BFMState>(this->operation_seq, bfm_state);
             }
         }
     };
