@@ -5,9 +5,12 @@ name: cpp_address_sanitizer
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - 'cpp/**'
       - '.github/workflows/cpp_address_sanitizer.yml'
+  pull_request:
 
 env:
   build_type: Release
@@ -15,7 +18,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
@@ -27,9 +30,12 @@ jobs:
 
       - name: Install ${{matrix.compiler}}
         run: |
-          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
           sudo apt-get install ${{matrix.compiler}}
+
+      - name: Display versions
+        run: |
           ${{matrix.compiler}} --version
+          cmake --version
 
       - name: Install boost
         run: |

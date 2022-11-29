@@ -5,9 +5,12 @@ name: cpp_check_include_guards
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - 'cpp/**'
       - '.github/workflows/cpp_check_include_guards.yml'
+  pull_request:
 
 jobs:
   include-guards:

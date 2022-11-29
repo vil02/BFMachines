@@ -5,11 +5,14 @@ name: cpp_build_ubuntu
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - 'cpp/**'
       - '.github/workflows/cpp_build_ubuntu.yml'
+  pull_request:
   schedule:
-    - cron: '5 7 * * 1,4'
+    - cron: '20 0 1,10,20 * 0'
 
 env:
   build_path: ${{github.workspace}}/cpp/build
@@ -30,7 +33,7 @@ jobs:
           - clang++-10
           - clang++-11
           - clang++-12
-        build_type: [Release, Debug, RelWithDebInfo]
+        build_type: [Release, Debug]
         exclude:
           - os: ubuntu-22.04
             compiler: g++-8

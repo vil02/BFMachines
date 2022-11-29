@@ -5,6 +5,9 @@ name: check_shell_scripts
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
+  pull_request:
 
 jobs:
   run_shellcheck:
