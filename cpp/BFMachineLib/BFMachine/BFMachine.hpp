@@ -1,7 +1,7 @@
 #ifndef BFMACHINE_HPP_INCLUDED
 #define BFMACHINE_HPP_INCLUDED
 
-#include "../BFMDataRef/BFMDataRef.hpp"
+#include "BFMState.hpp"
 
 #include <map>
 #include <string>
@@ -16,15 +16,13 @@ namespace bfm
     class [[nodiscard]] BFMachine
     {
         public:
-            using value_type = typename MemoryType::value_type;
-            using position_type = typename MemoryType::position_type;
+            using memory_type = MemoryType;
+            using value_type = typename memory_type::value_type;
+            using position_type = typename memory_type::position_type;
             using input_stream_type = InputStream;
             using output_stream_type = OutputStream;
         private:
-            MemoryType memory = {};
-            position_type cur_position;
-            input_stream_type& input_stream;
-            output_stream_type& output_stream;
+            BFMState<memory_type, input_stream_type, output_stream_type> state;
             template <typename CodeType>
             [[nodiscard]] constexpr typename CodeType::size_type execute_single_instruction(
                     const CodeType& in_code,
@@ -37,35 +35,33 @@ namespace bfm
                 switch (in_code[char_num])
                 {
                     case InstructionSet::move_right:
-                        ++this->cur_position;
+                        this->state.move_right();
                         ++char_num;
                         break;
                     case InstructionSet::move_left:
-                        --this->cur_position;
+                        this->state.move_left();
                         ++char_num;
                         break;
                     case InstructionSet::decrease_value:
-                        decrease_value(this->memory, this->cur_position);
+                        this->state.decrease_value();
                         ++char_num;
                         break;
                     case InstructionSet::increase_value:
-                        increase_value(this->memory, this->cur_position);
+                        this->state.increase_value();
                         ++char_num;
                         break;
                     case InstructionSet::print_value:
-                        this->output_stream<<this->memory.get_value(this->cur_position);
+                        this->state.print_value();
                         ++char_num;
                         break;
                     case InstructionSet::read_value:
                         {
-                            value_type new_val = value_type();
-                            this->input_stream>>new_val;
-                            this->memory.set_value(this->cur_position, new_val);
+                            this->state.read_value();
                             ++char_num;
                             break;
                         }
                     case InstructionSet::begin_loop:
-                        if (this->memory.get_value(this->cur_position) != value_type(0))
+                        if (this->state.is_current_value_not_zero())
                         {
                             ++char_num;
                         }
@@ -76,7 +72,7 @@ namespace bfm
                         }
                         break;
                     case InstructionSet::end_loop:
-                        if (this->memory.get_value(this->cur_position) != value_type(0))
+                        if (this->state.is_current_value_not_zero())
                         {
                             char_num = find_matching<CodeType, InstructionSet>(in_code, char_num);
                         }
@@ -95,18 +91,19 @@ namespace bfm
             constexpr BFMachine(
                     input_stream_type& in_input_stream,
                     output_stream_type& in_output_stream) :
-                cur_position(memory.get_starting_position()),
-                input_stream(in_input_stream),
-                output_stream(in_output_stream)
+                state(in_input_stream, in_output_stream)
             {}
-            [[nodiscard]] constexpr MemoryType get_memory() const
+
+            [[nodiscard]] constexpr memory_type get_memory() const
             {
-                return this->memory;
+                return this->state.get_memory();
             }
+
             [[nodiscard]] constexpr position_type get_memory_position() const
             {
-                return this->cur_position;
+                return this->state.get_memory_position();
             }
+
             template <typename CodeType>
             constexpr void execute(const CodeType& in_code)
             {
@@ -116,6 +113,7 @@ namespace bfm
                     char_num = this->execute_single_instruction(in_code, char_num);
                 }
             }
+
             template <typename ShowDebugData, typename CodeType>
             constexpr void execute(
                     const CodeType& in_code,
@@ -128,16 +126,13 @@ namespace bfm
                     char_num = this->execute_single_instruction(in_code, char_num);
                 }
             }
+
             template <typename BFOperationSeq>
             constexpr void execute_seq(const BFOperationSeq& in_bf_operation_seq)
             {
-                auto cur_bf_state = bfm::BFMDataRef(
-                    this->cur_position,
-                    this->memory,
-                    this->input_stream,
-                    this->output_stream);
-                bfm::bfo::execute_seq(in_bf_operation_seq, cur_bf_state);
+                bfm::bfo::execute_seq(in_bf_operation_seq, this->state);
             }
+
             template <typename CodeType>
             constexpr void execute_optimized(const CodeType& in_code)
             {

@@ -7,7 +7,6 @@
 #include "./FindMatching/FindMatching.hpp"
 #include "./BFParser/BFParser.hpp"
 #include "./BFOperations/BFOperationsMainIncl.hpp"
-#include "./BFMDataRef/BFMDataRef.hpp"
 #include "./BFMachine/BFMachine.hpp"
 
 #endif // BFMACHINELIB_HPP_INCLUDED
