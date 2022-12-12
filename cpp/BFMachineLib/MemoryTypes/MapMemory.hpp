@@ -27,21 +27,13 @@ namespace bfm::memory_types
             }
             constexpr void set_value(const position_type& in_position, const value_type& in_value)
             {
-                const auto value_it = this->data.find(in_position);
-                if (value_it != this->data.end())
+                [[maybe_unused]] const auto value_it = this->data.insert_or_assign(in_position, in_value).first;
+                if constexpr (remove_default_values)
                 {
-                    this->data[in_position] = in_value;
-                    if constexpr (remove_default_values)
+                    if (in_value == default_value)
                     {
-                        if (in_value == default_value)
-                        {
-                            this->data.erase(value_it);
-                        }
+                        this->data.erase(value_it);
                     }
-                }
-                else if (in_value != default_value)
-                {
-                    this->data[in_position] = in_value;
                 }
             }
     };
