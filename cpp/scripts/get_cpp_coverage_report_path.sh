@@ -2,4 +2,7 @@
 
 set -euo pipefail
 
-echo "$(./get_proj_root.sh)"/reports/cpp_coverage
+proj_root="$(./get_proj_root.sh)"
+readonly proj_root
+
+echo "${proj_root}"/reports/cpp_coverage

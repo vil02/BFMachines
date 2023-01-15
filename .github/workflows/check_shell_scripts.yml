@@ -25,5 +25,5 @@ jobs:
           shellcheck --version
       - name: run check_shell_scripts
         run: |
-          ./check_shell_scripts.sh
+          ./check_all_shell_scripts.sh
 ...
