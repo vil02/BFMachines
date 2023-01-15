@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 mkdir -p "$1" ||
 {
     printf "Cannot create the folder\n"
