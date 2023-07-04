@@ -44,6 +44,9 @@ jobs:
           python -m pip install --upgrade pip
           sudo pip install git+https://github.com/gcovr/gcovr.git
 
+      - name: Install sonar-scanner and build-wrapper
+        uses: sonarsource/sonarcloud-github-c-cpp@v1
+
       - name: Run build-wrapper
         run: |
           mkdir ${{ env.BUILD_PATH }}
