@@ -14,7 +14,7 @@ jobs:
     name: Build (sonarCloud)
     runs-on: ubuntu-latest
     env:
-      BUILD_PATH: "cpp/sonar_build"
+      BUILD_PATH: "cpp/build"
       SONAR_SERVER_URL: "https://sonarcloud.io"
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
