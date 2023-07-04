@@ -18,7 +18,6 @@ jobs:
       SONAR_SERVER_URL: "https://sonarcloud.io"
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
-      # yamllint disable rule:line-length
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -73,4 +72,3 @@ jobs:
           sonar-scanner
           --define sonar.host.url="${{ env.SONAR_SERVER_URL }}"
           --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
-        # yamllint enable rule:line-length
