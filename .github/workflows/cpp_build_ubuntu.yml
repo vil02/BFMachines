@@ -49,6 +49,7 @@ jobs:
       - name: Install ${{matrix.compiler}}
         if: ${{ matrix.compiler != 'clang++-12' }}
         run: |
+          sudo apt-get update
           sudo apt-get install ${{matrix.compiler}}
 
       - name: Display versions
@@ -58,7 +59,6 @@ jobs:
 
       - name: Install boost
         run: |
-          sudo apt-get update
           sudo apt-get install libboost-all-dev
 
       - name: Display boost version
