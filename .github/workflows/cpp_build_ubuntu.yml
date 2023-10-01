@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04]
+        os: [ubuntu-22.04]
         compiler:
           - g++-8
           - g++-9
@@ -47,7 +47,6 @@ jobs:
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608  # v4
 
       - name: Install ${{matrix.compiler}}
-        if: ${{ matrix.compiler != 'clang++-12' }}
         run: |
           sudo apt-get update
           sudo apt-get install ${{matrix.compiler}}
