@@ -1,8 +1,7 @@
 ---
 name: cpp_check_include_guards
 
-# yamllint disable-line rule:truthy
-on:
+'on':
   workflow_dispatch:
   push:
     branches:
