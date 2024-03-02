@@ -1,8 +1,7 @@
 ---
 name: cpp_address_sanitizer
 
-# yamllint disable-line rule:truthy
-on:
+'on':
   workflow_dispatch:
   push:
     branches:
