@@ -23,7 +23,7 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [g++-10, g++-11, clang++]
-        os: [macos-11]
+        os: [macos-12]
         build_type: [Release, Debug]
 
     steps:
