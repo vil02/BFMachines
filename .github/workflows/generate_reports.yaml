@@ -6,13 +6,13 @@ name: generate_reports
 
 env:
   cpp_scripts_path: ${{github.workspace}}/cpp/scripts
-  gxx: g++-10
-  clangxx: clang++-10
+  gxx: g++
+  clangxx: clang++
 
 jobs:
   generate_reports:
     name: Generate reports
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
@@ -22,11 +22,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install libboost-all-dev
-
-      - name: Install compilers
-        run: |
-          sudo apt-get install ${{env.gxx}}
-          sudo apt-get install ${{env.clangxx}}
 
       - name: Install lcov
         run: |

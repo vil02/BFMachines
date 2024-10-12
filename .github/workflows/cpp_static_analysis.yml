@@ -20,19 +20,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
-        compiler: [g++-10, clang++-10, clang++-11, clang++-12]
-        clang_tidy: [clang-tidy, clang-tidy-11]
+        os: [ubuntu-24.04]
+        compiler: [clang++]
+        clang_tidy: [clang-tidy]
         build_type: [Release, Debug]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Install ${{matrix.compiler}}
-        if: ${{ matrix.compiler != 'clang++-12' }}
-        run: |
-          sudo apt-get install ${{matrix.compiler}}
 
       - name: Install static analysis tools
         run: |

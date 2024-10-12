@@ -78,8 +78,7 @@ int main()
     std::cout<<"cur_n"
         <<separator<<"map [s]"
         <<separator<<"unordered_map [s]"
-        <<separator<<"vector [s]"
-        <<std::endl;
+        <<separator<<"vector [s]\n";
 #ifdef NDEBUG
     const value_type test_size = 12;
 #else
@@ -91,7 +90,7 @@ int main()
             <<separator<<time_bf_factorial<memory_type_a>(cur_n)
             <<separator<<time_bf_factorial<memory_type_b>(cur_n)
             <<separator<<time_bf_factorial<memory_type_c>(cur_n)
-            <<std::endl;
+            <<'\n';
     }
     return 0;
 }

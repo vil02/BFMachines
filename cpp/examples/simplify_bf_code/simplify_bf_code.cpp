@@ -19,7 +19,7 @@ template <typename CodeType,
 }
 int main()
 {
-    std::string example_code = ",>-++-ABC<>,<><[->-++<><]>.";
+    const std::string example_code = ",>-++-ABC<>,<><[->-++<><]>.";
     std::cout<<"Input code:\n"
         <<example_code<<'\n'
         <<"Simplified code:\n"
