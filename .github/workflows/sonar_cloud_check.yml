@@ -11,7 +11,7 @@ name: sonar_cloud_check
 jobs:
   sonarcloud:
     name: Build (sonarCloud)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       BUILD_PATH: "cpp/build"
       SONAR_SERVER_URL: "https://sonarcloud.io"
@@ -26,10 +26,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install libboost-all-dev
-
-      - name: Install g++-10
-        run: |
-          sudo apt-get install g++-10
 
       - name: Set up Python ${{matrix.python-version}}
         uses: actions/setup-python@v5
@@ -52,7 +48,7 @@ jobs:
             -S cpp/ \
             -B ${{ env.BUILD_PATH }} \
             -D CMAKE_BUILD_TYPE=Debug \
-            -D CMAKE_CXX_COMPILER=g++-10
+            -D CMAKE_CXX_COMPILER=g++
           build-wrapper-linux-x86-64 \
             --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} \
           cmake --build ${{ env.BUILD_PATH }} --config Debug

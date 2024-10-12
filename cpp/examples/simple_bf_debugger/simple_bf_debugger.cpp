@@ -20,7 +20,6 @@ class [[nodiscard]] ConsoleDebugViewer
     private:
         position_type min_pos = std::numeric_limits<position_type>::max();
         position_type max_pos = std::numeric_limits<position_type>::min();
-        std::size_t cur_step{0};
     public:
         ConsoleDebugViewer() = default;
         void operator()(
@@ -30,10 +29,10 @@ class [[nodiscard]] ConsoleDebugViewer
         {
             this->min_pos = std::min(this->min_pos, in_bf_machine.get_memory_position());
             this->max_pos = std::max(this->max_pos, in_bf_machine.get_memory_position());
-            std::cout<<"bf_bode:\n"<<in_code<<std::endl
+            std::cout<<"bf_bode:\n"<<in_code<<'\n'
                      <<std::string(in_code_position, ' ')
-                     <<"^ in_code_pos: "<<in_code_position<<std::endl;
-            std::cout<<"mem_pos: "<<std::endl;
+                     <<"^ in_code_pos: "<<in_code_position<<'\n';
+            std::cout<<"mem_pos: "<<'\n';
             for (position_type cur_pos = this->min_pos; cur_pos <= max_pos; ++cur_pos)
             {
                 if (cur_pos == in_bf_machine.get_memory_position())
@@ -46,8 +45,8 @@ class [[nodiscard]] ConsoleDebugViewer
                 }
                 std::cout<<'\t';
             }
-            std::cout<<std::endl;
-            std::cout<<"mem_val: "<<std::endl;
+            std::cout<<'\n';
+            std::cout<<"mem_val: "<<'\n';
             for (position_type cur_pos = this->min_pos; cur_pos <= max_pos; ++cur_pos)
             {
                 if (cur_pos == in_bf_machine.get_memory_position())
@@ -60,7 +59,7 @@ class [[nodiscard]] ConsoleDebugViewer
                 }
                 std::cout<<'\t';
             }
-            std::cout<<std::endl;
+            std::cout<<'\n';
             switch (in_code[in_code_position])
             {
                 case '.':
@@ -83,7 +82,7 @@ int main()
     using bfm_type = typename bfm::BFMachine<memory_type, decltype(std::cin), decltype(std::cout)>;
     auto debug_viewer = ConsoleDebugViewer<bfm_type>();
     //example bf code adding two numbers
-    std::string bf_code = ",>,<[->+<]>.";
+    const std::string bf_code = ",>,<[->+<]>.";
     try
     {
         bfm_type(std::cin, std::cout).execute(bf_code, debug_viewer);

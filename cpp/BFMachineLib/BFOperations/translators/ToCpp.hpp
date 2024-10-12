@@ -94,7 +94,7 @@ namespace bfm::bfo::translators::general_to_cpp
                         ss<<NameSet::cur_pos<<" += "<<in_shift<<";\n";
                     }
                 }
-                else if (in_shift < 0)
+                else
                 {
                     if (in_shift == -1)
                     {
@@ -206,8 +206,8 @@ namespace bfm::bfo::translators::general_to_cpp
                     ss<<indent(in_depth)<<"if ("<<ToCpp::get_cur_val()<<" != 0)\n"
                         <<indent(in_depth)<<"{\n"
                         <<indent(in_depth+1)<<"using "<<NameSet::value_change_type
-                        <<" = typename std::make_signed<typename decltype("
-                        <<NameSet::memory<<")::value_type>::type;\n"
+                        <<" = typename std::make_signed_t<typename decltype("
+                        <<NameSet::memory<<")::value_type>;\n"
                         <<indent(in_depth+1)
                         <<ToCpp::multip_str(in_operation.data_change.memory_change.at(0));
                     for (const auto& [cur_shift, cur_value_change] :

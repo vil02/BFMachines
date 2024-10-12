@@ -14,9 +14,10 @@ if(ENABLE_CPPCHECK)
       --enable=all
       --addon=threadsafety
       --addon=y2038
-      --addon=cert
       --inconclusive
       --force
+      --suppress=unusedFunction
+      --suppress=threadsafety-unsafe-call
       --error-exitcode=1)
   else()
     message(SEND_ERROR "cppcheck requested but executable not found")

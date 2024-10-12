@@ -32,7 +32,7 @@ namespace bfm::parser::general_parser
                 {
                     ++cur_len;
                 }
-                bfm::bfo::variant_type<DataChangeType> cur_operation =
+                const auto cur_operation =
                     bfm::bfo::BFBlock<DataChangeType>(
                         inner::proc_str_piece<CodeType, DataChangeType, InstructionSet>(
                             in_bf_code.substr(cur_code_pos, cur_len)));

@@ -43,11 +43,11 @@ int main()
     const auto start_time = std::chrono::steady_clock::now();
     for (value_type cur_n = 0; cur_n < n_limit; ++cur_n)
     {
-        std::cout<<cur_n<<'\t'<<factorial_bf(cur_n)<<std::endl;
+        std::cout<<cur_n<<'\t'<<factorial_bf(cur_n)<<'\n';
     }
     const auto end_time = std::chrono::steady_clock::now();
     const std::chrono::duration<double> run_time = end_time-start_time;
-    std::cout<<"Runtime: "<<run_time.count()<<" [s]"<<std::endl;
+    std::cout<<"Runtime: "<<run_time.count()<<" [s]"<<'\n';
     return 0;
 }
 

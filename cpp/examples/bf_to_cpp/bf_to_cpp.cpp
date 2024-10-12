@@ -4,8 +4,9 @@
 // bfm::bfo::translators::ToCpp<>::ToCpp::print_as_function
 // bfm::bfo::translators::ToCpp<>::print_as_function_in_header
 
+#include <cstdint>
+#include <exception>
 #include <iostream>
-#include <string>
 #include <string_view>
 
 #include "../../BFMachineLib/BFMachineLib.hpp"

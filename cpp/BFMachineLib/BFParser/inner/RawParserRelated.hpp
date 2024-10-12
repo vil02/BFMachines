@@ -49,7 +49,7 @@ namespace bfm::parser::inner
             typename CodeType::size_type& code_pos, CodeType& out_str)
     {
         using code_position_type = typename CodeType::size_type;
-        code_position_type tmp_code_pos =
+        const code_position_type tmp_code_pos =
             bfm::find_matching<CodeType, InstructionSet>(in_str, code_pos);
         out_str = in_str.substr(code_pos+1, tmp_code_pos-code_pos-1);
         code_pos = tmp_code_pos+1;
