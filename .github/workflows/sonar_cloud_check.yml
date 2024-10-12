@@ -11,7 +11,7 @@ name: sonar_cloud_check
 jobs:
   sonarcloud:
     name: Build (sonarCloud)
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     env:
       BUILD_PATH: "cpp/build"
       SONAR_SERVER_URL: "https://sonarcloud.io"
