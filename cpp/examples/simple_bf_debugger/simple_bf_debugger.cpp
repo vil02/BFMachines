@@ -32,7 +32,7 @@ class [[nodiscard]] ConsoleDebugViewer
             std::cout<<"bf_bode:\n"<<in_code<<'\n'
                      <<std::string(in_code_position, ' ')
                      <<"^ in_code_pos: "<<in_code_position<<'\n';
-            std::cout<<"mem_pos: "<<'\n';
+            std::cout<<"mem_pos:\n";
             for (position_type cur_pos = this->min_pos; cur_pos <= max_pos; ++cur_pos)
             {
                 if (cur_pos == in_bf_machine.get_memory_position())
@@ -46,7 +46,7 @@ class [[nodiscard]] ConsoleDebugViewer
                 std::cout<<'\t';
             }
             std::cout<<'\n';
-            std::cout<<"mem_val: "<<'\n';
+            std::cout<<"mem_val:\n";
             for (position_type cur_pos = this->min_pos; cur_pos <= max_pos; ++cur_pos)
             {
                 if (cur_pos == in_bf_machine.get_memory_position())

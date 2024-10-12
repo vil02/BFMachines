@@ -78,8 +78,7 @@ int main()
     std::cout<<"cur_n"
         <<separator<<"map [s]"
         <<separator<<"unordered_map [s]"
-        <<separator<<"vector [s]"
-        <<'\n';
+        <<separator<<"vector [s]\n";
 #ifdef NDEBUG
     const value_type test_size = 12;
 #else

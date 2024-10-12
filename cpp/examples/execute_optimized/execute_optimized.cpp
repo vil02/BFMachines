@@ -47,7 +47,7 @@ int main()
     }
     const auto end_time = std::chrono::steady_clock::now();
     const std::chrono::duration<double> run_time = end_time-start_time;
-    std::cout<<"Runtime: "<<run_time.count()<<" [s]"<<'\n';
+    std::cout<<"Runtime: "<<run_time.count()<<" [s]\n";
     return 0;
 }
 
