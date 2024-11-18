@@ -3,6 +3,8 @@ name: generate_reports
 
 'on':
   workflow_dispatch:
+  schedule:
+    - cron: '3 3 19 * *'
 
 env:
   cpp_scripts_path: ${{github.workspace}}/cpp/scripts
@@ -12,7 +14,7 @@ env:
 jobs:
   generate_reports:
     name: Generate reports
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
@@ -34,7 +36,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: 3.12
+
+      - name: Create virtual environment
+        run: |
+          python3 -m venv ./venv
+          source ./venv/bin/activate
+          echo "PATH=${PATH}" >> "${GITHUB_ENV}"
 
       - name: Install gcovr
         run: |
