@@ -73,5 +73,5 @@ jobs:
         run: >
           sonar-scanner
           --define sonar.host.url="${{ env.SONAR_SERVER_URL }}"
-          --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+          --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
         # yamllint enable rule:line-length
