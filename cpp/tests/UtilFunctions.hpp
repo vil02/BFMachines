@@ -8,6 +8,9 @@
 #include <random>
 #include <type_traits>
 
+#include "../BFMachineLib/Streams/InputStream.hpp"
+#include "../BFMachineLib/Streams/OutputVectorStream.hpp"
+
 namespace util_functions
 {
     template <typename T>

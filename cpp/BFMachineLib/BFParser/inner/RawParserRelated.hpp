@@ -2,6 +2,7 @@
 #define RAWPARSERRELATED_HPP_INCLUDED
 
 #include "BfOperationDataChangeRelated.hpp"
+#include "../../FindMatching/FindMatching.hpp"
 
 #include <type_traits>
 #include <exception>

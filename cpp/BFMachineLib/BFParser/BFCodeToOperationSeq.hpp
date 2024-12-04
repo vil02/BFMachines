@@ -2,7 +2,9 @@
 #define BFCODETOOPERATIONSEQ_HPP_INCLUDED
 
 #include "../BFOperations/BFOperations.hpp"
+#include "../StandardInstructions/StandardInstructions.hpp"
 #include "./inner/RawParserRelated.hpp"
+#include "DataChange.hpp"
 
 #include <map>
 #include <type_traits>

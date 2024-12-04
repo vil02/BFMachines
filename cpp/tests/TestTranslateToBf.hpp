@@ -4,6 +4,7 @@
 #include "../BFMachineLib/BFMachineLib.hpp"
 #include "BfTestCodes.hpp"
 #include "UtilFunctions.hpp"
+#include "UsedTestTypes.hpp"
 #include <boost/test/included/unit_test.hpp>
 #include <string>
 #include <sstream>

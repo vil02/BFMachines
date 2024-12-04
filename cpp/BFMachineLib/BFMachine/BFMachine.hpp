@@ -2,6 +2,10 @@
 #define BFMACHINE_HPP_INCLUDED
 
 #include "BFMState.hpp"
+#include "../FindMatching/FindMatching.hpp"
+#include "../BFParser/BFCodeToOperationSeq.hpp"
+#include "../BFOperations/BFOperations.hpp"
+#include "../StandardInstructions/StandardInstructions.hpp"
 
 #include <map>
 #include <string>
