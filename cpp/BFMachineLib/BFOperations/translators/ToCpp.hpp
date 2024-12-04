@@ -6,6 +6,7 @@
 #include <sstream>
 #include <map>
 
+#include "ToBf.hpp"
 #include "../BFOperations.hpp"
 #include "../../BFParser/DataChange.hpp"
 #include "../../StandardInstructions/StandardInstructions.hpp"

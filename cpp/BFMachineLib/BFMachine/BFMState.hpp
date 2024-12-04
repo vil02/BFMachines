@@ -3,6 +3,8 @@
 
 #include <type_traits>
 
+#include "../MemoryTypes/ChangeValueFunctions.hpp"
+
 namespace bfm
 {
     template <typename MemoryType, typename InputStreamType, typename OutputStreamType>

@@ -1,6 +1,7 @@
 #ifndef TOBF_HPP_INCLUDED
 #define TOBF_HPP_INCLUDED
 
+#include <cstdint>
 #include <string>
 #include <sstream>
 #include <map>
