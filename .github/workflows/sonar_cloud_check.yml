@@ -45,7 +45,7 @@ jobs:
           python3 -m pip install gcovr
 
       - name: Install sonar-scanner and build-wrapper
-        uses: sonarsource/sonarcloud-github-c-cpp@v3
+        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v5
 
       - name: Run build-wrapper
         run: |
@@ -66,12 +66,14 @@ jobs:
           ./run_gcovr_sonarqube.sh
 
       - name: Run sonar-scanner
+        if: "! github.event.pull_request.head.repo.fork "
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         # yamllint disable rule:line-length
-        run: >
-          sonar-scanner
-          --define sonar.host.url="${{ env.SONAR_SERVER_URL }}"
-          --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
+        with:
+          args: >
+            --define sonar.host.url="${{ env.SONAR_SERVER_URL }}"
+            --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
         # yamllint enable rule:line-length
