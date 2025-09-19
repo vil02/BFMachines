@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       BUILD_PATH: "cpp/build"
-      SONAR_SERVER_URL: "https://sonarcloud.io"
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
       - name: Checkout
@@ -74,6 +73,5 @@ jobs:
         # yamllint disable rule:line-length
         with:
           args: >
-            --define sonar.host.url="${{ env.SONAR_SERVER_URL }}"
-            --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
+            "-Dsonar.cfamily.compile-commands=${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
         # yamllint enable rule:line-length
