@@ -68,7 +68,7 @@ jobs:
           ./run_llvm-cov.sh
 
       - name: Upload generated reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: reports
           path: reports
